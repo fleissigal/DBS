@@ -4,9 +4,9 @@ Explanation
 The 'Profile' model:
 
 Each profile is linked to a user model, which has the username, password, email etc.
-We can add fields to that later, such as adress or phone number.
+We can add fields to that later, such as address or phone number.
 In addition a field "houses" which links to all the houses a user has (up to 10 according to
-the email you sent me). It is a many to many field because each profile can have multiple
+the email you sent me). It is a many-to-many field because each profile can have multiple
 houses and each house can be used by multiple users.
 
 
@@ -18,7 +18,7 @@ a whole, for example exterior cladding or exterior doors.
 
 The rooms models:
 
-Each of the rooms in the house has a "house" field which is a many-to-one field
+Each of the rooms in the house has a "house" field which is a many-to-one field.
 The reason is that every house can have one configuration of each
 room, but each of those configurations can be applied to multiple houses.
 
