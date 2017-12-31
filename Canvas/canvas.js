@@ -10,11 +10,12 @@ $(document).ready(function(){
 		if (canvas.getContext) {
 			var ctx = canvas.getContext('2d');
 
-			
+			var shape = $('#shape').find(":selected").val();
+			var number = $('#number').find(":selected").val();
+			var color = $('#color').find(":selected").val();
+			var num = parseInt(number);
 
-			draw("square", 2, "red");
-			draw("triangle", 3, "yellow");
-			draw("circle", 2, "blue");
+			draw(shape, num, color);
 		}
 	});
 });
