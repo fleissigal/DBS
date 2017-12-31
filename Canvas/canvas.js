@@ -18,6 +18,15 @@ $(document).ready(function(){
 			draw(shape, num, color);
 		}
 	});
+
+	$("#clearButton").click(function() {
+
+		var canvas = $("#myCanvas")[0];
+		var ctx = canvas.getContext('2d');
+
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		
+	});
 });
 
 function draw(shape, number, color) {
