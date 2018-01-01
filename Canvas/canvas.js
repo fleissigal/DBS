@@ -1,8 +1,10 @@
-// function draw() {
-// 	document.write(5);
-// }
+// Assignment 3:
+
 $(document).ready(function(){
 
+
+	// This function calls a helper function to draw shapes on
+	// the canvas when the "drawButton" button is clicked
 	$("#drawButton").click(function() {
 
 		var canvas = $("#myCanvas")[0];
@@ -16,18 +18,25 @@ $(document).ready(function(){
 			var num = parseInt(number);
 
 			draw(shape, num, color);
+			//ctx.fillStyle = 'rgb(0, 0, 255)'; // Blue color
+			//drawSquareV2();
 		}
 	});
 
+	// This function clears the canvas
 	$("#clearButton").click(function() {
 
 		var canvas = $("#myCanvas")[0];
 		var ctx = canvas.getContext('2d');
 
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		
+
 	});
 });
+
+// This function determines the color of the shape to be drawn
+// and calls the appropriate shape drawing function with the right
+// number of times
 
 function draw(shape, number, color) {
 	var canvas = $("#myCanvas")[0];
@@ -62,6 +71,7 @@ function draw(shape, number, color) {
 	}
 }
 
+// This function draws a circle "number" times
 function drawCircle(number) {
 	var canvas = $("#myCanvas")[0];
 	var ctx = canvas.getContext('2d');
@@ -73,6 +83,7 @@ function drawCircle(number) {
 	}
 }
 
+// This function draws a square "number" times
 function drawSquare(number) {
 	var canvas = $("#myCanvas")[0];
 	var ctx = canvas.getContext('2d');
@@ -82,6 +93,7 @@ function drawSquare(number) {
 	}
 }
 
+// This function draws a triangle "number" times
 function drawTriangle(number) {
 	var canvas = $("#myCanvas")[0];
 	var ctx = canvas.getContext('2d');
@@ -94,3 +106,70 @@ function drawTriangle(number) {
 	    ctx.fill();
 	}
 }
+
+/* Assignment 4
+* We should get the ImageData object, then look for areas
+* where new shapes can be placed: we scan an area for its pixels.
+* Only if this area is big enough to hold a specific shape
+* and all the pixels in it are white can we draw a new shape in it
+*/ 
+
+
+// This function checks if there is a location where a 20x20 pixels
+// square can be placed, by calling a helper function, and if there
+// is - the function draws it (for now - it draws a square at every
+// location where a square can be placed)
+function drawSquareV2() {
+	var canvas = $("#myCanvas")[0];
+	var ctx = canvas.getContext('2d');
+
+	var startingPointIsGood = false;
+
+	for (i = 0; i < canvas.width; i++) {
+		for (j = 0; j < canvas.height; j++) {
+			startingPointIsGood = checkStartingPointForSquare(i, j);
+			if (startingPointIsGood == true) {
+				ctx.fillRect(i, j, 20, 20);
+			}
+		}
+	}
+}
+
+
+// This function checks for 20x20 pixels that are white
+// for a square to be placed in it. It checks its red, green
+// and blue components
+
+function checkStartingPointForSquare(x, y) {
+
+	var myImageData = ctx.getImageData(left, top, width, height);
+
+
+	for (i = 0; i < 20; i++) {
+		for (j = 0; j < 20; j++) {
+			redComponent = myImageData.data[(((x + i) * (myImageData.width * 4)) + ((y + j) * 4)) + 0];
+			greenComponent = myImageData.data[(((x + i) * (myImageData.width * 4)) + ((y + j) * 4)) + 1];
+			blueComponent = myImageData.data[(((x + i) * (myImageData.width * 4)) + ((y + j) * 4)) + 2];
+
+			if (redComponent != 255 || greenComponent != 255 || blueComponent != 255) {
+				return false;
+			}
+
+		}
+	}
+
+	return true;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
