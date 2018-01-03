@@ -17,10 +17,7 @@ $(document).ready(function(){
 			var num = parseInt(number);
 
 			draw(shape, num, color);
-			// ctx.fillStyle = 'rgb(0, 0, 255)'; // Blue color
-			// drawTriangleV2(3);
-			// drawSquareV2(3);
-			// drawCircleV2(3);
+
 		}
 	});
 
@@ -219,7 +216,7 @@ function checkStartingPoint(x, y) {
 
 // Improvement for this function: checking every 2nd/3rd pixel
 
-// Improvement: using the random function
+// Improvement 2: using the random function
 
 
 
