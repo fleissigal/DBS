@@ -16,9 +16,11 @@ $(document).ready(function(){
 			var color = $('#color').find(":selected").val();
 			var num = parseInt(number);
 
-			//draw(shape, num, color);
-			ctx.fillStyle = 'rgb(0, 0, 255)'; // Blue color
-			drawSquareV2();
+			draw(shape, num, color);
+			// ctx.fillStyle = 'rgb(0, 0, 255)'; // Blue color
+			// drawTriangleV2(3);
+			// drawSquareV2(3);
+			// drawCircleV2(3);
 		}
 	});
 
@@ -36,6 +38,8 @@ $(document).ready(function(){
 // This function determines the color of the shape to be drawn
 // and calls the appropriate shape drawing function with the right
 // number of times
+
+var shapesSize = 30;
 
 function draw(shape, number, color) {
 	var canvas = $("#myCanvas")[0];
@@ -57,13 +61,16 @@ function draw(shape, number, color) {
 
 	switch(shape) {
 		case "circle":
-			drawCircle(number);
+			// drawCircle(number);
+			drawCircleV2(number);
 			break;
 		case "square":
-			drawSquare(number);
+			// drawSquare(number);
+			drawSquareV2(number);
 			break;
 		case "triangle":
-			drawTriangle(number);
+			// drawTriangle(number);
+			drawTriangleV2(number);
 			break;
 		default:
 			break;
@@ -118,49 +125,89 @@ function drawTriangle(number) {
 // square can be placed, by calling a helper function, and if there
 // is - the function draws it (for now - it draws a square at every
 // location where a square can be placed)
-function drawSquareV2() {
+function drawSquareV2(number) {
 	var canvas = $("#myCanvas")[0];
 	var ctx = canvas.getContext('2d');
+	var count = 0;
 
 	var startingPointIsGood = false;
 	
-	for (i = 0; i < canvas.width; i++) {
-		for (j = 0; j < canvas.height; j++) {
-			startingPointIsGood = checkStartingPointForSquare(i, j);
+	for (var i = 0; i < canvas.width; i++) {
+		for (var j = 0; j < canvas.height; j++) {
+			startingPointIsGood = checkStartingPoint(i, j);
 			if (startingPointIsGood == true) {
-				ctx.fillRect(i, j, 20, 20);
-				i += 20;
+				ctx.fillRect(i, j, shapesSize, shapesSize);
+				count++;
+				if (count == number) return;
 			}
 		}
 	}
 }
 
+function drawCircleV2(number) {
+	var canvas = $("#myCanvas")[0];
+	var ctx = canvas.getContext('2d');
+	var count = 0;
+
+	var startingPointIsGood = false;
+	
+	for (var i = 0; i < canvas.width; i++) {
+		for (var j = 0; j < canvas.height; j++) {
+			startingPointIsGood = checkStartingPoint(i, j);
+			if (startingPointIsGood == true) {
+				ctx.beginPath();
+				ctx.arc(i + shapesSize/2, j + shapesSize/2, shapesSize/2, 0, 2*Math.PI);
+				ctx.fill();
+			    count++;
+				if (count == number) return;
+			}
+		}
+	}
+}
+
+function drawTriangleV2(number) {
+	var canvas = $("#myCanvas")[0];
+	var ctx = canvas.getContext('2d');
+	var count = 0;
+
+	var startingPointIsGood = false;
+	
+	for (var i = 0; i < canvas.width; i++) {
+		for (var j = 0; j < canvas.height; j++) {
+			startingPointIsGood = checkStartingPoint(i, j);
+			if (startingPointIsGood == true) {
+				ctx.beginPath();
+			    ctx.moveTo(i, j);
+			    ctx.lineTo(i + shapesSize, j);
+			    ctx.lineTo(i + shapesSize/2, j + shapesSize);
+			    ctx.fill();
+			    count++;
+				if (count == number) return;
+			}
+		}
+	}
+}
 
 // This function checks for 20x20 pixels that are white
 // for a square to be placed in it. It checks its red, green
 // and blue components
 
-function checkStartingPointForSquare(x, y) {
+function checkStartingPoint(x, y) {
+	var k = 0;
+	var l = 0;
 
 	var canvas = $("#myCanvas")[0];
 	var ctx = canvas.getContext('2d');
 	var myImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-	for (k = 0; k < 20; k++) {
-		for (l = 0; l < 20; l++) {
+	for (k = 0; k < shapesSize; k++) {
+		for (l = 0; l < shapesSize; l++) {
 			
-			// redComponent = myImageData.data[(((x + i) * (myImageData.width * 4)) + ((y + j) * 4)) + 0];
-			// greenComponent = myImageData.data[(((x + i) * (myImageData.width * 4)) + ((y + j) * 4)) + 1];
-			// blueComponent = myImageData.data[(((x + i) * (myImageData.width * 4)) + ((y + j) * 4)) + 2];
-
 			redComponent = myImageData.data[((myImageData.width * (y + l)) + (x + k)) * 4];
 			greenComponent = myImageData.data[((myImageData.width * (y + l)) + (x + k)) * 4 + 1];
 			blueComponent = myImageData.data[((myImageData.width * (y + l)) + (x + k)) * 4 + 2];
 			alphaComponent = myImageData.data[((myImageData.width * (y + l)) + (x + k)) * 4 + 3];
-			console.log(redComponent);
-			console.log(greenComponent);
-			console.log(blueComponent);
-			console.log(alphaComponent);
+
 			if (redComponent != 0 || greenComponent != 0 || blueComponent != 0 || alphaComponent != 0) {
 				return false;
 			}
@@ -171,6 +218,8 @@ function checkStartingPointForSquare(x, y) {
 }
 
 // Improvement for this function: checking every 2nd/3rd pixel
+
+// Improvement: using the random function
 
 
 
