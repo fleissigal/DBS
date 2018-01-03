@@ -2,7 +2,6 @@
 
 $(document).ready(function(){
 
-
 	// This function calls a helper function to draw shapes on
 	// the canvas when the "drawButton" button is clicked
 	$("#drawButton").click(function() {
@@ -17,9 +16,9 @@ $(document).ready(function(){
 			var color = $('#color').find(":selected").val();
 			var num = parseInt(number);
 
-			draw(shape, num, color);
-			//ctx.fillStyle = 'rgb(0, 0, 255)'; // Blue color
-			//drawSquareV2();
+			//draw(shape, num, color);
+			ctx.fillStyle = 'rgb(0, 0, 255)'; // Blue color
+			drawSquareV2();
 		}
 	});
 
@@ -124,12 +123,13 @@ function drawSquareV2() {
 	var ctx = canvas.getContext('2d');
 
 	var startingPointIsGood = false;
-
+	
 	for (i = 0; i < canvas.width; i++) {
 		for (j = 0; j < canvas.height; j++) {
 			startingPointIsGood = checkStartingPointForSquare(i, j);
 			if (startingPointIsGood == true) {
 				ctx.fillRect(i, j, 20, 20);
+				i += 20;
 			}
 		}
 	}
@@ -142,24 +142,37 @@ function drawSquareV2() {
 
 function checkStartingPointForSquare(x, y) {
 
-	var myImageData = ctx.getImageData(left, top, width, height);
+	var canvas = $("#myCanvas")[0];
+	var ctx = canvas.getContext('2d');
+	var myImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
+	for (k = 0; k < 20; k++) {
+		for (l = 0; l < 20; l++) {
+			
+			// redComponent = myImageData.data[(((x + i) * (myImageData.width * 4)) + ((y + j) * 4)) + 0];
+			// greenComponent = myImageData.data[(((x + i) * (myImageData.width * 4)) + ((y + j) * 4)) + 1];
+			// blueComponent = myImageData.data[(((x + i) * (myImageData.width * 4)) + ((y + j) * 4)) + 2];
 
-	for (i = 0; i < 20; i++) {
-		for (j = 0; j < 20; j++) {
-			redComponent = myImageData.data[(((x + i) * (myImageData.width * 4)) + ((y + j) * 4)) + 0];
-			greenComponent = myImageData.data[(((x + i) * (myImageData.width * 4)) + ((y + j) * 4)) + 1];
-			blueComponent = myImageData.data[(((x + i) * (myImageData.width * 4)) + ((y + j) * 4)) + 2];
-
-			if (redComponent != 255 || greenComponent != 255 || blueComponent != 255) {
+			redComponent = myImageData.data[((myImageData.width * (y + l)) + (x + k)) * 4];
+			greenComponent = myImageData.data[((myImageData.width * (y + l)) + (x + k)) * 4 + 1];
+			blueComponent = myImageData.data[((myImageData.width * (y + l)) + (x + k)) * 4 + 2];
+			alphaComponent = myImageData.data[((myImageData.width * (y + l)) + (x + k)) * 4 + 3];
+			console.log(redComponent);
+			console.log(greenComponent);
+			console.log(blueComponent);
+			console.log(alphaComponent);
+			if (redComponent != 0 || greenComponent != 0 || blueComponent != 0 || alphaComponent != 0) {
 				return false;
 			}
-
 		}
 	}
 
 	return true;
 }
+
+// Improvement for this function: checking every 2nd/3rd pixel
+
+
 
 
 
