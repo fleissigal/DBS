@@ -1,20 +1,21 @@
-## When designing a bedroom I pick:
+#### When designing a bedroom I pick:
+-------------------------------------
 
 1. Flooring
-..1. Flooring Type
-..2. Flooring Style
+··1. Flooring Type
+··2. Flooring Style
 2. Walls
-..1. Wall Material
-..2. Wall Covering
-..3. Wall Covering Style
+··1. Wall Material
+··2. Wall Covering
+··3. Wall Covering Style
 3. Ceiling - same as walls, maybe different colours
 4. Moulding
-..4. Moulding Type
-..5. Moulding Finish
+··4. Moulding Type
+··5. Moulding Finish
 5. Lighting
-..1. Number of lights
-..2. Lighting Locations
-..3. Lighting Styles
+··1. Number of lights
+··2. Lighting Locations
+··3. Lighting Styles
 6. Plugs & Switches (maybe not selectable)
 
 
