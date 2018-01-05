@@ -1,5 +1,5 @@
 #### When designing a bedroom I pick:
------
+----
 
 1. Flooring
 	1. Flooring Type
@@ -10,8 +10,8 @@
 	3. Wall Covering Style
 3. Ceiling - same as walls, maybe different colours
 4. Moulding
-	4. Moulding Type
-	5. Moulding Finish
+	1. Moulding Type
+	2. Moulding Finish
 5. Lighting
 	1. Number of lights
 	2. Lighting Locations
@@ -25,86 +25,53 @@
 
 
 
+####When designing a bathroom I pick:
+----
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-When designing a bathroom I pick:
-
-Flooring
-Flooring Type
-Flooring Style
-Walls
-Wall Material
-Wall Covering
-Wall Covering Style
-Ceiling - same as walls, maybe different colours
-Moulding
-Moulding Type
-Moulding Finish
-Lighting
-Number of lights
-Lighting Locations
-Lighting Styles
-Plugs & Switches (maybe not selectable)
-Sink
-Sink Location
-Sink Style
-Sink Faucet Style
-Cabinets
-Number of cabinets
-Cabinets Locations
-Cabinets Styles
-Knobs/Handles Styles
-Toilet
-Toilet Location
-Toilet Style
-Flushing Button Style
-Bath/shower
-Bath or Shower
-Bath/shower Location
-Bath/shower Style
-Bath/shower Walls
-Wall Material
-Wall Covering
-Wall Covering Style
-Bath/shower Shower-head Style
-Bath/shower Faucet Style
-Mirrors
-Number of Mirrors
-Mirrors Locations
-Mirrors Types
-Mirrors Styles
+1. Flooring
+	1. Flooring Type
+	2. Flooring Style
+2. Walls
+	1. Wall Material
+	2. Wall Covering
+	3. Wall Covering Style
+3. Ceiling - same as walls, maybe different colours
+4. Moulding
+	1. Moulding Type
+	2. Moulding Finish
+5. Lighting
+	1. Number of lights
+	2. Lighting Locations
+	3. Lighting Styles
+6. Plugs & Switches (maybe not selectable)
+7. Sink
+	1. Sink Location
+	2. Sink Style
+	3. Sink Faucet Style
+8. Cabinets
+	1. Number of cabinets
+	2. Cabinets Locations
+	3. Cabinets Styles
+	4. Knobs/Handles Styles
+9. Toilet
+	1. Toilet Location
+	2. Toilet Style
+	3. Flushing Button Style
+10. Bath/shower
+	1. Bath or Shower
+	2. Bath/shower Location
+	3. Bath/shower Style
+	4. Bath/shower Walls
+		1. Wall Material
+		2. Wall Covering
+		3. Wall Covering Style
+	5. Bath/shower Shower-head Style
+	6. Bath/shower Faucet Style
+11. Mirrors
+	1. Number of Mirrors
+	2. Mirrors Locations
+	3. Mirrors Types
+	4. Mirrors Styles
 
 
 
