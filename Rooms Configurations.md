@@ -20,12 +20,7 @@
 
 
 
-
-
-
-
-
-####When designing a bathroom I pick:
+#### When designing a bathroom I pick:
 ----
 
 1. Flooring
@@ -75,66 +70,56 @@
 
 
 
+#### When designing a kitchen I pick:
+----
 
-
-
-
-
-
-
-
-
-
-
-When designing a kitchen I pick:
-
-Flooring
-Flooring Type
-Flooring Style
-Walls
-Wall Material
-Wall Covering
-Wall Covering Style
-Ceiling - same as walls, maybe different colours
-Moulding
-Moulding Type
-Moulding Finish
-Lighting
-Number of lights
-Lighting Locations
-Lighting Styles
-Plugs & Switches (maybe not selectable)
-Sink
-Number of sinks
-Sink Location
-Sink Style
-Sink Faucet Style
-Cabinets
-Number of Cabinets
-Cabinets Locations
-Cabinets Styles
-Knobs/Handles Styles
-Countertops
-Countertops locations
-Countertops Type (for example marble, stainless steel)
-Countertops Styles
-Kitchen Island
-Yes/No
-Island Size
-Island Location
-Island Faucet - Yes/No
-Faucet Style
-Island Cabinets
-Number of Cabinets
-Cabinets Locations
-Cabinets Styles
-Stove
-Stove Location
-Stove Type (for example electric, gas)
-Stove Style
-Stove Ventilation
-Yes/No
-Stove Ventilation Style
-Oven
-Oven Location
-Oven Style
+1. Flooring
+	1. Flooring Type
+	2. Flooring Style
+2. Walls
+	1. Wall Material
+	2. Wall Covering
+	3. Wall Covering Style
+3. Ceiling - same as walls, maybe different colours
+4. Moulding
+	1. Moulding Type
+	2. Moulding Finish
+5. Lighting
+	1. Number of lights
+	2. Lighting Locations
+	3. Lighting Styles
+6. Plugs & Switches (maybe not selectable)
+7. Sink
+	1. Number of sinks
+	2. Sink Location
+	3. Sink Style
+	4. Sink Faucet Style
+8. Cabinets
+	1. Number of Cabinets
+	2. Cabinets Locations
+	3. Cabinets Styles
+	4. Knobs/Handles Styles
+9. Countertops
+	1. Countertops locations
+	2. Countertops Type (for example marble, stainless steel)
+	3. Countertops Styles
+10. Kitchen Island
+	1. Yes/No
+	2. Island Size
+	3. Island Location
+	4. Island Faucet - Yes/No
+		1. Faucet Style
+	5. Island Cabinets
+		1. Number of Cabinets
+		2. Cabinets Locations
+		3. Cabinets Styles
+11. Stove
+	1. Stove Location
+	2. Stove Type (for example electric, gas)
+	3. Stove Style
+12. Stove Ventilation
+	1. Yes/No
+	2. Stove Ventilation Style
+13. Oven
+	1. Oven Location
+	2. Oven Style
