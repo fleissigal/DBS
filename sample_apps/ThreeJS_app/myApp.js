@@ -111,7 +111,7 @@ $(document).ready(function(){
 		animate();
 	});
 
-	$('#dimensionButton').click(function() {
+	$('#updateDimensionButton').click(function() {
 		width = $('#width').val();
 		height = $('#height').val();
 		depth = $('#depth').val();
@@ -119,14 +119,42 @@ $(document).ready(function(){
 		animate();
 	});
 
-	$('#zoomPanButton').click(function() {
+	$('#resetDimensionsButton').click(function() {
+		width = 1;
+		height = 1;
+		depth = 1;
+		changeShape();
+		animate();
+	});
+
+	
+	$('#updateZoomButton').click(function() {
 		zoom = $('#zoom').val();
-		pan = $('#pan').val();
 		camera.fov = zoom;
+		camera.updateProjectionMatrix();
+		animate();
+	});
+
+	$('#resetZoomButton').click(function() {
+		camera.fov = 50;
+		camera.updateProjectionMatrix();
+		animate();
+	});
+
+
+	$('#updatePanButton').click(function() {
+		pan = $('#pan').val() / 10;
 		camera.position.x = pan;
 		camera.position.y = pan;
 		camera.position.z = pan;
-		camera.updateProjectionMatrix();
+		animate();
+	});
+
+
+	$('#resetPanButton').click(function() {
+		camera.position.x = 0;
+		camera.position.y = 3;
+		camera.position.z = 9;
 		animate();
 	});
 

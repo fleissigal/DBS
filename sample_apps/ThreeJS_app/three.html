@@ -34,127 +34,154 @@
 		  	</tr>
 		  </table>
 		  <br>
-		    <button type="button" class="btn btn-primary" id="dimensionButton">Update Dimension</button>
+		    <button type="button" class="btn btn-primary" id="updateDimensionButton">Update Dimensions</button>
+		    <button type="button" class="btn btn-warning" id="resetDimensionsButton">Reset</button>
+
 		</div>
-		<br>
+		<hr>
 
 		<div class="container">
-			<strong>Choose Dimensions:</strong>
+			<strong>Choose Zoom / Pan:</strong>
 			<br>
 			<br>
-			<table width="300">
+			<table width="700">
 			  	<tr>
 			  		<td>Zoom</td>
 			  		<td>Pan</td>
 			  	</tr>
 			  	<tr>
 			  		<td><input type="number" min="10" max="100" id="zoom"></td>
-			  		<td><input type="number" min="0" max="9" id="pan"></td>
+			  		<td><input type="number" min="5" max="15" id="pan"></td>
 			  	</tr>
 			  	<tr>
 			  		<td>
 			  			<p>Select a value between 10 (close) and 100 (far)</p>
 			  		</td>
 			  		<td>
-			  			<p>Select a value between 10 (close) and 100 (far)</p>
+			  			<p>Select a value between 5 (close) and 15 (far)</p>
+			  		</td>
+			  	</tr>
+			  	<tr>
+			  		<td>
+			  			<button type="button" class="btn btn-primary" id="updateZoomButton">Update Zoom</button>
+		    			<button type="button" class="btn btn-warning" id="resetZoomButton">Reset</button>
+			  		</td>
+			  		<td>
+			  			<button type="button" class="btn btn-primary" id="updatePanButton">Update Pan</button>
+		    			<button type="button" class="btn btn-warning" id="resetPanButton">Reset</button>
 			  		</td>
 			  	</tr>
 		  	</table>
-			<br>
-		    <button type="button" class="btn btn-primary" id="zoomPanButton">Update Zoom / Pan</button>
 		</div>
+
+
 		
+		<hr>
 
-		<br><br>
-		<strong>Choose face colors:</strong>
+		<div class="container">
+			<strong>Choose Face Colors:</strong>
+			<br>
 
-		<br>
-		<div class="container">
-		  <p>Color for Face 1:</p>
-			<select class="faceMenu" id="face1">
-				<option>red</option>
-				<option>blue</option>
-				<option>yellow</option>
-				<option>white</option>
-				<option>green</option>
-				<option>orange</option>
-				<option>purple</option>
-				<option>gray</option>
-			</select>
-		</div>
-		<br>
-		<div class="container">
-		  <p>Color for Face 2:</p>
-			<select class="faceMenu" id="face2">
-				<option>red</option>
-				<option>blue</option>
-				<option>yellow</option>
-				<option>white</option>
-				<option>green</option>
-				<option>orange</option>
-				<option>purple</option>
-				<option>gray</option>
-			</select>
-		</div>
-		<br>
-		<div class="container">
-		  <p>Color for Face 3:</p>
-			<select class="faceMenu" id="face3">
-				<option>red</option>
-				<option>blue</option>
-				<option>yellow</option>
-				<option>white</option>
-				<option>green</option>
-				<option>orange</option>
-				<option>purple</option>
-				<option>gray</option>
-			</select>
-		</div>
-		<br>
-		<div class="container">
-		  <p>Color for Face 4:</p>
-			<select class="faceMenu" id="face4">
-				<option>red</option>
-				<option>blue</option>
-				<option>yellow</option>
-				<option>white</option>
-				<option>green</option>
-				<option>orange</option>
-				<option>purple</option>
-				<option>gray</option>
-			</select>
-		</div>
-		<br>
-		<div class="container">
-		  <p>Color for Face 5:</p>
-			<select class="faceMenu" id="face5">
-				<option>red</option>
-				<option>blue</option>
-				<option>yellow</option>
-				<option>white</option>
-				<option>green</option>
-				<option>orange</option>
-				<option>purple</option>
-				<option>gray</option>
-			</select>
-		</div>
-		<br>
-		<div class="container">
-		  <p>Color for Face 6:</p>
-			<select class="faceMenu" id="face6">
-				<option>red</option>
-				<option>blue</option>
-				<option>yellow</option>
-				<option>white</option>
-				<option>green</option>
-				<option>orange</option>
-				<option>purple</option>
-				<option>gray</option>
-			</select>
-		</div>
+			<table width="800">
+				<tr>
+					<td>
+						<p>Color for Face 1:</p>
+					</td>
+					<td>
+					  	<p>Color for Face 2:</p>		
+					</td>
+					<td>
+					 	<p>Color for Face 3:</p>		
+					</td>
+					<td>
+					  	<p>Color for Face 4:</p>
+					</td>
+					<td>
+					  	<p>Color for Face 5:</p>
+					</td>
+					<td>
+						<p>Color for Face 6:</p>
+					</td>
+				</tr>
 
-		<br>
-		<br>
+				<tr>
+					<td>
+						<select class="faceMenu" id="face1">
+							<option>red</option>
+							<option>blue</option>
+							<option>yellow</option>
+							<option>white</option>
+							<option>green</option>
+							<option>orange</option>
+							<option>purple</option>
+							<option>gray</option>
+						</select>
+					</td>
+					<td>
+						<select class="faceMenu" id="face2">
+							<option>red</option>
+							<option>blue</option>
+							<option>yellow</option>
+							<option>white</option>
+							<option>green</option>
+							<option>orange</option>
+							<option>purple</option>
+							<option>gray</option>
+						</select>	
+					</td>
+					<td>
+						<select class="faceMenu" id="face3">
+							<option>red</option>
+							<option>blue</option>
+							<option>yellow</option>
+							<option>white</option>
+							<option>green</option>
+							<option>orange</option>
+							<option>purple</option>
+							<option>gray</option>
+						</select>					
+					</td>
+					<td>
+						<select class="faceMenu" id="face4">
+							<option>red</option>
+							<option>blue</option>
+							<option>yellow</option>
+							<option>white</option>
+							<option>green</option>
+							<option>orange</option>
+							<option>purple</option>
+							<option>gray</option>
+						</select>		
+					</td>
+					<td>
+						<select class="faceMenu" id="face5">
+							<option>red</option>
+							<option>blue</option>
+							<option>yellow</option>
+							<option>white</option>
+							<option>green</option>
+							<option>orange</option>
+							<option>purple</option>
+							<option>gray</option>
+						</select>	
+					</td>
+					<td>
+						<select class="faceMenu" id="face6">
+							<option>red</option>
+							<option>blue</option>
+							<option>yellow</option>
+							<option>white</option>
+							<option>green</option>
+							<option>orange</option>
+							<option>purple</option>
+							<option>gray</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<hr>
+
 		<div class="container">
 		  <strong>Choose View:</strong>
 		  <br><br>
