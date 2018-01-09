@@ -23,23 +23,137 @@
 		  <br><br>
 		  <table width="200">
 		  	<tr>
-		  		<td>Height</td>
 		  		<td>Width</td>
+		  		<td>Height</td>
 		  		<td>Depth</td>
 		  	</tr>
 		  	<tr>
-		  		<td><input type="number" min="1" max="3" id="height"></td>
-		  		<td><input type="number" min="1" max="3" id="width"></td>
-		  		<td><input type="number" min="1" max="3" id="depth"></td>
+		  		<td><input type="number" min="1" max="5" id="width"></td>
+		  		<td><input type="number" min="1" max="5" id="height"></td>
+		  		<td><input type="number" min="1" max="5" id="depth"></td>
 		  	</tr>
 		  </table>
 		  <br>
-		    <button type="button" class="btn btn-primary" id="dimensionButton">Change Dimension</button>
+		    <button type="button" class="btn btn-primary" id="dimensionButton">Update Dimension</button>
 		</div>
 		<br>
 
+		<div class="container">
+			<strong>Choose Dimensions:</strong>
+			<br>
+			<br>
+			<table width="300">
+			  	<tr>
+			  		<td>Zoom</td>
+			  		<td>Pan</td>
+			  	</tr>
+			  	<tr>
+			  		<td><input type="number" min="10" max="100" id="zoom"></td>
+			  		<td><input type="number" min="0" max="9" id="pan"></td>
+			  	</tr>
+			  	<tr>
+			  		<td>
+			  			<p>Select a value between 10 (close) and 100 (far)</p>
+			  		</td>
+			  		<td>
+			  			<p>Select a value between 10 (close) and 100 (far)</p>
+			  		</td>
+			  	</tr>
+		  	</table>
+			<br>
+		    <button type="button" class="btn btn-primary" id="zoomPanButton">Update Zoom / Pan</button>
+		</div>
+		
 
+		<br><br>
+		<strong>Choose face colors:</strong>
 
+		<br>
+		<div class="container">
+		  <p>Color for Face 1:</p>
+			<select class="faceMenu" id="face1">
+				<option>red</option>
+				<option>blue</option>
+				<option>yellow</option>
+				<option>white</option>
+				<option>green</option>
+				<option>orange</option>
+				<option>purple</option>
+				<option>gray</option>
+			</select>
+		</div>
+		<br>
+		<div class="container">
+		  <p>Color for Face 2:</p>
+			<select class="faceMenu" id="face2">
+				<option>red</option>
+				<option>blue</option>
+				<option>yellow</option>
+				<option>white</option>
+				<option>green</option>
+				<option>orange</option>
+				<option>purple</option>
+				<option>gray</option>
+			</select>
+		</div>
+		<br>
+		<div class="container">
+		  <p>Color for Face 3:</p>
+			<select class="faceMenu" id="face3">
+				<option>red</option>
+				<option>blue</option>
+				<option>yellow</option>
+				<option>white</option>
+				<option>green</option>
+				<option>orange</option>
+				<option>purple</option>
+				<option>gray</option>
+			</select>
+		</div>
+		<br>
+		<div class="container">
+		  <p>Color for Face 4:</p>
+			<select class="faceMenu" id="face4">
+				<option>red</option>
+				<option>blue</option>
+				<option>yellow</option>
+				<option>white</option>
+				<option>green</option>
+				<option>orange</option>
+				<option>purple</option>
+				<option>gray</option>
+			</select>
+		</div>
+		<br>
+		<div class="container">
+		  <p>Color for Face 5:</p>
+			<select class="faceMenu" id="face5">
+				<option>red</option>
+				<option>blue</option>
+				<option>yellow</option>
+				<option>white</option>
+				<option>green</option>
+				<option>orange</option>
+				<option>purple</option>
+				<option>gray</option>
+			</select>
+		</div>
+		<br>
+		<div class="container">
+		  <p>Color for Face 6:</p>
+			<select class="faceMenu" id="face6">
+				<option>red</option>
+				<option>blue</option>
+				<option>yellow</option>
+				<option>white</option>
+				<option>green</option>
+				<option>orange</option>
+				<option>purple</option>
+				<option>gray</option>
+			</select>
+		</div>
+
+		<br>
 		<br>
 		<div class="container">
 		  <strong>Choose View:</strong>
@@ -49,113 +163,7 @@
 		    <button type="button" class="btn btn-default viewButton" value="side">Side</button>
 		  </div>
 		</div>
-		<br>
-
-
-		<br>
-		<div class="container">
-		  <strong>Color for Face 1:</strong>
-			<select id="colorFace1">
-				<option>Red</option>
-				<option>Blue</option>
-				<option>Yellow</option>
-				<option>White</option>
-				<option>Green</option>
-				<option>Orange</option>
-				<option>Purple</option>
-				<option>Gray</option>
-			</select>
-		</div>
-		<br>
-		<div class="container">
-		  <strong>Color for Face 2:</strong>
-			<select id="colorFace2">
-				<option>Red</option>
-				<option>Blue</option>
-				<option>Yellow</option>
-				<option>White</option>
-				<option>Green</option>
-				<option>Orange</option>
-				<option>Purple</option>
-				<option>Gray</option>
-			</select>
-		</div>
-		<br>
-		<div class="container">
-		  <strong>Color for Face 3:</strong>
-			<select id="colorFace3">
-				<option>Red</option>
-				<option>Blue</option>
-				<option>Yellow</option>
-				<option>White</option>
-				<option>Green</option>
-				<option>Orange</option>
-				<option>Purple</option>
-				<option>Gray</option>
-			</select>
-		</div>
-		<br>
-		<div class="container">
-		  <strong>Color for Face 4:</strong>
-			<select id="colorFace4">
-				<option>Red</option>
-				<option>Blue</option>
-				<option>Yellow</option>
-				<option>White</option>
-				<option>Green</option>
-				<option>Orange</option>
-				<option>Purple</option>
-				<option>Gray</option>
-			</select>
-		</div>
-		<br>
-		<div class="container">
-		  <strong>Color for Face 5:</strong>
-			<select id="colorFace5">
-				<option>Red</option>
-				<option>Blue</option>
-				<option>Yellow</option>
-				<option>White</option>
-				<option>Green</option>
-				<option>Orange</option>
-				<option>Purple</option>
-				<option>Gray</option>
-			</select>
-		</div>
-		<br>
-		<div class="container">
-		  <strong>Color for Face 6:</strong>
-			<select id="colorFace6">
-				<option>Red</option>
-				<option>Blue</option>
-				<option>Yellow</option>
-				<option>White</option>
-				<option>Green</option>
-				<option>Orange</option>
-				<option>Purple</option>
-				<option>Gray</option>
-			</select>
-		</div>
-
-
-		<br>
-		<br>
-		<div class="container">
-		  <strong>Choose Color:</strong>
-		  <br><br>
-		  <div class="btn-group">
-		    <button type="button" style="background-color:red" class="btn btn-default colorButton" value="red">Red</button>
-		    <button type="button" style="background-color:blue; color:white" class="btn btn-default colorButton" value="blue">Blue</button>
-		    <button type="button" style="background-color:yellow" class="btn btn-default colorButton" value="yellow">Yellow</button>
-		    <button type="button" style="background-color:white" class="btn btn-default colorButton" value="white">White</button>
-		    <button type="button" style="background-color:green" class="btn btn-default colorButton" value="green">Green</button>
-		    <button type="button" style="background-color:orange" class="btn btn-default colorButton" value="orange">Orange</button>
-		    <button type="button" style="background-color:purple" class="btn btn-default colorButton" value="purple">Purple</button>
-		    <button type="button" style="background-color:gray" class="btn btn-default colorButton" value="gray">Gray</button>
-
-		  </div>
-		</div>
-		<br>
+		<br><br>
 
 	</body>
 </html>
