@@ -19,12 +19,32 @@
 
 		<br>
 		<div class="container">
-		  <strong>Choose Shape:</strong>
+		  <strong>Choose Dimensions:</strong>
+		  <br><br>
+		  <table width="200">
+		  	<tr>
+		  		<td>Height</td>
+		  		<td>Width</td>
+		  		<td>Depth</td>
+		  	</tr>
+		  	<tr>
+		  		<td><input type="number" name="height" min="10" max="50" class="dimensionButton"></td>
+		  		<td><input type="number" name="width" min="10" max="50" class="dimensionButton"></td>
+		  		<td><input type="number" name="depth" min="10" max="50" class="dimensionButton"></td>
+		  	</tr>
+		  </table>
+		</div>
+		<br>
+
+
+
+		<br>
+		<div class="container">
+		  <strong>Choose View:</strong>
 		  <br><br>
 		  <div class="btn-group">
-		    <button type="button" class="btn btn-default shapeButton" value="cube">Cube</button>
-		    <button type="button" class="btn btn-default shapeButton" value="sphere">Sphere</button>
-		    <button type="button" class="btn btn-default shapeButton" value="pyramid">Pyramid</button>
+		    <button type="button" class="btn btn-default viewButton" value="top">Top</button>
+		    <button type="button" class="btn btn-default viewButton" value="side">Side</button>
 		  </div>
 		</div>
 		<br>
