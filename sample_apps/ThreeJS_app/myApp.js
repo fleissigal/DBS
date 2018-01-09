@@ -9,7 +9,7 @@ document.body.appendChild( renderer.domElement );
 
 var color = "red";
 var shapeName = "cube";
-var view = "default";
+
 
 // Default shape
 
@@ -24,6 +24,9 @@ camera.position.x = 0;
 camera.position.y = 2;
 camera.position.z = 5;
 
+
+// Functions
+
 function animate() {
 	requestAnimationFrame( animate );
 
@@ -31,6 +34,7 @@ function animate() {
 }
 
 animate();
+
 
 
 function removeObject(objectName) {
@@ -49,7 +53,7 @@ function changeColor() {
 }
 
 
-function changeView() {
+function changeView(view) {
 
 	if (view == "top") {
 		camera.position.x = 0;
@@ -65,19 +69,39 @@ function changeView() {
 
 }
 
+function changeDimension(height, width, depth) {
+	console.log(height);
+	removeObject("myShape");
+
+	geometry = new THREE.BoxGeometry( width, height, depth );
+	material = new THREE.MeshBasicMaterial( {color: color} );
+	shape = new THREE.Mesh( geometry, material );
+	shape.position.set(0, 0, 0);
+	shape.name = "myShape";
+	scene.add( shape );
+
+}
+
 
 $(document).ready(function(){
 
 	$('.viewButton').click(function() {
 		view = $(this).val();
-		changeView();
+		changeView(view);
 		animate();
 	});
-
 
 	$('.colorButton').click(function() {
 		color = $(this).val();
 		changeColor();
+		animate();
+	});
+
+	$('#dimensionButton').click(function() {
+		var height = $('#height').val();
+		var	width = $('#width').val();
+		var depth = $('#depth').val();
+		changeDimension(height, width, depth);
 		animate();
 	});
 
