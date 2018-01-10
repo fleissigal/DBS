@@ -7,26 +7,34 @@ from django.db import models
 
 
 class OptionType(models.Model):
-	cabinets = models.CharField(max_length = 1000)
+	name = models.CharField(max_length=100)
+	description = models.CharField(max_length=1000)
 
 class Option(models.Model):
+	name = models.CharField(max_length=100)
+	description = models.CharField(max_length=1000)
 	optionTypeID = models.ForeignKey(OptionType)
 
-# Need to add a class for OptionChoice ?
 
 
 ### Configurations
 
 class HouseConfiguration(models.Model):
+	name = models.CharField(max_length=100)
+	description = models.CharField(max_length=1000)
 	optionChoice = models.ManyToManyField(Option)
 	housePlan = models.ForeignKey(HousePlan)
 
 class FloorConfiguration(models.Model):
+	name = models.CharField(max_length=100)
+	description = models.CharField(max_length=1000)
 	optionChoice = models.ManyToManyField(Option)
 	floorPlan = models.ForeignKey(FloorPlan)
 	houseConfiguration = models.ForeignKey(HouseConfiguration)
 
 class RoomConfiguration(models.Model):
+	name = models.CharField(max_length=100)
+	description = models.CharField(max_length=1000)
 	optionChoice = models.ManyToManyField(Option)
 	roomPlan = models.ForeignKey(RoomPlan)
 	floorConfiguration = models.ForeignKey(FloorConfiguration)
@@ -35,15 +43,21 @@ class RoomConfiguration(models.Model):
 ### Plans
 
 class HousePlan(models.Model):
-	description = models.CharField(max_length = 1000)
+	name = models.CharField(max_length=100)
+	description = models.CharField(max_length=1000)
+	optionChoice = models.ManyToManyField(OptionType)
 
 class FloorPlan(models.Model):
-	description = models.CharField(max_length = 1000)
+	name = models.CharField(max_length=100)
+	description = models.CharField(max_length=1000)
 	housePlan = models.ForeignKey(HousePlan)
+	optionChoice = models.ManyToManyField(OptionType)
 
 class RoomPlan(models.Model):
-	description = models.CharField(max_length = 1000)
+	name = models.CharField(max_length=100)
+	description = models.CharField(max_length=1000)
 	floorPlan = models.ForeignKey(FloorPlan)
+	optionChoice = models.ManyToManyField(OptionType)
 
 
 
