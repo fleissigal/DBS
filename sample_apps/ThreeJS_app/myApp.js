@@ -1,40 +1,59 @@
-// Setup the environment
+// Global variables
+var scene;
+var camera;
+var renderer;
 
-var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+var face1Color;
+var face2Color;
+var face3Color;
+var face4Color;
+var face5Color;
+var face6Color;
 
-var renderer = new THREE.WebGLRenderer();
-renderer.setSize( window.innerWidth, window.innerHeight );
-document.body.appendChild( renderer.domElement );
+var width;
+var height;
+var depth;
 
-var face1Color = "red";
-var face2Color = "red";
-var face3Color = "red";
-var face4Color = "red";
-var face5Color = "red";
-var face6Color = "red";
-
-var width = 1;
-var height = 1;
-var depth = 1;
-
-// Default shape
-
-var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-var material = new THREE.MeshBasicMaterial( { color: "red" } );
-var shape = new THREE.Mesh( geometry, material );
-
-shape.name = "myShape";
-shape.position.set(0, 0, 0);
-scene.add( shape );
-
-camera.position.x = 0;
-camera.position.y = 3;
-camera.position.z = 9;
+var geometry;
+var material;
+var shape;
 
 
-// Functions
+// Setup of the initial state of the app
+function init() {
+	scene = new THREE.Scene();
+	camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
+	renderer = new THREE.WebGLRenderer();
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	document.body.appendChild( renderer.domElement );
+
+	face1Color = "red";
+	face2Color = "red";
+	face3Color = "red";
+	face4Color = "red";
+	face5Color = "red";
+	face6Color = "red";
+
+	width = 1;
+	height = 1;
+	depth = 1;
+
+	// The default shape - a cube
+	geometry = new THREE.BoxGeometry( width, height, depth );
+	material = new THREE.MeshBasicMaterial( { color: "red" } );
+	shape = new THREE.Mesh( geometry, material );
+	shape.name = "myShape";
+	shape.position.set(0, 0, 0);
+	scene.add( shape );
+
+	// Default position of the camera
+	camera.position.x = 0;
+	camera.position.y = 3;
+	camera.position.z = 9;
+}
+
+// The function that is responsible for animating
 function animate() {
 	requestAnimationFrame( animate );
 
@@ -45,10 +64,7 @@ function animate() {
 	renderer.render( scene, camera );
 }
 
-animate();
-
-
-
+// Removing the object from the scene
 function removeObject(objectName) {
 	var objectToDelete = scene.getObjectByName(objectName);
 	scene.remove(objectToDelete);
@@ -62,6 +78,7 @@ function changeShape() {
 	material = new THREE.MeshBasicMaterial( { color: 0xffffff, vertexColors: THREE.FaceColors } );
 	shape = new THREE.Mesh( geometry, material );
 
+	// Changing the colors of the different faces
 	geometry.faces[ 0 ].color = new THREE.Color(face1Color);
 	geometry.faces[ 1 ].color = new THREE.Color(face1Color);
 
@@ -85,7 +102,7 @@ function changeShape() {
 	scene.add( shape );
 }
 
-
+// Changing the angle of the camera
 function changeView(view) {
 
 	if (view == "top") {
@@ -102,7 +119,7 @@ function changeView(view) {
 
 }
 
-
+// Functions to execute as response to buttons/menus
 $(document).ready(function(){
 
 	$('.viewButton').click(function() {
@@ -189,5 +206,6 @@ $(document).ready(function(){
 });
 
 
-
-
+// The program that runs
+init();
+animate();
