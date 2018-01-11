@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset=utf-8>
+		<title>My first three.js app</title>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+	</head>
+	<body>
+		<script src="jquery.js"></script>
+		<script src="three.min.js"></script>
+		<script src="cube_3d.js"></script>
+		<script src="cube_jquery.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		
+		<br>
+		<div class="container">
+		  <strong>Choose Dimensions:</strong>
+		  <br><br>
+		  <table width="200">
+		  	<tr>
+		  		<td>Width</td>
+		  		<td>Height</td>
+		  		<td>Depth</td>
+		  	</tr>
+		  	<tr>
+		  		<td><input type="number" min="1" max="5" id="width"></td>
+		  		<td><input type="number" min="1" max="5" id="height"></td>
+		  		<td><input type="number" min="1" max="5" id="depth"></td>
+		  	</tr>
+		  </table>
+		  <br>
+		    <button type="button" class="btn btn-primary" id="updateDimensionButton">Update Dimensions</button>
+		    <button type="button" class="btn btn-warning" id="resetDimensionsButton">Reset</button>
+
+		</div>
+		<hr>
+
+		<div class="container">
+			<strong>Choose Zoom / Pan:</strong>
+			<br>
+			<br>
+			<table width="700">
+			  	<tr>
+			  		<td>Zoom</td>
+			  		<td>Pan</td>
+			  	</tr>
+			  	<tr>
+			  		<td><input type="number" min="10" max="100" id="zoom"></td>
+			  		<td><input type="number" min="5" max="15" id="pan"></td>
+			  	</tr>
+			  	<tr>
+			  		<td>
+			  			<p>Select a value between 10 (close) and 100 (far)</p>
+			  		</td>
+			  		<td>
+			  			<p>Select a value between 5 (close) and 15 (far)</p>
+			  		</td>
+			  	</tr>
+			  	<tr>
+			  		<td>
+			  			<button type="button" class="btn btn-primary" id="updateZoomButton">Update Zoom</button>
+		    			<button type="button" class="btn btn-warning" id="resetZoomButton">Reset</button>
+			  		</td>
+			  		<td>
+			  			<button type="button" class="btn btn-primary" id="updatePanButton">Update Pan</button>
+		    			<button type="button" class="btn btn-warning" id="resetPanButton">Reset</button>
+			  		</td>
+			  	</tr>
+		  	</table>
+		</div>
+
+
+		
+		<hr>
+
+		<div class="container">
+			<strong>Choose Face Colors:</strong>
+			<br>
+
+			<table width="800">
+				<tr>
+					<td>
+						<p>Color for Face 1:</p>
+					</td>
+					<td>
+					  	<p>Color for Face 2:</p>		
+					</td>
+					<td>
+					 	<p>Color for Face 3:</p>		
+					</td>
+					<td>
+					  	<p>Color for Face 4:</p>
+					</td>
+					<td>
+					  	<p>Color for Face 5:</p>
+					</td>
+					<td>
+						<p>Color for Face 6:</p>
+					</td>
+				</tr>
+
+				<tr>
+					<td>
+						<select class="faceMenu" id="face1">
+							<option>red</option>
+							<option>blue</option>
+							<option>yellow</option>
+							<option>white</option>
+							<option>green</option>
+							<option>orange</option>
+							<option>purple</option>
+							<option>gray</option>
+						</select>
+					</td>
+					<td>
+						<select class="faceMenu" id="face2">
+							<option>red</option>
+							<option>blue</option>
+							<option>yellow</option>
+							<option>white</option>
+							<option>green</option>
+							<option>orange</option>
+							<option>purple</option>
+							<option>gray</option>
+						</select>	
+					</td>
+					<td>
+						<select class="faceMenu" id="face3">
+							<option>red</option>
+							<option>blue</option>
+							<option>yellow</option>
+							<option>white</option>
+							<option>green</option>
+							<option>orange</option>
+							<option>purple</option>
+							<option>gray</option>
+						</select>					
+					</td>
+					<td>
+						<select class="faceMenu" id="face4">
+							<option>red</option>
+							<option>blue</option>
+							<option>yellow</option>
+							<option>white</option>
+							<option>green</option>
+							<option>orange</option>
+							<option>purple</option>
+							<option>gray</option>
+						</select>		
+					</td>
+					<td>
+						<select class="faceMenu" id="face5">
+							<option>red</option>
+							<option>blue</option>
+							<option>yellow</option>
+							<option>white</option>
+							<option>green</option>
+							<option>orange</option>
+							<option>purple</option>
+							<option>gray</option>
+						</select>	
+					</td>
+					<td>
+						<select class="faceMenu" id="face6">
+							<option>red</option>
+							<option>blue</option>
+							<option>yellow</option>
+							<option>white</option>
+							<option>green</option>
+							<option>orange</option>
+							<option>purple</option>
+							<option>gray</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<hr>
+
+		<div class="container">
+		  <strong>Choose View:</strong>
+		  <br><br>
+		  <div class="btn-group">
+		    <button type="button" class="btn btn-default viewButton" value="top">Top</button>
+		    <button type="button" class="btn btn-default viewButton" value="side">Side</button>
+		  </div>
+		</div>
+		<br><br>
+
+	</body>
+</html>
