@@ -55,30 +55,10 @@ $(document).ready(function(){
 	});
 
 	$('.faceMenu').change(function() {
-		color = $(this).val();
-		switch($(this).attr('id')) {
-			case "face1":
-				DBS.room1.face1Color = color;
-				break;
-			case "face2":
-				DBS.room1.face2Color = color;
-				break;
-			case "face3":
-				DBS.room1.face3Color = color;
-				break;
-			case "face4":
-				DBS.room1.face4Color = color;
-				break;
-			case "face5":
-				DBS.room1.face5Color = color;
-				break;
-			case "face6":
-				DBS.room1.face6Color = color;
-				break;
-			default:
-				break;
-		}
-		DBS.changeShape();
+		var color = $(this).val();
+		var id = $(this).attr('id');
+
+		DBS.changeShape(id, color);
 		DBS.animate();
 	});
 
