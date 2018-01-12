@@ -37,7 +37,6 @@ var DBS = {
 
 		// The default shape - a cube
 		DBS.room1.geometry = new THREE.BoxGeometry( DBS.room1.width, DBS.room1.height, DBS.room1.depth );
-		// DBS.room1.material = new THREE.MeshBasicMaterial( { color: "white" } );
 		DBS.room1.material = new THREE.MeshBasicMaterial( { color: "white", vertexColors: THREE.FaceColors } );
 		DBS.room1.shape = new THREE.Mesh( DBS.room1.geometry, DBS.room1.material );
 		DBS.room1.shape.name = "myShape";
@@ -45,10 +44,7 @@ var DBS = {
 		DBS.setup.scene.add( DBS.room1.shape );
 
 		// Default position of the camera
-		// changeView("side");
-		DBS.setup.camera.position.x = 0;
-		DBS.setup.camera.position.y = 3;
-		DBS.setup.camera.position.z = 9;
+		DBS.changeView("side");
 	},
 
 	// The function that is responsible for animating
@@ -63,14 +59,14 @@ var DBS = {
 	},
 
 	// Removing the object from the scene
-	removeObject:function(objectName) {
-		var objectToDelete = DBS.setup.scene.getObjectByName(objectName);
-		DBS.setup.scene.remove(objectToDelete);
-	},
-
-	changeShape:function(faceNumber, color) {
+	// removeObject:function(objectName) {
+	// 	var objectToDelete = DBS.setup.scene.getObjectByName(objectName);
+	// 	DBS.setup.scene.remove(objectToDelete);
+	// },
+	
+	// Changing the colors of the different faces
+	changeColors:function(faceNumber, color) {
 		var num = parseInt(faceNumber);
-		// Changing the colors of the different faces
 		DBS.room1.geometry.faces[ num * 2 - 2 ].color.set(color);
 		DBS.room1.geometry.faces[ num * 2 - 1 ].color.set(color);
 
@@ -78,16 +74,16 @@ var DBS = {
 
 	},
 
+	changeDimensions:function(width, height, depth) {
+		DBS.room1.shape.scale.x = width;
+		DBS.room1.shape.scale.y = height;
+		DBS.room1.shape.scale.z = depth;
+	},
+
 	// Changing the angle of the camera
 	changeView:function(view) {
 		DBS.setup.camera.position.x = 0;
-
-		if (view == "top") {
-			DBS.setup.camera.position.y = 0;
-		} else {
-			DBS.setup.camera.position.y = 3;
-		}
-
+		DBS.setup.camera.position.y = (view == "top") ? 0 : 3;
 		DBS.setup.camera.position.z = 9;
 	},
 }
