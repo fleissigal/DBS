@@ -6,14 +6,15 @@ var DBS = {
 		scene: null,
 		camera: null,
 		renderer: null,
+		controls: null,
 
 	},
 
 	room1: {
 		
-		width: null,
-		height: null,
-		depth: null,
+		width: 1,
+		height: 1,
+		depth: 1,
 
 		geometry: null,
 		material: null,
@@ -24,45 +25,48 @@ var DBS = {
 	// Setup of the initial state of the app
 	init:function() {
 
-		DBS.setup.scene = new THREE.Scene();
 		DBS.setup.camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+		// Default position of the camera
+		DBS.changeView("side");
 
-		renderer = new THREE.WebGLRenderer();
-		renderer.setSize( window.innerWidth, window.innerHeight );
-		document.body.appendChild( renderer.domElement );
+		DBS.setup.controls = new THREE.TrackballControls( DBS.setup.camera );
+		DBS.setup.controls.addEventListener('change', DBS.render);
 
-		DBS.room1.width = 1;
-		DBS.room1.height = 1;
-		DBS.room1.depth = 1;
+		DBS.setup.scene = new THREE.Scene();
+
+		// DBS.room1.width = 1;
+		// DBS.room1.height = 1;
+		// DBS.room1.depth = 1;
 
 		// The default shape - a cube
 		DBS.room1.geometry = new THREE.BoxGeometry( DBS.room1.width, DBS.room1.height, DBS.room1.depth );
 		DBS.room1.material = new THREE.MeshBasicMaterial( { color: "white", vertexColors: THREE.FaceColors } );
+
 		DBS.room1.shape = new THREE.Mesh( DBS.room1.geometry, DBS.room1.material );
-		DBS.room1.shape.name = "myShape";
 		DBS.room1.shape.position.set(0, 0, 0);
 		DBS.setup.scene.add( DBS.room1.shape );
 
-		// Default position of the camera
-		DBS.changeView("side");
+		DBS.setup.renderer = new THREE.WebGLRenderer();
+		DBS.setup.renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( DBS.setup.renderer.domElement );
+
 	},
 
 	// The function that is responsible for animating
 	animate:function() {
 		requestAnimationFrame( DBS.animate );
+		DBS.setup.controls.update();
 
-		DBS.room1.shape.rotation.x += 0.003;
-		DBS.room1.shape.rotation.y += 0.005;
-		DBS.room1.shape.rotation.z += 0.005;
-
-		renderer.render( DBS.setup.scene, DBS.setup.camera );
+		// DBS.room1.shape.rotation.x += 0.003;
+		// DBS.room1.shape.rotation.y += 0.005;
+		// DBS.room1.shape.rotation.z += 0.005;
+		DBS.render();
 	},
 
-	// Removing the object from the scene
-	// removeObject:function(objectName) {
-	// 	var objectToDelete = DBS.setup.scene.getObjectByName(objectName);
-	// 	DBS.setup.scene.remove(objectToDelete);
-	// },
+	render:function() {
+		DBS.setup.renderer.render( DBS.setup.scene, DBS.setup.camera );
+
+	},
 	
 	// Changing the colors of the different faces
 	changeColors:function(faceNumber, color) {

@@ -8,17 +8,11 @@ $(document).ready(function(){
 	});
 
 	$('#updateDimensionButton').click(function() {
-		// DBS.room1.width = ;
-		// DBS.room1.height = ;
-		// DBS.room1.depth = ;
 		DBS.changeDimensions($('#width').val(), $('#height').val(), $('#depth').val());
 		DBS.animate();
 	});
 
 	$('#resetDimensionsButton').click(function() {
-		// DBS.room1.width = 1;
-		// DBS.room1.height = 1;
-		// DBS.room1.depth = 1;
 		DBS.changeDimensions(1, 1, 1);
 		DBS.animate();
 	});
