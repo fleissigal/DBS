@@ -19,33 +19,11 @@
 		<script src="cube_jquery.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		
-		<br>
-		<div class="container">
-		  <strong>Choose Dimensions:</strong>
-		  <br><br>
-		  <table width="200">
-		  	<tr>
-		  		<td>Width</td>
-		  		<td>Height</td>
-		  		<td>Depth</td>
-		  	</tr>
-		  	<tr>
-		  		<td><input type="number" min="1" max="5" id="width"></td>
-		  		<td><input type="number" min="1" max="5" id="height"></td>
-		  		<td><input type="number" min="1" max="5" id="depth"></td>
-		  	</tr>
-		  </table>
-		  <br>
-		    <button type="button" class="btn btn-primary" id="updateDimensionButton">Update Dimensions</button>
-		    <button type="button" class="btn btn-warning" id="resetDimensionsButton">Reset</button>
-
-		</div>
-		<hr>
+		<h3>General Options</h3>
 
 		<div class="container">
 			<strong>Choose Zoom / Pan:</strong>
-			<br>
-			<br>
+			<br><br>
 			<table width="700">
 			  	<tr>
 			  		<td>Zoom</td>
@@ -76,8 +54,70 @@
 		  	</table>
 		</div>
 
+		<hr>
 
-		
+		<div class="container">
+		  <strong>Choose View and Add Rooms:</strong>
+		  <br><br>
+		  <table width="700">
+			  	<tr>
+			  		<td>View</td>
+			  		<td>Rooms</td>
+			  	</tr>
+			  	<tr>
+			  		<td>
+					  <div class="btn-group">
+					    <button type="button" class="btn btn-default viewButton" value="top">Top</button>
+					    <button type="button" class="btn btn-default viewButton" value="side">Side</button>
+					  </div>
+			  		</td>
+			  		<td>
+					  <div class="btn-group">
+					    <button type="button" class="btn btn-default addRoomButton" value="addRoom">Add a Room</button>
+					  </div>
+			  		</td>
+			  	</tr>
+		  	</table>
+		</div>
+
+		<hr>
+
+		<h3>Specific Room Options</h3>
+
+		<div class="container">
+		  <strong>Choose Room to Configure:</strong>
+		  <br><br>
+			<select class="faceMenu" id="2">
+				<option>Room1</option>
+				<option>Room2</option>
+				<option>Room3</option>
+				<option>Room4</option>
+			</select>	
+		</div>
+
+		<hr>
+
+		<div class="container">
+		  <strong>Choose Dimensions:</strong>
+		  <br><br>
+		  <table width="200">
+		  	<tr>
+		  		<td>Width</td>
+		  		<td>Height</td>
+		  		<td>Depth</td>
+		  	</tr>
+		  	<tr>
+		  		<td><input type="number" min="1" max="5" id="width"></td>
+		  		<td><input type="number" min="1" max="5" id="height"></td>
+		  		<td><input type="number" min="1" max="5" id="depth"></td>
+		  	</tr>
+		  </table>
+		  <br>
+		    <button type="button" class="btn btn-primary" id="updateDimensionButton">Update Dimensions</button>
+		    <button type="button" class="btn btn-warning" id="resetDimensionsButton">Reset</button>
+
+		</div>
+
 		<hr>
 
 		<div class="container">
@@ -93,10 +133,10 @@
 					  	<p>Color for Face 2:</p>		
 					</td>
 					<td>
-					 	<p>Color for Face 3:</p>		
+					 	<p>Color for <strong>Ceiling</strong>:</p>		
 					</td>
 					<td>
-					  	<p>Color for Face 4:</p>
+					  	<p>Color for <strong>Floor</strong>:</p>
 					</td>
 					<td>
 					  	<p>Color for Face 5:</p>
@@ -181,16 +221,6 @@
 					</td>
 				</tr>
 			</table>
-		</div>
-		<hr>
-
-		<div class="container">
-		  <strong>Choose View:</strong>
-		  <br><br>
-		  <div class="btn-group">
-		    <button type="button" class="btn btn-default viewButton" value="top">Top</button>
-		    <button type="button" class="btn btn-default viewButton" value="side">Side</button>
-		  </div>
 		</div>
 		<br><br>
 

@@ -56,10 +56,12 @@ $(document).ready(function(){
 		DBS.animate();
 	});
 
-	// $('#canvas').mousemove(function() {
-	// 	camera.position.x += ;
-	// 	camera.position.y += ;
-	// 	// camera.position.z += ;
-	// });
+	$('.addRoomButton').click(function() {
+
+		DBS.addRoom();
+		DBS.animate();
+	});
+
+	
 
 });
