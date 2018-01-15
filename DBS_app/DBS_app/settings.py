@@ -77,11 +77,11 @@ WSGI_APPLICATION = 'DBS_app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'houses_db',
-        'USER': '',
-        'PASSWORD': '',
+        'NAME': 'dbs',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
         'HOST': '',
-        'PORT': '',
+        'PORT': '5433',
 
     }
 }
