@@ -8,12 +8,14 @@ $(document).ready(function(){
 	});
 
 	$('#updateDimensionButton').click(function() {
-		DBS.changeDimensions($('#width').val(), $('#height').val(), $('#depth').val());
+		var roomName = $('#roomMenu').val();
+		DBS.changeDimensions(roomName, $('#width').val(), $('#height').val(), $('#depth').val());
 		DBS.animate();
 	});
 
 	$('#resetDimensionsButton').click(function() {
-		DBS.changeDimensions(1, 1, 1);
+		var roomName = $('#roomMenu').val();
+		DBS.changeDimensions(roomName, 1, 1, 1);
 		DBS.animate();
 	});
 
@@ -42,22 +44,20 @@ $(document).ready(function(){
 
 
 	$('#resetPanButton').click(function() {
-		DBS.setup.camera.position.x = 0;
-		DBS.setup.camera.position.y = 3;
-		DBS.setup.camera.position.z = 9;
+		DBS.changeView("side");
 		DBS.animate();
 	});
 
 	$('.faceMenu').change(function() {
+		var roomName = $('#roomMenu').val();
 		var color = $(this).val();
-		var id = $(this).attr('id');
+		var faceNumber = $(this).attr('id');
 
-		DBS.changeColors(id, color);
+		DBS.changeColors(roomName, faceNumber, color);
 		DBS.animate();
 	});
 
 	$('.addRoomButton').click(function() {
-
 		DBS.addRoom();
 		DBS.animate();
 	});

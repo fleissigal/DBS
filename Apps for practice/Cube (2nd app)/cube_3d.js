@@ -28,7 +28,7 @@ var DBS = {
 		width: 1,
 		height: 1,
 		depth: 1,
-		defaultColor: "red",
+		defaultColor: "white",
 
 		geometry: null,
 		material: null,
@@ -40,7 +40,7 @@ var DBS = {
 		width: 1,
 		height: 1,
 		depth: 1,
-		defaultColor: "purple",
+		defaultColor: "white",
 
 		geometry: null,
 		material: null,
@@ -53,7 +53,7 @@ var DBS = {
 		width: 1,
 		height: 1,
 		depth: 1,
-		defaultColor: "orange",
+		defaultColor: "white",
 
 		geometry: null,
 		material: null,
@@ -103,19 +103,17 @@ var DBS = {
 	},
 	
 	// Changing the colors of the different faces
-	changeColors:function(faceNumber, color) {
-		var num = parseInt(faceNumber);
-		DBS.room1.geometry.faces[ num * 2 - 2 ].color.set(color);
-		DBS.room1.geometry.faces[ num * 2 - 1 ].color.set(color);
-
-		DBS.room1.geometry.colorsNeedUpdate = true;
+	changeColors:function(roomName, faceNumber, color) {
+		eval("DBS." + roomName + ".geometry.faces[ " + faceNumber + " * 2 - 2 ].color.set(\"" + color + "\");");
+		eval("DBS." + roomName + ".geometry.faces[ " + faceNumber + " * 2 - 1 ].color.set(\"" + color + "\");");
+		eval("DBS." + roomName + ".geometry.colorsNeedUpdate = true;");
 
 	},
 
-	changeDimensions:function(width, height, depth) {
-		DBS.room1.shape.scale.x = width;
-		DBS.room1.shape.scale.y = height;
-		DBS.room1.shape.scale.z = depth;
+	changeDimensions:function(roomName, width, height, depth) {
+		eval("DBS." + roomName + ".shape.scale.x = width;");
+		eval("DBS." + roomName + ".shape.scale.y = height;");
+		eval("DBS." + roomName + ".shape.scale.z = depth;");
 	},
 
 	// Changing the angle of the camera
@@ -127,12 +125,13 @@ var DBS = {
 
 	// Adding one more room to the scene
 	addRoom:function() {
+		var next = DBS.setup.nextRoom;
 
-		eval("DBS.room" + DBS.setup.nextRoom + ".geometry = new THREE.BoxGeometry( DBS.room" + DBS.setup.nextRoom + ".width, DBS.room" + DBS.setup.nextRoom + ".height, DBS.room" + DBS.setup.nextRoom + ".depth );");
-		eval("DBS.room" + DBS.setup.nextRoom + ".material = new THREE.MeshBasicMaterial( { color: DBS.room" + DBS.setup.nextRoom + ".defaultColor, vertexColors: THREE.FaceColors } );");
-		eval("DBS.room" + DBS.setup.nextRoom + ".shape = new THREE.Mesh( DBS.room" + DBS.setup.nextRoom + ".geometry, DBS.room" + DBS.setup.nextRoom + ".material );");
-		eval("DBS.room" + DBS.setup.nextRoom + ".shape.position.set(" + (DBS.setup.nextRoom - 1) + ", 0, 0);");
-		eval("DBS.setup.scene.add( DBS.room" + DBS.setup.nextRoom + ".shape );");
+		eval("DBS.room" + next + ".geometry = new THREE.BoxGeometry( DBS.room" + next + ".width, DBS.room" + next + ".height, DBS.room" + next + ".depth );");
+		eval("DBS.room" + next + ".material = new THREE.MeshBasicMaterial( { color: DBS.room" + next + ".defaultColor, vertexColors: THREE.FaceColors } );");
+		eval("DBS.room" + next + ".shape = new THREE.Mesh( DBS.room" + next + ".geometry, DBS.room" + next + ".material );");
+		eval("DBS.room" + next + ".shape.position.set(" + (next - 1) + ", 0, 0);");
+		eval("DBS.setup.scene.add( DBS.room" + next + ".shape );");
 		
 		DBS.setup.nextRoom++;
 	},
