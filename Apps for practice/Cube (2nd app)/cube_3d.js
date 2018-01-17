@@ -7,57 +7,9 @@ var DBS = {
 		camera: null,
 		renderer: null,
 		controls: null,
-		nextRoom: "2",
+		nextRoom: "1",
+		rooms: [],
 
-	},
-
-	room1: {
-		
-		width: 1,
-		height: 1,
-		depth: 1,
-		defaultColor: "white",
-
-		geometry: null,
-		material: null,
-		shape: null,
-	},
-
-	room2: {
-		
-		width: 1,
-		height: 1,
-		depth: 1,
-		defaultColor: "white",
-
-		geometry: null,
-		material: null,
-		shape: null,
-	},
-
-	room3: {
-		
-		width: 1,
-		height: 1,
-		depth: 1,
-		defaultColor: "white",
-
-		geometry: null,
-		material: null,
-		shape: null,
-	},
-
-
-	room4: {
-		
-		width: 1,
-		height: 1,
-		depth: 1,
-		defaultColor: "white",
-
-		geometry: null,
-		material: null,
-		shape: null,
 	},
 
 	// Setup of the initial state of the app
@@ -71,14 +23,6 @@ var DBS = {
 		DBS.setup.controls.addEventListener('change', DBS.render);
 
 		DBS.setup.scene = new THREE.Scene();
-
-		// The default shape - a cube
-		DBS.room1.geometry = new THREE.BoxGeometry( DBS.room1.width, DBS.room1.height, DBS.room1.depth );
-		DBS.room1.material = new THREE.MeshBasicMaterial( { color: DBS.room1.defaultColor, vertexColors: THREE.FaceColors } );
-
-		DBS.room1.shape = new THREE.Mesh( DBS.room1.geometry, DBS.room1.material );
-		DBS.room1.shape.position.set(0, 0, 0);
-		DBS.setup.scene.add( DBS.room1.shape );
 
 		DBS.setup.renderer = new THREE.WebGLRenderer();
 		DBS.setup.renderer.setSize( window.innerWidth, window.innerHeight );
@@ -98,16 +42,16 @@ var DBS = {
 	},
 	
 	// Changing the colors of the different faces
-	changeColors:function(roomName, faceNumber, color) {
-		DBS[roomName].geometry.faces[ faceNumber * 2 - 2 ].color.set(color);
-		DBS[roomName].geometry.faces[ faceNumber * 2 - 1 ].color.set(color);
-		DBS[roomName].geometry.colorsNeedUpdate = true;
+	changeColors:function(roomNumber, faceNumber, color) {
+		DBS.setup.rooms[roomNumber].geometry.faces[ faceNumber * 2 - 2 ].color.set(color);
+		DBS.setup.rooms[roomNumber].geometry.faces[ faceNumber * 2 - 1 ].color.set(color);
+		DBS.setup.rooms[roomNumber].geometry.colorsNeedUpdate = true;
 	},
 
-	changeDimensions:function(roomName, width, height, depth) {
-		DBS[roomName].shape.scale.x = width;
-		DBS[roomName].shape.scale.y = height;
-		DBS[roomName].shape.scale.z = depth;
+	changeDimensions:function(roomNumber, width, height, depth) {
+		DBS.setup.rooms[roomNumber].shape.scale.x = width;
+		DBS.setup.rooms[roomNumber].shape.scale.y = height;
+		DBS.setup.rooms[roomNumber].shape.scale.z = depth;
 	},
 
 	// Changing the angle of the camera
@@ -117,17 +61,29 @@ var DBS = {
 		DBS.setup.camera.position.z = 9;
 	},
 
+	Room:function(size) {
+		this.width = size;
+		this.height = size;
+		this.depth = size;
+		this.defaultColor = "white";
+
+		this.geometry = null;
+		this.material = null;
+		this.shape = null;
+	},
+
 	// Adding one more room to the scene
 	addRoom:function() {
-		var next = "room" + DBS.setup.nextRoom;
-		var nextPosition = parseInt(DBS.setup.nextRoom) - 1;
+		DBS.setup.rooms[DBS.setup.nextRoom] = new DBS.Room(1);
+		var next = DBS.setup.nextRoom;
+		var nextPosition = parseInt(next) - 1;
 
-		DBS[next].geometry = new THREE.BoxGeometry( DBS[next].width, DBS[next].height, DBS[next].depth );
-		DBS[next].material = new THREE.MeshBasicMaterial( { color: DBS[next].defaultColor, vertexColors: THREE.FaceColors } );
-		DBS[next].shape = new THREE.Mesh( DBS[next].geometry, DBS[next].material );
-		DBS[next].shape.position.set(nextPosition , 0, 0);
-		DBS.setup.scene.add( DBS[next].shape );
-		
+		DBS.setup.rooms[next].geometry = new THREE.BoxGeometry( DBS.setup.rooms[next].width, DBS.setup.rooms[next].height, DBS.setup.rooms[next].depth );
+		DBS.setup.rooms[next].material = new THREE.MeshBasicMaterial( { color: DBS.setup.rooms[next].defaultColor, vertexColors: THREE.FaceColors } );
+		DBS.setup.rooms[next].shape = new THREE.Mesh( DBS.setup.rooms[next].geometry, DBS.setup.rooms[next].material );
+		DBS.setup.rooms[next].shape.position.set(nextPosition , 0, 0);
+		DBS.setup.scene.add( DBS.setup.rooms[next].shape );
+
 		DBS.setup.nextRoom++;
 	},
 }
