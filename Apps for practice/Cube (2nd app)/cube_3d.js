@@ -90,16 +90,11 @@ var DBS = {
 	animate:function() {
 		requestAnimationFrame( DBS.animate );
 		DBS.setup.controls.update();
-
-		// DBS.room1.shape.rotation.x += 0.003;
-		// DBS.room1.shape.rotation.y += 0.005;
-		// DBS.room1.shape.rotation.z += 0.005;
 		DBS.render();
 	},
 
 	render:function() {
 		DBS.setup.renderer.render( DBS.setup.scene, DBS.setup.camera );
-
 	},
 	
 	// Changing the colors of the different faces
