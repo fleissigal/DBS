@@ -99,16 +99,15 @@ var DBS = {
 	
 	// Changing the colors of the different faces
 	changeColors:function(roomName, faceNumber, color) {
-		eval("DBS." + roomName + ".geometry.faces[ " + faceNumber + " * 2 - 2 ].color.set(\"" + color + "\");");
-		eval("DBS." + roomName + ".geometry.faces[ " + faceNumber + " * 2 - 1 ].color.set(\"" + color + "\");");
-		eval("DBS." + roomName + ".geometry.colorsNeedUpdate = true;");
-
+		DBS[roomName].geometry.faces[ faceNumber * 2 - 2 ].color.set(color);
+		DBS[roomName].geometry.faces[ faceNumber * 2 - 1 ].color.set(color);
+		DBS[roomName].geometry.colorsNeedUpdate = true;
 	},
 
 	changeDimensions:function(roomName, width, height, depth) {
-		eval("DBS." + roomName + ".shape.scale.x = width;");
-		eval("DBS." + roomName + ".shape.scale.y = height;");
-		eval("DBS." + roomName + ".shape.scale.z = depth;");
+		DBS[roomName].shape.scale.x = width;
+		DBS[roomName].shape.scale.y = height;
+		DBS[roomName].shape.scale.z = depth;
 	},
 
 	// Changing the angle of the camera
@@ -120,13 +119,14 @@ var DBS = {
 
 	// Adding one more room to the scene
 	addRoom:function() {
-		var next = DBS.setup.nextRoom;
+		var next = "room" + DBS.setup.nextRoom;
+		var nextPosition = parseInt(DBS.setup.nextRoom) - 1;
 
-		eval("DBS.room" + next + ".geometry = new THREE.BoxGeometry( DBS.room" + next + ".width, DBS.room" + next + ".height, DBS.room" + next + ".depth );");
-		eval("DBS.room" + next + ".material = new THREE.MeshBasicMaterial( { color: DBS.room" + next + ".defaultColor, vertexColors: THREE.FaceColors } );");
-		eval("DBS.room" + next + ".shape = new THREE.Mesh( DBS.room" + next + ".geometry, DBS.room" + next + ".material );");
-		eval("DBS.room" + next + ".shape.position.set(" + (next - 1) + ", 0, 0);");
-		eval("DBS.setup.scene.add( DBS.room" + next + ".shape );");
+		DBS[next].geometry = new THREE.BoxGeometry( DBS[next].width, DBS[next].height, DBS[next].depth );
+		DBS[next].material = new THREE.MeshBasicMaterial( { color: DBS[next].defaultColor, vertexColors: THREE.FaceColors } );
+		DBS[next].shape = new THREE.Mesh( DBS[next].geometry, DBS[next].material );
+		DBS[next].shape.position.set(nextPosition , 0, 0);
+		DBS.setup.scene.add( DBS[next].shape );
 		
 		DBS.setup.nextRoom++;
 	},
