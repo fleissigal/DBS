@@ -9,6 +9,7 @@ var DBS = {
 		controls: null,
 		nextRoom: "1",
 		rooms: [],
+		textures: [],
 
 	},
 
@@ -85,6 +86,22 @@ var DBS = {
 		DBS.setup.scene.add( DBS.setup.rooms[next].shape );
 
 		DBS.setup.nextRoom++;
+	},
+
+	changeTexture:function(roomNumber, faceNumber) {
+
+		// instantiate a texture
+		// var texture = new THREE.TextureLoader();
+		// texture.load( "images/woodenFloor.jpg" );
+
+  //       var materialA = new THREE.MeshBasicMaterial({map: texture});
+		
+		// DBS.setup.rooms[roomNumber].geometry.materials = [materialA];
+		// DBS.setup.rooms[roomNumber].geometry.faces[ faceNumber * 2 - 2 ].materialIndex = 0;
+		// DBS.setup.rooms[roomNumber].geometry.faces[ faceNumber * 2 - 1 ].materialIndex = 0;
+
+		DBS.setup.rooms[roomNumber].material.map = THREE.ImageUtils.loadTexture( "images/woodenFloor.jpg" );
+		DBS.setup.rooms[roomNumber].material.needsUpdate = true;
 	},
 }
 

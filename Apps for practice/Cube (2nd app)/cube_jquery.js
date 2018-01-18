@@ -62,6 +62,14 @@ $(document).ready(function(){
 		DBS.animate();
 	});
 
+	$('#changeTexture').click(function() {
+		var roomNumber = $('#roomMenu').val();
+		// var color = $(this).val();
+		// var faceNumber = $(this).attr('id');
+
+		DBS.changeTexture(roomNumber, "3");
+		DBS.animate();
+	});
 	
 
 });
