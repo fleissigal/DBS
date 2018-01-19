@@ -9,8 +9,13 @@ var DBS = {
 		controls: null,
 		nextRoom: "1",
 		rooms: [],
-		textures: [new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load( "images/woodenFloor.jpg" )})],
-
+		materials: [
+		    new THREE.MeshBasicMaterial( { color: "white", vertexColors: THREE.FaceColors } ),
+			new THREE.MeshBasicMaterial({
+		        map: new THREE.TextureLoader().load( "images/carpet.jpg" ) }),
+		    new THREE.MeshBasicMaterial({
+		        map: new THREE.TextureLoader().load( "images/woodenFloor.jpg" ) }),
+		],
 	},
 
 	// Setup of the initial state of the app
@@ -62,6 +67,14 @@ var DBS = {
 		DBS.setup.camera.position.z = 9;
 	},
 
+	changeMaterial:function(roomNumber, faceNumber, material) {
+		DBS.setup.rooms[roomNumber].geometry.faces[ faceNumber * 2 - 2 ].materialIndex = material;
+		DBS.setup.rooms[roomNumber].geometry.faces[ faceNumber * 2 - 1 ].materialIndex = material;
+		DBS.setup.rooms[roomNumber].geometry.groupsNeedUpdate = true;
+
+	},
+
+	// Room constructor
 	Room:function(size) {
 		this.width = size;
 		this.height = size;
@@ -80,51 +93,17 @@ var DBS = {
 		var nextPosition = parseInt(next) - 1;
 
 		DBS.setup.rooms[next].geometry = new THREE.BoxGeometry( DBS.setup.rooms[next].width, DBS.setup.rooms[next].height, DBS.setup.rooms[next].depth );
-		DBS.setup.rooms[next].material = new THREE.MeshBasicMaterial( { color: DBS.setup.rooms[next].defaultColor, vertexColors: THREE.FaceColors } );
+		DBS.setup.rooms[next].shape = new THREE.Mesh( DBS.setup.rooms[next].geometry, DBS.setup.materials );
 
+		for (var i = 1; i < 7; i++) {
+			DBS.changeMaterial(next, i, 0);
+		}
 
-
-
-		var materials = [
-		    new THREE.MeshBasicMaterial({
-		        map: new THREE.TextureLoader().load( "images/carpet.jpg" ) }),
-		    new THREE.MeshBasicMaterial({
-		        map: new THREE.TextureLoader().load( "images/carpet.jpg" ) }),
-		    new THREE.MeshBasicMaterial({
-		        map: new THREE.TextureLoader().load( "images/carpet.jpg" ) }),
-		    new THREE.MeshBasicMaterial({
-		        map: new THREE.TextureLoader().load( "images/woodenFloor.jpg" ) }),
-		    new THREE.MeshBasicMaterial({
-		        map: new THREE.TextureLoader().load( "images/woodenFloor.jpg" ) }),
-		    new THREE.MeshBasicMaterial( {
-		        map: new THREE.TextureLoader().load( "images/woodenFloor.jpg" ) }),
-		];
-
-
-
-
-
-		DBS.setup.rooms[next].shape = new THREE.Mesh( DBS.setup.rooms[next].geometry, materials );
-		// DBS.setup.rooms[next].shape = new THREE.Mesh( DBS.setup.rooms[next].geometry, DBS.setup.rooms[next].material );
 		DBS.setup.rooms[next].shape.position.set(nextPosition , 0, 0);
 		DBS.setup.scene.add( DBS.setup.rooms[next].shape );
 
 		DBS.setup.nextRoom++;
 	},
-
-	changeTexture:function(roomNumber, faceNumber) {
-
-		DBS.setup.rooms[roomNumber].geometry.faces[ 0 ].materialIndex = 3;
-
-		DBS.setup.rooms[roomNumber].geometry.groupsNeedUpdate = true;
-
-	},
-
-
-
-
-
-
 
 }
 

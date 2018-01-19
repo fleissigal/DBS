@@ -8,13 +8,13 @@ $(document).ready(function(){
 	});
 
 	$('#updateDimensionButton').click(function() {
-		var roomNumber = $('#roomMenu').val();
+		var roomNumber = $('#roomToChange').val();
 		DBS.changeDimensions(roomNumber, $('#width').val(), $('#height').val(), $('#depth').val());
 		DBS.animate();
 	});
 
 	$('#resetDimensionsButton').click(function() {
-		var roomNumber = $('#roomMenu').val();
+		var roomNumber = $('#roomToChange').val();
 		DBS.changeDimensions(roomNumber, 1, 1, 1);
 		DBS.animate();
 	});
@@ -48,26 +48,24 @@ $(document).ready(function(){
 		DBS.animate();
 	});
 
-	$('.faceMenu').change(function() {
-		var roomNumber = $('#roomMenu').val();
-		var color = $(this).val();
-		var faceNumber = $(this).attr('id');
+	$('#faceMaterial').change(function() {
+		var roomNumber = $('#roomToChange').val();
+		var faceNumber = $('#faceToChange').val();
+		var material = $(this).val();
 
-		DBS.changeColors(roomNumber, faceNumber, color);
+		if (material == "woodenFloor") {
+			DBS.changeMaterial(roomNumber, faceNumber, "2");
+		} else if (material == "carpet") {
+			DBS.changeMaterial(roomNumber, faceNumber, "1");
+		} else {
+			DBS.changeColors(roomNumber, faceNumber, material);
+		}
+
 		DBS.animate();
 	});
 
 	$('.addRoomButton').click(function() {
 		DBS.addRoom();
-		DBS.animate();
-	});
-
-	$('#changeTexture').click(function() {
-		var roomNumber = $('#roomMenu').val();
-		// var color = $(this).val();
-		// var faceNumber = $(this).attr('id');
-
-		DBS.changeTexture(roomNumber, "3");
 		DBS.animate();
 	});
 	
