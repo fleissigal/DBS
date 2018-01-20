@@ -11,10 +11,32 @@ var DBS = {
 		rooms: [],
 		materials: [
 		    new THREE.MeshBasicMaterial( { color: "white", vertexColors: THREE.FaceColors } ),
+		    new THREE.MeshBasicMaterial( { color: "blue", vertexColors: THREE.FaceColors } ),
+		    new THREE.MeshBasicMaterial( { color: "yellow", vertexColors: THREE.FaceColors } ),
+		    new THREE.MeshBasicMaterial( { color: "red", vertexColors: THREE.FaceColors } ),
+		    new THREE.MeshBasicMaterial( { color: "green", vertexColors: THREE.FaceColors } ),
+		    new THREE.MeshBasicMaterial( { color: "orange", vertexColors: THREE.FaceColors } ),
+		    new THREE.MeshBasicMaterial( { color: "purple", vertexColors: THREE.FaceColors } ),
+		    new THREE.MeshBasicMaterial( { color: "gray", vertexColors: THREE.FaceColors } ),
+
 			new THREE.MeshBasicMaterial({
-		        map: new THREE.TextureLoader().load( "images/carpet.jpg" ) }),
-		    new THREE.MeshBasicMaterial({
 		        map: new THREE.TextureLoader().load( "images/woodenFloor.jpg" ) }),
+		    new THREE.MeshBasicMaterial({
+		        map: new THREE.TextureLoader().load( "images/carpet.jpg" ) }),
+			new THREE.MeshBasicMaterial({
+		        map: new THREE.TextureLoader().load( "images/stoneFloor.jpg" ) }),
+			new THREE.MeshBasicMaterial({
+		        map: new THREE.TextureLoader().load( "images/blackRoof.jpg" ) }),
+		    new THREE.MeshBasicMaterial({
+		        map: new THREE.TextureLoader().load( "images/redRoof.jpg" ) }),
+			new THREE.MeshBasicMaterial({
+		        map: new THREE.TextureLoader().load( "images/roundTileRoof.jpg" ) }),
+			new THREE.MeshBasicMaterial({
+		        map: new THREE.TextureLoader().load( "images/whiteWall.jpg" ) }),
+		    new THREE.MeshBasicMaterial({
+		        map: new THREE.TextureLoader().load( "images/stoneWall.jpg" ) }),
+			new THREE.MeshBasicMaterial({
+		        map: new THREE.TextureLoader().load( "images/brickWall.jpg" ) }),
 		],
 	},
 
@@ -48,10 +70,13 @@ var DBS = {
 	},
 	
 	// Changing the colors of the different faces
-	changeColors:function(roomNumber, faceNumber, color) {
-		DBS.setup.rooms[roomNumber].geometry.faces[ faceNumber * 2 - 2 ].color.set(color);
-		DBS.setup.rooms[roomNumber].geometry.faces[ faceNumber * 2 - 1 ].color.set(color);
-		DBS.setup.rooms[roomNumber].geometry.colorsNeedUpdate = true;
+	changeColors:function(roomNumber, faceNumber, colorNumber) {
+		DBS.setup.rooms[roomNumber].geometry.faces[ faceNumber * 2 - 2 ].materialIndex = colorNumber;
+		DBS.setup.rooms[roomNumber].geometry.faces[ faceNumber * 2 - 1 ].materialIndex = colorNumber;
+		DBS.setup.rooms[roomNumber].geometry.groupsNeedUpdate = true;
+		// DBS.setup.rooms[roomNumber].geometry.faces[ faceNumber * 2 - 2 ].color.set(color);
+		// DBS.setup.rooms[roomNumber].geometry.faces[ faceNumber * 2 - 1 ].color.set(color);
+		// DBS.setup.rooms[roomNumber].geometry.colorsNeedUpdate = true;
 	},
 
 	changeDimensions:function(roomNumber, width, height, depth) {
@@ -67,9 +92,9 @@ var DBS = {
 		DBS.setup.camera.position.z = 9;
 	},
 
-	changeMaterial:function(roomNumber, faceNumber, material) {
-		DBS.setup.rooms[roomNumber].geometry.faces[ faceNumber * 2 - 2 ].materialIndex = material;
-		DBS.setup.rooms[roomNumber].geometry.faces[ faceNumber * 2 - 1 ].materialIndex = material;
+	changeMaterial:function(roomNumber, faceNumber, materialNumber) {
+		DBS.setup.rooms[roomNumber].geometry.faces[ faceNumber * 2 - 2 ].materialIndex = materialNumber;
+		DBS.setup.rooms[roomNumber].geometry.faces[ faceNumber * 2 - 1 ].materialIndex = materialNumber;
 		DBS.setup.rooms[roomNumber].geometry.groupsNeedUpdate = true;
 
 	},
