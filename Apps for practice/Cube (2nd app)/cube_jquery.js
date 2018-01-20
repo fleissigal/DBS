@@ -52,79 +52,20 @@ $(document).ready(function(){
 	$('#faceColor').change(function() {
 		var roomNumber = $('#roomToChange').val();
 		var faceNumber = $('#faceToChange').val();
-		var color = $(this).val();
-		var colorNumber;
+		var colorString = ($(this).val()).substring(0, 2);
+		var colorInt = parseInt(colorString); // This function is for removing leading zeros
 
-		switch (color) {
-			case "white":
-				colorNumber = "0";
-				break;
-			case "blue":
-				colorNumber = "1";
-				break;
-			case "yellow":
-				colorNumber = "2";
-				break;
-			case "red":
-				colorNumber = "3";
-				break;
-			case "green":
-				colorNumber = "4";
-				break;
-			case "orange":
-				colorNumber = "5";
-				break;
-			case "purple":
-				colorNumber = "6";
-				break;
-			case "gray":
-				colorNumber = "7";
-				break;
-			default: break;
-		}
-
-		DBS.changeColors(roomNumber, faceNumber, colorNumber);
+		DBS.changeColors(roomNumber, faceNumber, colorInt);
 		DBS.animate();
 	});
 
 	$('#faceMaterial').change(function() {
 		var roomNumber = $('#roomToChange').val();
 		var faceNumber = $('#faceToChange').val();
-		var material = $(this).val();
-		var materialNumber;
+		var materialString = ($(this).val()).substring(0, 2);
+		var materialInt = parseInt(materialString); // This function is for removing leading zeros
 
-		switch (material) {
-			case "woodenFloor":
-				materialNumber = "8";
-				break;
-			case "carpet":
-				materialNumber = "9";
-				break;
-			case "stoneFloor":
-				materialNumber = "10";
-				break;
-			case "blackRoof":
-				materialNumber = "11";
-				break;
-			case "redRoof":
-				materialNumber = "12";
-				break;
-			case "roundTileRoof":
-				materialNumber = "13";
-				break;
-			case "whiteWall":
-				materialNumber = "14";
-				break;
-			case "stoneWall":
-				materialNumber = "15";
-				break;
-			case "brickWall":
-				materialNumber = "16";
-				break;
-			default: break;
-		}
-
-		DBS.changeMaterial(roomNumber, faceNumber, materialNumber);
+		DBS.changeMaterial(roomNumber, faceNumber, materialInt);
 		DBS.animate();
 	});
 
