@@ -55,7 +55,7 @@ $(document).ready(function(){
 		var colorString = ($(this).val()).substring(0, 2);
 		var colorInt = parseInt(colorString); // This function is for removing leading zeros
 
-		DBS.changeColors(roomNumber, faceNumber, colorInt);
+		DBS.changeMaterial(roomNumber, faceNumber, colorInt);
 		DBS.animate();
 	});
 

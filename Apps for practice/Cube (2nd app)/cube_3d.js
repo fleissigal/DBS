@@ -68,16 +68,6 @@ var DBS = {
 	render:function() {
 		DBS.setup.renderer.render( DBS.setup.scene, DBS.setup.camera );
 	},
-	
-	// Changing the colors of the different faces
-	changeColors:function(roomNumber, faceNumber, colorNumber) {
-		DBS.setup.rooms[roomNumber].geometry.faces[ faceNumber * 2 - 2 ].materialIndex = colorNumber;
-		DBS.setup.rooms[roomNumber].geometry.faces[ faceNumber * 2 - 1 ].materialIndex = colorNumber;
-		DBS.setup.rooms[roomNumber].geometry.groupsNeedUpdate = true;
-		// DBS.setup.rooms[roomNumber].geometry.faces[ faceNumber * 2 - 2 ].color.set(color);
-		// DBS.setup.rooms[roomNumber].geometry.faces[ faceNumber * 2 - 1 ].color.set(color);
-		// DBS.setup.rooms[roomNumber].geometry.colorsNeedUpdate = true;
-	},
 
 	changeDimensions:function(roomNumber, width, height, depth) {
 		DBS.setup.rooms[roomNumber].shape.scale.x = width;
@@ -92,6 +82,8 @@ var DBS = {
 		DBS.setup.camera.position.z = 9;
 	},
 
+	// Changing the material / color of the face. We change two attributes because each of the cube's faces
+	// is constructed from two triangles in Three js.
 	changeMaterial:function(roomNumber, faceNumber, materialNumber) {
 		DBS.setup.rooms[roomNumber].geometry.faces[ faceNumber * 2 - 2 ].materialIndex = materialNumber;
 		DBS.setup.rooms[roomNumber].geometry.faces[ faceNumber * 2 - 1 ].materialIndex = materialNumber;
@@ -131,7 +123,6 @@ var DBS = {
 	},
 
 }
-
 
 // The program that runs
 DBS.init();
