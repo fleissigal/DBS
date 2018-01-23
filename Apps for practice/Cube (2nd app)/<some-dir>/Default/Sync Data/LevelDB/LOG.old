@@ -1,0 +1,3 @@
+2018/01/19-16:39:52.147 55555 Reusing MANIFEST /Users/GalFleissig/Jobs/DBS - Pittsburgh/DBS/Apps for practice/Cube (2nd app)/<some-dir>/Default/Sync Data/LevelDB/MANIFEST-000001
+2018/01/19-16:39:52.149 55555 Recovering log #3
+2018/01/19-16:39:52.150 55555 Reusing old log /Users/GalFleissig/Jobs/DBS - Pittsburgh/DBS/Apps for practice/Cube (2nd app)/<some-dir>/Default/Sync Data/LevelDB/000003.log 
