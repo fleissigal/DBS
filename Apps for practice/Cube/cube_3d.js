@@ -107,7 +107,7 @@ var DBS = {
 	addRoom:function() {
 		DBS.setup.rooms[DBS.setup.nextRoom] = new DBS.Room(1);
 		var next = DBS.setup.nextRoom;
-		var nextPosition = parseInt(next) - 1;
+		var nextPosition = Number.parseInt(next) - 1;
 
 		DBS.setup.rooms[next].geometry = new THREE.BoxGeometry( DBS.setup.rooms[next].width, DBS.setup.rooms[next].height, DBS.setup.rooms[next].depth );
 		DBS.setup.rooms[next].shape = new THREE.Mesh( DBS.setup.rooms[next].geometry, DBS.setup.materials );
