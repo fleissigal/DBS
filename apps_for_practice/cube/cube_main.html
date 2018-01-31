@@ -28,6 +28,7 @@
 
 		<h3>General Options</h3>
 
+		<!-- Configuring the zoom/pan of the scene -->
 		<div class="container">
 			<strong>Choose Zoom / Pan:</strong>
 			<br><br>
@@ -63,6 +64,7 @@
 
 		<hr>
 
+		<!-- Configuring the view of the scene (camera angle) and adding a new room -->
 		<div class="container">
 		  <strong>Choose View and Add Rooms:</strong>
 		  <br><br>
@@ -76,11 +78,12 @@
 					  <div class="btn-group">
 					    <button type="button" class="btn btn-default viewButton" value="top">Top</button>
 					    <button type="button" class="btn btn-default viewButton" value="side">Side</button>
+					    <button type="button" class="btn btn-default viewButton" value="forward">Forward</button>
 					  </div>
 			  		</td>
 			  		<td>
 					  <div class="btn-group">
-					    <button type="button" class="btn btn-default addRoomButton" value="addRoom">Add a Room</button>
+					    <button type="button" class="btn btn-default" value="addRoom" id="addRoomButton">Add a Room</button>
 					  </div>
 			  		</td>
 			  	</tr>
@@ -91,6 +94,7 @@
 
 		<h3>Specific Room Options</h3>
 
+		<!-- Configureing the colors/materials of a specific face in a specific room -->
 		<div class="container">
 		  <br>
 		  	<table width="700">
@@ -153,26 +157,54 @@
 
 		<hr>
 
+		<!-- Configuring the dimensions of a room -->
 		<div class="container">
-		  <strong>Choose Dimensions for Room:</strong>
-		  <br><br>
-		  <table width="200">
-		  	<tr>
-		  		<td>Width</td>
-		  		<td>Height</td>
-		  		<td>Depth</td>
-		  	</tr>
-		  	<tr>
-		  		<td><input type="number" min="1" max="5" id="width"></td>
-		  		<td><input type="number" min="1" max="5" id="height"></td>
-		  		<td><input type="number" min="1" max="5" id="depth"></td>
-		  	</tr>
-		  </table>
+			<strong>Choose Dimensions for Room:</strong>
+			<br><br>
+			<table width="500">
+		  		<tr>
+			  		<td>Width</td>
+			  		<td>Height</td>
+			  		<td>Depth</td>
+			  	</tr>
+			  	<tr>
+			  		<td><input type="number" min="1" max="5" id="width"></td>
+			  		<td><input type="number" min="1" max="5" id="height"></td>
+			  		<td><input type="number" min="1" max="5" id="depth"></td>
+			  	</tr>
+			</table>
+			<br>
+			<p>Select a value between 1 and 5</p>
+			<button type="button" class="btn btn-primary" id="updateDimensionButton">Update Dimensions</button>
+			<button type="button" class="btn btn-warning" id="resetDimensionsButton">Reset</button>
+		</div>
+
+		<hr>
+		
+		<!-- Configuring the position of a room -->
+		<div class="container">
+		  	<strong>Choose Position of a Room:</strong>
+		  	<br><br>
+			<table width="500">
+		  		<tr>
+			  		<td>X axis</td>
+			  		<td>Y axis</td>
+			  		<td>Z axis</td>
+			  	</tr>
+			  	<tr>
+			 		<td><input type="number" min="0" max="10" id="x_axis"></td>
+			  		<td><input type="number" min="0" max="10" id="y_axis"></td>
+			  		<td><input type="number" min="0" max="10" id="z_axis"></td>
+			  	</tr>
+			</table>
+			<br>
+			<p>Select a value between 1 and 10</p>
+		    <button type="button" class="btn btn-primary" id="updatePositionButton">Update Position</button>
+		    <button type="button" class="btn btn-warning" id="resetPositionButton">Reset</button>
 		  <br>
-		    <button type="button" class="btn btn-primary" id="updateDimensionButton">Update Dimensions</button>
-		    <button type="button" class="btn btn-warning" id="resetDimensionsButton">Reset</button>
 
 		</div>
+
 		<br><br>
 
 	</body>

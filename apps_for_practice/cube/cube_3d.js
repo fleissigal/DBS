@@ -1,4 +1,5 @@
 
+// The variable that holds the different rooms, colors, materials and more
 var DBS = {
 
 	setup: {
@@ -10,6 +11,7 @@ var DBS = {
 		nextRoom: "1",
 		rooms: [],
 		materials: [
+			// All the available colors in the app
 		    new THREE.MeshBasicMaterial( { color: "white", vertexColors: THREE.FaceColors } ),
 		    new THREE.MeshBasicMaterial( { color: "blue", vertexColors: THREE.FaceColors } ),
 		    new THREE.MeshBasicMaterial( { color: "yellow", vertexColors: THREE.FaceColors } ),
@@ -19,6 +21,7 @@ var DBS = {
 		    new THREE.MeshBasicMaterial( { color: "purple", vertexColors: THREE.FaceColors } ),
 		    new THREE.MeshBasicMaterial( { color: "gray", vertexColors: THREE.FaceColors } ),
 
+			// All the available materials in the app
 			new THREE.MeshBasicMaterial({
 		        map: new THREE.TextureLoader().load( "images/woodenFloor.jpg" ) }),
 		    new THREE.MeshBasicMaterial({
@@ -65,24 +68,31 @@ var DBS = {
 		DBS.render();
 	},
 
+	// The function that is responsible for rendering
 	render:function() {
 		DBS.setup.renderer.render( DBS.setup.scene, DBS.setup.camera );
 	},
 
+	// The function that changes the dimensions of a specific room
 	changeDimensions:function(roomNumber, width, height, depth) {
 		DBS.setup.rooms[roomNumber].shape.scale.x = width;
 		DBS.setup.rooms[roomNumber].shape.scale.y = height;
 		DBS.setup.rooms[roomNumber].shape.scale.z = depth;
 	},
 
-	// Changing the angle of the camera
+	// The function that changes the angle of the camera
 	changeView:function(view) {
 		DBS.setup.camera.position.x = 0;
-		DBS.setup.camera.position.y = (view == "top") ? 0 : 3;
-		DBS.setup.camera.position.z = 9;
+		DBS.setup.camera.position.y = (view == "forward") ? 0 : 3;
+		DBS.setup.camera.position.z = (view == "top") ? 0 : 9;
 	},
 
-	// Changing the material / color of the face. We change two attributes because each of the cube's faces
+	// The function that changes the position of a specific room
+	changePosition:function(roomNumber, x, y, z) {
+		DBS.setup.rooms[roomNumber].shape.position.set(x , y, z);
+	},
+
+	// Changing the material / color of the face. Two attributes are being changed because each of the cube's faces
 	// is constructed from two triangles in Three js.
 	changeMaterial:function(roomNumber, faceNumber, materialNumber) {
 		DBS.setup.rooms[roomNumber].geometry.faces[ faceNumber * 2 - 2 ].materialIndex = materialNumber;
@@ -91,7 +101,7 @@ var DBS = {
 
 	},
 
-	// Room constructor
+	// The Room constructor. Default color of all the faces is white
 	Room:function(size) {
 		this.width = size;
 		this.height = size;
@@ -129,4 +139,3 @@ DBS.init();
 DBS.animate();
 
 
-// });
