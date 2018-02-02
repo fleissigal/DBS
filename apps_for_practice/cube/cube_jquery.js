@@ -81,6 +81,10 @@ $(document).ready(function(){
 	$('#addRoomButton').click(function() {
 		DBS.addRoom();
 	});
-	
+
+	// The button that prints the door locations
+	$('#printDoorLocations').click(function() {
+		DBS.printDoorLocations();
+	});
 
 });

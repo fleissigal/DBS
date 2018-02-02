@@ -40,6 +40,8 @@ var DBS = {
 		        map: new THREE.TextureLoader().load( "images/stoneWall.jpg" ) }),
 			new THREE.MeshBasicMaterial({
 		        map: new THREE.TextureLoader().load( "images/brickWall.jpg" ) }),
+			new THREE.MeshBasicMaterial({
+		        map: new THREE.TextureLoader().load( "images/door.jpg" ) }),
 		],
 	},
 
@@ -98,7 +100,12 @@ var DBS = {
 		DBS.setup.rooms[roomNumber].geometry.faces[ faceNumber * 2 - 2 ].materialIndex = materialNumber;
 		DBS.setup.rooms[roomNumber].geometry.faces[ faceNumber * 2 - 1 ].materialIndex = materialNumber;
 		DBS.setup.rooms[roomNumber].geometry.groupsNeedUpdate = true;
-
+		
+		if (materialNumber == 17) {
+			DBS.setup.rooms[roomNumber].doors[faceNumber - 1] = true;
+		} else {
+			DBS.setup.rooms[roomNumber].doors[faceNumber - 1] = false;
+		}
 	},
 
 	// The Room constructor. Default color of all the faces is white
@@ -111,19 +118,24 @@ var DBS = {
 		this.geometry = null;
 		this.material = null;
 		this.shape = null;
+
+		this.doors = [false, false, false, false, false, false];
 	},
 
 	// Adding one more room to the scene
 	addRoom:function() {
 		DBS.setup.rooms[DBS.setup.nextRoom] = new DBS.Room(1);
 		var next = DBS.setup.nextRoom;
+		// console.log(next);
 		var nextPosition = Number.parseInt(next) - 1;
 
 		DBS.setup.rooms[next].geometry = new THREE.BoxGeometry( DBS.setup.rooms[next].width, DBS.setup.rooms[next].height, DBS.setup.rooms[next].depth );
 		DBS.setup.rooms[next].shape = new THREE.Mesh( DBS.setup.rooms[next].geometry, DBS.setup.materials );
+		// console.log(next);
 
 		for (var i = 1; i < 7; i++) {
-			DBS.changeMaterial(next, i, 0);
+			// console.log(next);
+			DBS.changeMaterial( next, i, 0 );
 		}
 
 		DBS.setup.rooms[next].shape.position.set(nextPosition , 0, 0);
@@ -132,6 +144,18 @@ var DBS = {
 		DBS.setup.nextRoom++;
 	},
 
+	// Prints the locations of all the doors in the house
+	printDoorLocations:function() {
+		var next = Number.parseInt(DBS.setup.nextRoom);
+		console.log("Doors are at:");
+		for (var i = 1; i < next; i++) {
+			for (var j = 0; j < 6; j++) {
+				if (DBS.setup.rooms[i].doors[j] == true) {
+					console.log("Room number: " + i + ", " + "Face number: " + (j + 1));
+				}
+			}
+		}
+	},
 }
 
 // The program that runs
