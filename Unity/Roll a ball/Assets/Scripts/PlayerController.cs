@@ -11,7 +11,9 @@ public class PlayerController : MonoBehaviour {
 
 	private Rigidbody rb;
 	private int count;
-
+	private Renderer rn;
+	private float elapsedTime;
+	
 	void Start() {
 		rb = GetComponent<Rigidbody> ();
 		count = 0;
@@ -41,6 +43,20 @@ public class PlayerController : MonoBehaviour {
 		countText.text = "Count: " + count.ToString();
 		if (count >= 12) {
 			winText.text = "You Win!";
+		}
+	}
+
+	void Update() {
+	    elapsedTime += Time.deltaTime;
+
+	    if (elapsedTime >= 5) {
+	        elapsedTime -= 5;
+			rn = GetComponent<Renderer> ();
+			if (rn.material.color == Color.red) {
+				rn.material.color = Color.green;
+			} else {
+				rn.material.color = Color.red;
+			}
 		}
 	}
 
