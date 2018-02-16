@@ -27,17 +27,34 @@ public class PlayerController : MonoBehaviour {
 
 	// Changes the color of the 'player' from green to red and back according to the dropdown menu
 	public void Dropdown_IndexChanged(int index) {
-		rn.material.color = (index == 0) ? Color.red : Color.green;
+		if (index == 0) rn.material.color = Color.red;
+		if (index == 1) rn.material.color = Color.green;
+		if (index == 2) rn.material.color = Color.blue;
+		if (index == 3) rn.material.color = Color.yellow;
+		if (index == 4) rn.material.color = Color.white;
+
+		// rn.material.color = (index == 0) ? Color.red : Color.green;
 	}
 
-	// Changes the color of the 'player' from green to red and back according to the text from the user
+	// Changes the color of the 'player' between red/green/blue/yellow according to the text from the user
 	public void InputTextColor(string color) {
-		if (color == "Red") {
-			rn.material.color = Color.red;
-		}
-		if (color == "Green") {
-			rn.material.color = Color.green;
-		}
+		switch (color) {
+			case "Red":
+				rn.material.color = Color.red;
+				break;
+			case "Green":
+				rn.material.color = Color.green;
+				break;
+			case "Blue":
+				rn.material.color = Color.blue;
+				break;
+			case "Yellow":
+				rn.material.color = Color.yellow;
+				break;
+			case "White":
+				rn.material.color = Color.white;
+				break;
+			}
 	}
 
 	void FixedUpdate() {

@@ -2364,7 +2364,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Enter "Red" or "Green" in
+  m_Text: 'Enter the color name in
 
     the text box below:'
 --- !u!222 &1300761563
@@ -2892,6 +2892,10 @@ MonoBehaviour:
     - m_Text: Red
       m_Image: {fileID: 0}
     - m_Text: Green
+      m_Image: {fileID: 0}
+    - m_Text: Blue
+      m_Image: {fileID: 0}
+    - m_Text: Yellow
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
