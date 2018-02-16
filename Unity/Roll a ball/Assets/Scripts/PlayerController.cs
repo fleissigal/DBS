@@ -30,6 +30,16 @@ public class PlayerController : MonoBehaviour {
 		rn.material.color = (index == 0) ? Color.red : Color.green;
 	}
 
+	// Changes the color of the 'player' from green to red and back according to the text from the user
+	public void InputTextColor(string color) {
+		if (color == "Red") {
+			rn.material.color = Color.red;
+		}
+		if (color == "Green") {
+			rn.material.color = Color.green;
+		}
+	}
+
 	void FixedUpdate() {
 		float moveHorizontal = Input.GetAxis ("Horizontal");
 		float moveVertical = Input.GetAxis ("Vertical");
@@ -56,19 +66,19 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	// Changes the color of the 'player' from green to red and back every X seconds
-	void Update() {
-	    elapsedTime += Time.deltaTime;
+	// void Update() {
+	//     elapsedTime += Time.deltaTime;
 
-	    if (elapsedTime >= 3) {
-	        elapsedTime -= 3;
-			rn = GetComponent<Renderer> ();
-			if (rn.material.color == Color.red) {
-				rn.material.color = Color.green;
-			} else {
-				rn.material.color = Color.red;
-			}
-		}
-	}
+	//     if (elapsedTime >= 3) {
+	//         elapsedTime -= 3;
+	// 		rn = GetComponent<Renderer> ();
+	// 		if (rn.material.color == Color.red) {
+	// 			rn.material.color = Color.green;
+	// 		} else {
+	// 			rn.material.color = Color.red;
+	// 		}
+	// 	}
+	// }
 
 	// Changes the color of the 'player' from green to red and back according to the toggle
 	public void toggleColor(bool val) {
