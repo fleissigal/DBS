@@ -2384,6 +2384,7 @@ GameObject:
   - component: {fileID: 1330719685}
   - component: {fileID: 1330719684}
   - component: {fileID: 1330719683}
+  - component: {fileID: 1330719686}
   m_Layer: 0
   m_Name: West Wall
   m_TagString: Untagged
@@ -2457,6 +2458,17 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1330719681}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1330719686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1330719681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85145d1f1762448628ef38afe141e05c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1371472333 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4301847448858768, guid: cee25c2eeac6640d9929c1b4ad7ed034,
