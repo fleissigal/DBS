@@ -19,5 +19,4 @@ import houses.views
 
 urlpatterns = [
     url(r'^main$', houses.views.main, name="main"),
-    url(r'^pano_7000', houses.views.pano_7000, name="pano_7000"),
 ]
