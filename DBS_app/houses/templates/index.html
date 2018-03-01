@@ -3,27 +3,23 @@
 
   <head>
     <meta charset="UTF-8">
+    <title>DBS - Dream Home</title>
+
+      <!-- The different scripts for the project -->
       <script src="static/three/three.min.js"></script>
       <script src="static/panolens/panolens.min.js"></script>
-
       <!-- Latest compiled and minified CSS -->
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>      <script src="static/tether/dist/js/tether.min.js"></script>
-
       <!-- Latest compiled and minified JavaScript -->
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-      
       <script src="static/css/js/dist/tooltip.js"></script>
       <script src="static/css/js/dist/popover.js"></script>
-
-    <title>DBS - Dream Home</title>
   </head>
 
   <body>
 
       <div class="row">
-
 
         <div class="col-md-8">
           <h1>360 Panoramic View</h1>
@@ -32,13 +28,14 @@
         
         <div class="col-md-4">
 
+          <!-- Floor plan button grid that lets the user move between the different rooms of the house -->
           <h1>Floor Plan</h1>
           <div class="btn-group" data-toggle="buttons">
               <label class="btn btn-primary active">
-                <input type="radio" name="options" id="option1" autocomplete="off" checked> Kitchen
+                <input type="radio" name="options" id="option1" autocomplete="off" checked> Living Room
               </label>
               <label class="btn btn-primary">
-                <input type="radio" name="options" id="option2" autocomplete="off"> Living Room
+                <input type="radio" name="options" id="option2" autocomplete="off"> Kitchen
               </label>
               <label class="btn btn-primary">
                 <input type="radio" name="options" id="option3" autocomplete="off"> Bathroom
@@ -48,8 +45,8 @@
               </label>
            </div>
 
+          <!-- A dropdown menu of the options of the current room -->
           <h1>Options</h1>
-
           <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Drape Options
             <span class="caret"></span></button>
@@ -58,6 +55,10 @@
               <li><a class="dropdown-item" id="whiteDrapes">White Drapes</a></li>
             </ul>
           </div>
+
+          <!-- The price that updates when the different options change -->
+          <h1>Price</h1>
+          <h3 id="price" style="color: darkblue"></h3>
 
         </div>
 
