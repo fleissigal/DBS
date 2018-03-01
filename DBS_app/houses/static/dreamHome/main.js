@@ -1,8 +1,9 @@
 
 var panorama, viewer;
 panorama = new PANOLENS.ImagePanorama( 'static/360/redDrapes.jpg' );
-viewer = new PANOLENS.Viewer();
+viewer = new PANOLENS.Viewer({container: canvasContainer});
 viewer.add( panorama );
+
 
 // Functions to execute as response to buttons/menus
 $(document).ready(function(){

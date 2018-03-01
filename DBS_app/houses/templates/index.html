@@ -3,11 +3,6 @@
 
   <head>
     <meta charset="UTF-8">
-    <title>360-image-viewer</title>
-  </head>
-
-  <body>
-
       <script src="static/three/three.min.js"></script>
       <script src="static/panolens/panolens.min.js"></script>
 
@@ -19,32 +14,48 @@
       <!-- Latest compiled and minified JavaScript -->
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-      <div class="btn-group" data-toggle="buttons">
-          <label class="btn btn-primary active">
-            <input type="radio" name="options" id="option1" autocomplete="off" checked> Kitchen
-          </label>
-          <label class="btn btn-primary">
-            <input type="radio" name="options" id="option2" autocomplete="off"> Living Room
-          </label>
-          <label class="btn btn-primary">
-            <input type="radio" name="options" id="option3" autocomplete="off"> Bathroom
-          </label>
-          <label class="btn btn-primary">
-            <input type="radio" name="options" id="option3" autocomplete="off"> Bedroom
-          </label>
-       </div>
+    <title>360-image-viewer</title>
+  </head>
 
-      <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Options
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" id="redDrapes">Red Drapes</a>
-            <a class="dropdown-item" id="whiteDrapes">White Drapes</a>
+  <body>
+
+      <div class="row">
+
+
+        <div class="col-md-8" id="canvasContainer">
+          <script src="static/dreamHome/main.js"></script>
+        </div>
+        
+        <div class="col-md-4">
+
+          <div class="btn-group" data-toggle="buttons">
+              <label class="btn btn-primary active">
+                <input type="radio" name="options" id="option1" autocomplete="off" checked> Kitchen
+              </label>
+              <label class="btn btn-primary">
+                <input type="radio" name="options" id="option2" autocomplete="off"> Living Room
+              </label>
+              <label class="btn btn-primary">
+                <input type="radio" name="options" id="option3" autocomplete="off"> Bathroom
+              </label>
+              <label class="btn btn-primary">
+                <input type="radio" name="options" id="option3" autocomplete="off"> Bedroom
+              </label>
+           </div>
+
+          <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Options</button>
+              
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" id="redDrapes">Red Drapes</a>
+                <a class="dropdown-item" id="whiteDrapes">White Drapes</a>
+              </div>
           </div>
+
+        </div>
+
       </div>
 
-      <script src="static/dreamHome/main.js"></script>
 
   </body>
 
