@@ -119,9 +119,9 @@ USE_L10N = True
 
 USE_TZ = True
 
-MEDIA_ROOT = BASE_DIR + '/houses/media'
+MEDIA_ROOT = BASE_DIR + '/houses/static/media'
 
-MEDIA_URL = '/media/'
+MEDIA_URL = '/static/media/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/

@@ -1,15 +1,16 @@
 
-var panorama, viewer;
-panorama = new PANOLENS.ImagePanorama( 'static/360/kitchenBlueCabinets.jpg' );
-viewer = new PANOLENS.Viewer({ container: canvasContainer });
-viewer.add( panorama );
-
-var basePrice = 100000;
-$('#price').html("$" + basePrice);
-
 
 // Functions to execute as response to buttons/menus
 $(document).ready(function(){
+
+
+	var panorama, viewer;
+	panorama = new PANOLENS.ImagePanorama( Cookies.get('uploadedImage') || 'static/360/livingroomWhiteDrapes.jpg' );
+	viewer = new PANOLENS.Viewer({ container: canvasContainer });
+	viewer.add( panorama );
+
+	var basePrice = 100000;
+	$('#price').html("$" + basePrice);
 
 
 	$('#gridRadio').click(function(){
@@ -146,4 +147,22 @@ $(document).ready(function(){
 
 	});
 
+	$('#submitImage').submit(function(e) {
+		// Replaces the image with the new image
+		fileName = $('#fileInput').val().replace(/.*[\/\\]/, '');
+		Cookies.set('uploadedImage', 'static/media/' + fileName);
+		// viewer.remove( panorama );
+		// console.log('static/media/' + fileName);
+		// newPanorama = new PANOLENS.ImagePanorama( 'static/media/' + fileName );
+		// viewer.add( newPanorama );
+		// viewer.setPanorama( newPanorama );
+
+	});
+
 });
+
+
+
+
+
+
