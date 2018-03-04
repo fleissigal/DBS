@@ -18,5 +18,6 @@ from django.contrib import admin
 import houses.views
 
 urlpatterns = [
-    url(r'^main$', houses.views.main, name="main"),
+    url(r'^$', houses.views.main, name="main"),
+    url(r'uploadFile$', houses.views.uploadFile, name="uploadFile"),
 ]

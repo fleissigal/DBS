@@ -1,0 +1,9 @@
+
+.floorplan{
+  position: relative;
+}
+
+.floorplan a{
+  display: block;      
+  position: absolute;
+}

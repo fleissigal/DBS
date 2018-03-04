@@ -121,7 +121,7 @@ USE_TZ = True
 
 MEDIA_ROOT = BASE_DIR + '/houses/media'
 
-MEDIA_URL = '/localhost:8000/media/' 
+MEDIA_URL = '/media/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/

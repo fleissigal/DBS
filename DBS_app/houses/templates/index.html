@@ -15,6 +15,8 @@
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
       <script src="static/css/js/dist/tooltip.js"></script>
       <script src="static/css/js/dist/popover.js"></script>
+
+      <link rel="stylesheet" href="static/dreamHome/main.css">
   </head>
 
   <body>
@@ -28,40 +30,51 @@
         
         <div class="col-md-4">
 
-          <h1>Floor Plan</h1>
-          <img src="static/360/floorPlan.png" style="width: 80%; height: 80%">
+        <h1>Floor Plan</h1>
+        <div class="floorplan">
+          <img src="static/360/floorPlan.png" style="width: 80%; height: 80%" alt="Floor Plan" />
+          <a href="http://www.google.com" style="top: 10%; left: 0%; width: 30%; height: 40%;" alt="Bedroom"></a>
+          <a href="http://www.apple.com" style="top: 5%; left: 30%; width: 30%; height: 45%;" alt="Kitchen"></a>
+          <a href="http://www.amazon.com" style="top: 5%; left: 60%; width: 20%; height: 45%;" alt="Bathroom"></a>
+          <a href="http://www.yahoo.com" style="top: 50%; left: 0%; width: 42%; height: 45%;" alt="Living Room"></a>
+          <a href="http://www.instagram.com" style="top: 50%; left: 42%; width: 38%; height: 45%;" alt="Master Bedroom"></a>
+        </div> 
 
           <!-- Floor plan button grid that lets the user move between the different rooms of the house -->
           <h1>Rooms</h1>
-          <div class="btn-group" data-toggle="buttons">
+          <div class="btn-group" id="gridRadio" data-toggle="buttons">
+              <label class="btn btn-primary">
+                <input type="radio" id="bedroomGrid" autocomplete="off"> Bedroom
+              </label>
+              <label class="btn btn-primary">
+                <input type="radio" id="kitchenGrid" autocomplete="off"> Kitchen
+              </label>
+              <label class="btn btn-primary">
+                <input type="radio" id="bathroomGrid" autocomplete="off"> Bathroom
+              </label>
               <label class="btn btn-primary active">
-                <input type="radio" name="options" id="option1" autocomplete="off" checked> Living Room
+                <input type="radio" id="livingroomGrid" autocomplete="off" checked> Living Room
               </label>
               <label class="btn btn-primary">
-                <input type="radio" name="options" id="option2" autocomplete="off"> Kitchen
+                <input type="radio" id="masterbedroomGrid" autocomplete="off"> Master Bedroom
               </label>
-              <label class="btn btn-primary">
-                <input type="radio" name="options" id="option3" autocomplete="off"> Bathroom
-              </label>
-              <label class="btn btn-primary">
-                <input type="radio" name="options" id="option3" autocomplete="off"> Bedroom
-              </label>
-           </div>
+          </div>
 
           <!-- A dropdown menu of the options of the current room -->
-          <h1>Options</h1>
-          <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Drape Options
-            <span class="caret"></span></button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" id="redDrapes">Red Drapes</a></li>
-              <li><a class="dropdown-item" id="whiteDrapes">White Drapes</a></li>
-            </ul>
-          </div>
+          <div id="dd"></div>
 
           <!-- The price that updates when the different options change -->
           <h1>Price</h1>
           <h3 id="price" style="color: darkblue"></h3>
+          <br><br>
+
+          <h1>Panoramic image upload</h1>
+          <form action="uploadFile" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="picture"><br>
+            <button class="btn btn-primary">Submit</button>
+          </form>
+          <br><br>
 
         </div>
 
