@@ -1,5 +1,4 @@
 
-
 // Functions to execute as response to buttons/menus
 $(document).ready(function(){
 
@@ -13,85 +12,84 @@ $(document).ready(function(){
 	$('#price').html("$" + basePrice);
 
 
-	$('#gridRadio').click(function(){
-	    if ($('#kitchenGrid').is(':checked'))
-	    {
+	// $('#rr input').on('change', function() {
 
-		// Replaces the image with the new image
-		viewer.remove( panorama );
-		newPanorama = new PANOLENS.ImagePanorama( 'static/360/kitchenBlueCabinets.jpg' );
-		viewer.add( newPanorama );
-		viewer.setPanorama( newPanorama );
-		// Updates the price
-		redDrapesPrice = 1000; // In the future we will get this piece of data from the database
-		newPrice = basePrice + redDrapesPrice;
-		$('#price').html("$" + newPrice);
+	//     if ($('#kitchenGrid').is(':checked'))
+	//     {
 
-		$('#dd').html(
-			"<h1>Options</h1>"
-	        +"<div class=\"dropdown\">"
-	          +"<button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Cabinet Options"
-	          +"<span class=\"caret\"></span></button>"
-	          +"<ul class=\"dropdown-menu\">"
-	            +"<li><a class=\"dropdown-item\" id=\"blueCabinets\">Blue Cabinets</a></li>"
-	            +"<li><a class=\"dropdown-item\" id=\"silverCabinets\">Silver Cabinets</a></li>"
-	          +"</ul>"
-	        +"</div>"
-		);
+	// 	// Replaces the image with the new image
+	// 	viewer.remove( panorama );
+	// 	newPanorama = new PANOLENS.ImagePanorama( 'static/360/kitchenSilverCabinets.jpg' );
+	// 	viewer.add( newPanorama );
+	// 	viewer.setPanorama( newPanorama );
+	// 	// Updates the price
+	// 	redDrapesPrice = 1000; // In the future we will get this piece of data from the database
+	// 	newPrice = basePrice + redDrapesPrice;
+	// 	$('#price').html("$" + newPrice);
 
-	    }
+	// 	$('#dd').html(
+	// 		"<h1>Options</h1>"
+	//         +"<div class=\"dropdown\">"
+	//           +"<button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Cabinet Options"
+	//           +"<span class=\"caret\"></span></button>"
+	//           +"<ul class=\"dropdown-menu\">"
+	//             +"<li><a class=\"dropdown-item\" id=\"blueCabinets\">Blue Cabinets</a></li>"
+	//             +"<li><a class=\"dropdown-item\" id=\"silverCabinets\">Silver Cabinets</a></li>"
+	//           +"</ul>"
+	//         +"</div>"
+	// 	);
 
-	    if ($('#livingroomGrid').is(':checked'))
-	    {
+	//     }
 
+	//     if ($('#livingroomGrid').is(':checked'))
+	//     {
 
-		// Replaces the image with the new image
-		viewer.remove( panorama );
-		newPanorama = new PANOLENS.ImagePanorama( 'static/360/livingroomRedDrapes.jpg' );
-		viewer.add( newPanorama );
-		viewer.setPanorama( newPanorama );
-		// Updates the price
-		redDrapesPrice = 1000; // In the future we will get this piece of data from the database
-		newPrice = basePrice + redDrapesPrice;
-		$('#price').html("$" + newPrice);
+	// 	// Replaces the image with the new image
+	// 	viewer.remove( panorama );
+	// 	newPanorama = new PANOLENS.ImagePanorama( 'static/360/livingroomRedDrapes.jpg' );
+	// 	viewer.add( newPanorama );
+	// 	viewer.setPanorama( newPanorama );
+	// 	// Updates the price
+	// 	redDrapesPrice = 1000; // In the future we will get this piece of data from the database
+	// 	newPrice = basePrice + redDrapesPrice;
+	// 	$('#price').html("$" + newPrice);
 
-		$('#dd').html(
-			"<h1>Options</h1>"
-            +"<div class=\"dropdown\">"
-              +"<button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Drape Options"
-              +"<span class=\"caret\"></span></button>"
-              +"<ul class=\"dropdown-menu\">"
-                +"<li><a class=\"dropdown-item\" id=\"redDrapes\">Red Drapes</a></li>"
-                +"<li><a class=\"dropdown-item\" id=\"whiteDrapes\">White Drapes</a></li>"
-              +"</ul>"
-            +"</div>"
-		);
+	// 	$('#dd').html(
+	// 		"<h1>Options</h1>"
+ //            +"<div class=\"dropdown\">"
+ //              +"<button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\">Drape Options"
+ //              +"<span class=\"caret\"></span></button>"
+ //              +"<ul class=\"dropdown-menu\">"
+ //                +"<li><a class=\"dropdown-item\" id=\"redDrapes\">Red Drapes</a></li>"
+ //                +"<li><a class=\"dropdown-item\" id=\"whiteDrapes\">White Drapes</a></li>"
+ //              +"</ul>"
+ //            +"</div>"
+	// 	);
 
-		}
-
-
-	    if ($('#bedroomGrid').is(':checked'))
-	    {
-	    	viewer.remove( panorama );
-			$('#dd').html("");
-
-	    }
+	// 	}
 
 
-	    if ($('#bathroomGrid').is(':checked'))
-	    {
-	    	viewer.remove( panorama );
-			$('#dd').html("");
-	    }
+	//     if ($('#bedroomGrid').is(':checked'))
+	//     {
+	//     	viewer.remove( panorama );
+	// 		$('#dd').html("");
+	//     }
 
 
-	    if ($('#masterbedroomGrid').is(':checked'))
-	    {
-	    	viewer.remove( panorama );
-			$('#dd').html("");
-	    }
+	//     if ($('#bathroomGrid').is(':checked'))
+	//     {
+	//     	viewer.remove( panorama );
+	// 		$('#dd').html("");
+	//     }
 
-	});
+
+	//     if ($('#masterbedroomGrid').is(':checked'))
+	//     {
+	//     	viewer.remove( panorama );
+	// 		$('#dd').html("");
+	//     }
+
+	// });
 
 
 	// Red drapes option in the dropdown menu
@@ -122,6 +120,8 @@ $(document).ready(function(){
 	});
 
 	$('#blueCabinets').click(function() {
+
+		console.log("blue");
 		// Replaces the image with the new image
 		viewer.remove( panorama );
 		newPanorama = new PANOLENS.ImagePanorama( 'static/360/kitchenBlueCabinets.jpg' );
@@ -147,15 +147,9 @@ $(document).ready(function(){
 
 	});
 
-	$('#submitImage').submit(function(e) {
-		// Replaces the image with the new image
+	$('#submitImage').submit(function() {
 		fileName = $('#fileInput').val().replace(/.*[\/\\]/, '');
 		Cookies.set('uploadedImage', 'static/media/' + fileName);
-		// viewer.remove( panorama );
-		// console.log('static/media/' + fileName);
-		// newPanorama = new PANOLENS.ImagePanorama( 'static/media/' + fileName );
-		// viewer.add( newPanorama );
-		// viewer.setPanorama( newPanorama );
 
 	});
 

@@ -43,31 +43,50 @@
 
           <!-- Floor plan button grid that lets the user move between the different rooms of the house -->
           <h1>Rooms</h1>
-          <div class="btn-group" id="gridRadio" data-toggle="buttons">
+          <div class="btn-group" data-toggle="buttons" id="rr">
               <label class="btn btn-primary">
-                <input type="radio" id="bedroomGrid" autocomplete="off"> Bedroom
+                <input type="radio" id="bedroomGrid" autocomplete="off" name="gridRadio"> Bedroom
               </label>
               <label class="btn btn-primary">
-                <input type="radio" id="kitchenGrid" autocomplete="off"> Kitchen
+                <input type="radio" id="kitchenGrid" autocomplete="off" name="gridRadio"> Kitchen
               </label>
               <label class="btn btn-primary">
-                <input type="radio" id="bathroomGrid" autocomplete="off"> Bathroom
+                <input type="radio" id="bathroomGrid" autocomplete="off" name="gridRadio"> Bathroom
               </label>
               <label class="btn btn-primary active">
-                <input type="radio" id="livingroomGrid" autocomplete="off" checked> Living Room
+                <input type="radio" id="livingroomGrid" autocomplete="off" name="gridRadio" checked> Living Room
               </label>
               <label class="btn btn-primary">
-                <input type="radio" id="masterbedroomGrid" autocomplete="off"> Master Bedroom
+                <input type="radio" id="masterbedroomGrid" autocomplete="off" name="gridRadio"> Master Bedroom
               </label>
           </div>
 
           <!-- A dropdown menu of the options of the current room -->
-          <div id="dd"></div>
+          <div id="dd">
+            <h1>Options</h1>
+            <div class="dropdown">
+              <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Cabinet Options
+              <span class="caret"></span></button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" id="blueCabinets">Blue Cabinets</a></li>
+                <li><a class="dropdown-item" id="silverCabinets">Silver Cabinets</a></li>
+              </ul>
+            </div>
+
+            <div class="dropdown">
+              <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Drapes Options
+              <span class="caret"></span></button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" id="redDrapes">Red Drapes</a></li>
+                <li><a class="dropdown-item" id="whiteDrapes">White Drapes</a></li>
+              </ul>
+            </div>
+
+          </div>
 
           <!-- The price that updates when the different options change -->
           <h1>Price</h1>
           <h3 id="price" style="color: darkblue"></h3>
-          <br><br>
 
           <h1>Panoramic image upload</h1>
           <form action="uploadFile" method="post" enctype="multipart/form-data" id="submitImage">
