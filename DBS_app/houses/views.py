@@ -22,4 +22,16 @@ def uploadFile(request):
         return render(request, 'index.html')
     return render(request, 'index.html')
 
+def configurator(request, houseID, floorPlanID, roomID, optionID):
 
+	context = {}
+
+	model = HousePlan.objects.get(id=houseID)
+	floor = FloorPlan.objects.get(id=floorPlanID)
+	rooms = floor.roomplan_set ## Need to figure out how to reach all the rooms in the specific floor - somehow to go the other direction
+	optionTypes = RoomPlan.objects.get(id=roomID).optionTypes
+	optionChosen = optionID
+
+	context = {'model':model, 'rooms':rooms, 'optionTypes':optionTypes, 'optionChosen':optionChosen}
+
+	return render(request, 'index.html', context)

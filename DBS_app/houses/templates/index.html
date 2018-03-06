@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>DBS - Dream Home</title>
 
+      <!-- Scripts and css files -->
       <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
       <!-- The different scripts for the project -->
       <script src="static/three/three.min.js"></script>
@@ -31,23 +32,28 @@
         
         <div class="col-md-4">
 
-        <h1>Floor Plan</h1>
-        <div class="floorplan">
-          <img src="static/360/floorPlan.png" style="width: 80%; height: 80%" alt="Floor Plan" />
-          <a href="http://www.google.com" style="top: 10%; left: 0%; width: 30%; height: 40%;" alt="Bedroom"></a>
-          <a href="http://www.apple.com" style="top: 5%; left: 30%; width: 30%; height: 45%;" alt="Kitchen"></a>
-          <a href="http://www.amazon.com" style="top: 5%; left: 60%; width: 20%; height: 45%;" alt="Bathroom"></a>
-          <a href="http://www.yahoo.com" style="top: 50%; left: 0%; width: 42%; height: 45%;" alt="Living Room"></a>
-          <a href="http://www.instagram.com" style="top: 50%; left: 42%; width: 38%; height: 45%;" alt="Master Bedroom"></a>
-        </div> 
+          <h1>Floor Plan</h1>
+          <div class="floorplan">
+            <img src="static/360/floorPlan.png" style="width: 80%; height: 80%" alt="Floor Plan" />
+            <a href="http://www.google.com" style="top: 10%; left: 0%; width: 30%; height: 40%;" alt="Bedroom"></a>
+            <a href="http://www.apple.com" style="top: 5%; left: 30%; width: 30%; height: 45%;" alt="Kitchen"></a>
+            <a href="http://www.amazon.com" style="top: 5%; left: 60%; width: 20%; height: 45%;" alt="Bathroom"></a>
+            <a href="http://www.yahoo.com" style="top: 50%; left: 0%; width: 42%; height: 45%;" alt="Living Room"></a>
+            <a href="http://www.instagram.com" style="top: 50%; left: 42%; width: 38%; height: 45%;" alt="Master Bedroom"></a>
+          </div> 
+
+          <h1>Model</h1>
+          {{ model.name }}
 
           <!-- Floor plan button grid that lets the user move between the different rooms of the house -->
           <h1>Rooms</h1>
           <div class="btn-group" data-toggle="buttons" id="rr">
+              {% for room in rooms %}
               <label class="btn btn-primary">
-                <input type="radio" id="bedroomGrid" autocomplete="off" name="gridRadio"> Bedroom
+                <input type="radio" id="{{ room.name }}" autocomplete="off" name="gridRadio"> {{ room.description }}
               </label>
-              <label class="btn btn-primary">
+              {% endfor %}
+<!--               <label class="btn btn-primary">
                 <input type="radio" id="kitchenGrid" autocomplete="off" name="gridRadio"> Kitchen
               </label>
               <label class="btn btn-primary">
@@ -58,29 +64,26 @@
               </label>
               <label class="btn btn-primary">
                 <input type="radio" id="masterbedroomGrid" autocomplete="off" name="gridRadio"> Master Bedroom
-              </label>
+              </label> -->
           </div>
 
           <!-- A dropdown menu of the options of the current room -->
           <div id="dd">
             <h1>Options</h1>
+
+            {% for optionType in optionsTypes %}
+
             <div class="dropdown">
-              <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Cabinet Options
+              <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{ optionType.name }} Options
               <span class="caret"></span></button>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" id="blueCabinets">Blue Cabinets</a></li>
-                <li><a class="dropdown-item" id="silverCabinets">Silver Cabinets</a></li>
+                  {% for option in optiontype.option_set %}
+                  <li><a class="dropdown-item" id="{{ option.name }}">{{ option.description }}</a></li>
+                  {% endfor %}
               </ul>
             </div>
 
-            <div class="dropdown">
-              <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Drapes Options
-              <span class="caret"></span></button>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" id="redDrapes">Red Drapes</a></li>
-                <li><a class="dropdown-item" id="whiteDrapes">White Drapes</a></li>
-              </ul>
-            </div>
+            {% endfor %}
 
           </div>
 

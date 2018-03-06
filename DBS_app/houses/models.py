@@ -13,46 +13,42 @@ class OptionType(models.Model):
 class Option(models.Model):
 	name = models.CharField(max_length=100)
 	description = models.CharField(max_length=1000)
-	optionTypeID = models.ForeignKey(OptionType)
+	optionType = models.ForeignKey(OptionType)
 
 ### Plans
 
 class HousePlan(models.Model):
 	name = models.CharField(max_length=100)
 	description = models.CharField(max_length=1000)
-	optionChoice = models.ManyToManyField(Option)
 
 class FloorPlan(models.Model):
 	name = models.CharField(max_length=100)
 	description = models.CharField(max_length=1000)
 	housePlan = models.ForeignKey(HousePlan)
-	optionChoice = models.ManyToManyField(Option)
 
 class RoomPlan(models.Model):
 	name = models.CharField(max_length=100)
 	description = models.CharField(max_length=1000)
 	floorPlan = models.ForeignKey(FloorPlan)
-	optionChoice = models.ManyToManyField(Option)
+	optionTypes = models.ManyToManyField(OptionType)
 
 ### Configurations
 
 class HouseConfiguration(models.Model):
 	name = models.CharField(max_length=100)
 	description = models.CharField(max_length=1000)
-	optionChoice = models.ManyToManyField(Option)
 	housePlan = models.ForeignKey(HousePlan)
 
 class FloorConfiguration(models.Model):
 	name = models.CharField(max_length=100)
 	description = models.CharField(max_length=1000)
-	optionChoice = models.ManyToManyField(Option)
 	floorPlan = models.ForeignKey(FloorPlan)
 	houseConfiguration = models.ForeignKey(HouseConfiguration) # Needed?
 
 class RoomConfiguration(models.Model):
 	name = models.CharField(max_length=100)
 	description = models.CharField(max_length=1000)
-	optionChoice = models.ManyToManyField(Option)
+	optionChoices = models.ManyToManyField(Option)
 	roomPlan = models.ForeignKey(RoomPlan)
 	floorConfiguration = models.ForeignKey(FloorConfiguration) # Needed?
 
