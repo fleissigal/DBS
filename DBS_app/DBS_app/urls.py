@@ -18,7 +18,7 @@ from django.contrib import admin
 import houses.views
 
 urlpatterns = [
-    url(r'$', houses.views.main, name="main"),
+    url(r'^$', houses.views.main, name="main"),
     url(r'uploadFile$', houses.views.uploadFile, name="uploadFile"),
-    url(r'configurator/<int:houseID>/<int:floorID>/<int:roomID>/<int:optionID>/', houses.views.configurator, name="configurator"),
+    url(r'^configurator/(?P<houseID>[0-9]{1})/(?P<floorPlanID>[0-9]{1})/(?P<roomID>[0-9]{1})/(?P<optionID>[0-9]{1})/$', houses.views.configurator, name="configurator"),
 ]

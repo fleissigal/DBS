@@ -33,7 +33,11 @@
         
         <div class="col-md-4">
 
+          <h1>Model</h1>
+          {{ model.name }}
+
           <h1>Floor Plan</h1>
+          {{ floor.name }}
           <div class="floorplan">
             <img src="static/360/floorPlan.png" style="width: 80%; height: 80%" alt="Floor Plan" />
             <a href="http://www.google.com" style="top: 10%; left: 0%; width: 30%; height: 40%;" alt="Bedroom"></a>
@@ -41,10 +45,7 @@
             <a href="http://www.amazon.com" style="top: 5%; left: 60%; width: 20%; height: 45%;" alt="Bathroom"></a>
             <a href="http://www.yahoo.com" style="top: 50%; left: 0%; width: 42%; height: 45%;" alt="Living Room"></a>
             <a href="http://www.instagram.com" style="top: 50%; left: 42%; width: 38%; height: 45%;" alt="Master Bedroom"></a>
-          </div> 
-
-          <h1>Model</h1>
-          {{ model.name }}
+          </div>
 
           <!-- Floor plan button grid that lets the user move between the different rooms of the house -->
           <h1>Rooms</h1>
@@ -54,18 +55,6 @@
                 <input type="radio" id="{{ room.name }}" autocomplete="off" name="gridRadio"> {{ room.description }}
               </label>
               {% endfor %}
-<!--               <label class="btn btn-primary">
-                <input type="radio" id="kitchenGrid" autocomplete="off" name="gridRadio"> Kitchen
-              </label>
-              <label class="btn btn-primary">
-                <input type="radio" id="bathroomGrid" autocomplete="off" name="gridRadio"> Bathroom
-              </label>
-              <label class="btn btn-primary active">
-                <input type="radio" id="livingroomGrid" autocomplete="off" name="gridRadio" checked> Living Room
-              </label>
-              <label class="btn btn-primary">
-                <input type="radio" id="masterbedroomGrid" autocomplete="off" name="gridRadio"> Master Bedroom
-              </label> -->
           </div>
 
           <!-- A dropdown menu of the options of the current room -->

@@ -5,6 +5,9 @@ from django.http import HttpResponse
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 
+from houses.models import *
+# from houses.forms import *
+
 # Create your views here.
 
 def main(request):
@@ -26,12 +29,16 @@ def configurator(request, houseID, floorPlanID, roomID, optionID):
 
 	context = {}
 
+	# Getting the information from the DB
 	model = HousePlan.objects.get(id=houseID)
 	floor = FloorPlan.objects.get(id=floorPlanID)
-	rooms = floor.roomplan_set ## Need to figure out how to reach all the rooms in the specific floor - somehow to go the other direction
+	rooms = floor.roomplan_set.all() ## Need to figure out how to reach all the rooms in the specific floor - somehow to go the other direction
 	optionTypes = RoomPlan.objects.get(id=roomID).optionTypes
 	optionChosen = optionID
 
-	context = {'model':model, 'rooms':rooms, 'optionTypes':optionTypes, 'optionChosen':optionChosen}
+	context = {'model':model, 'floor':floor, 'rooms':rooms, 'optionTypes':optionTypes, 'optionChosen':optionChosen}
 
 	return render(request, 'index.html', context)
+
+
+
