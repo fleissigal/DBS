@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'DBS_app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dbs',
+        'NAME': 'DBS',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': '',
