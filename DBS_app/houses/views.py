@@ -33,10 +33,15 @@ def configurator(request, houseID, floorPlanID, roomID, optionID):
 	model = HousePlan.objects.get(id=houseID)
 	floor = FloorPlan.objects.get(id=floorPlanID)
 	rooms = floor.roomplan_set.all() ## Need to figure out how to reach all the rooms in the specific floor - somehow to go the other direction
-	optionTypes = RoomPlan.objects.get(id=roomID).optionTypes
-	optionChosen = optionID
+	optionTypes = RoomPlan.objects.get(id=roomID).optionTypes.all()
 
-	context = {'model':model, 'floor':floor, 'rooms':rooms, 'optionTypes':optionTypes, 'optionChosen':optionChosen}
+	optionTypesList = {}
+	for op in optionTypes:#create a multiple dictionaries and add them to a new dictionary and that dictionary to the context finally
+		optionTypesList[op] = op.option_set.all()
+
+	optionChosen = Option.objects.get(id=optionID)
+
+	context = {'model':model, 'floor':floor, 'rooms':rooms, 'optionTypes':optionTypes, 'optionTypesList':optionTypesList, 'optionChosen':optionChosen}
 
 	return render(request, 'index.html', context)
 

@@ -4,7 +4,7 @@ $(document).ready(function(){
 
 
 	var panorama, viewer;
-	panorama = new PANOLENS.ImagePanorama( Cookies.get('uploadedImage') || 'static/360/livingroomWhiteDrapes.jpg' );
+	panorama = new PANOLENS.ImagePanorama( Cookies.get('uploadedImage') || '/static/360/livingroomWhiteDrapes.jpg' );
 	viewer = new PANOLENS.Viewer({ container: canvasContainer });
 	viewer.add( panorama );
 
@@ -89,55 +89,11 @@ $(document).ready(function(){
 	// 		$('#dd').html("");
 	//     }
 
-	// });
-
-
-	// Red drapes option in the dropdown menu
-	$('#redDrapes').click(function() {
+	$('.option').click(function() {
 		// Replaces the image with the new image
+		var imageName = String($(this).attr('id'));
 		viewer.remove( panorama );
-		newPanorama = new PANOLENS.ImagePanorama( 'static/360/livingroomRedDrapes.jpg' );
-		viewer.add( newPanorama );
-		viewer.setPanorama( newPanorama );
-		// Updates the price
-		redDrapesPrice = 1000; // In the future we will get this piece of data from the database
-		newPrice = basePrice + redDrapesPrice;
-		$('#price').html("$" + newPrice);
-
-	});
-
-	$('#whiteDrapes').click(function() {
-		// Replaces the image with the new image
-		viewer.remove( panorama );
-		newPanorama = new PANOLENS.ImagePanorama( 'static/360/livingroomWhiteDrapes.jpg' );
-		viewer.add( newPanorama );
-		viewer.setPanorama( newPanorama );
-		// Updates the price
-		whiteDrapesPrice = 2000; // In the future we will get this piece of data from the database
-		newPrice = basePrice + whiteDrapesPrice;
-		$('#price').html("$" + newPrice);
-
-	});
-
-	$('#blueCabinets').click(function() {
-
-		console.log("blue");
-		// Replaces the image with the new image
-		viewer.remove( panorama );
-		newPanorama = new PANOLENS.ImagePanorama( 'static/360/kitchenBlueCabinets.jpg' );
-		viewer.add( newPanorama );
-		viewer.setPanorama( newPanorama );
-		// Updates the price
-		blueCabinets = 1500; // In the future we will get this piece of data from the database
-		newPrice = basePrice + blueCabinets;
-		$('#price').html("$" + newPrice);
-
-	});
-
-	$('#silverCabinets').click(function() {
-		// Replaces the image with the new image
-		viewer.remove( panorama );
-		newPanorama = new PANOLENS.ImagePanorama( 'static/360/kitchenSilverCabinets.jpg' );
+		newPanorama = new PANOLENS.ImagePanorama( '/static/360/' + imageName + '.jpg' );
 		viewer.add( newPanorama );
 		viewer.setPanorama( newPanorama );
 		// Updates the price
@@ -146,6 +102,61 @@ $(document).ready(function(){
 		$('#price').html("$" + newPrice);
 
 	});
+
+	// // Red drapes option in the dropdown menu
+	// $('#redDrapes').click(function() {
+	// 	// Replaces the image with the new image
+	// 	viewer.remove( panorama );
+	// 	newPanorama = new PANOLENS.ImagePanorama( 'static/360/livingroomRedDrapes.jpg' );
+	// 	viewer.add( newPanorama );
+	// 	viewer.setPanorama( newPanorama );
+	// 	// Updates the price
+	// 	redDrapesPrice = 1000; // In the future we will get this piece of data from the database
+	// 	newPrice = basePrice + redDrapesPrice;
+	// 	$('#price').html("$" + newPrice);
+
+	// });
+
+	// $('#whiteDrapes').click(function() {
+	// 	// Replaces the image with the new image
+	// 	viewer.remove( panorama );
+	// 	newPanorama = new PANOLENS.ImagePanorama( 'static/360/livingroomWhiteDrapes.jpg' );
+	// 	viewer.add( newPanorama );
+	// 	viewer.setPanorama( newPanorama );
+	// 	// Updates the price
+	// 	whiteDrapesPrice = 2000; // In the future we will get this piece of data from the database
+	// 	newPrice = basePrice + whiteDrapesPrice;
+	// 	$('#price').html("$" + newPrice);
+
+	// });
+
+	// $('#blueCabinets').click(function() {
+
+	// 	console.log("blue");
+	// 	// Replaces the image with the new image
+	// 	viewer.remove( panorama );
+	// 	newPanorama = new PANOLENS.ImagePanorama( 'static/360/kitchenBlueCabinets.jpg' );
+	// 	viewer.add( newPanorama );
+	// 	viewer.setPanorama( newPanorama );
+	// 	// Updates the price
+	// 	blueCabinets = 1500; // In the future we will get this piece of data from the database
+	// 	newPrice = basePrice + blueCabinets;
+	// 	$('#price').html("$" + newPrice);
+
+	// });
+
+	// $('#silverCabinets').click(function() {
+	// 	// Replaces the image with the new image
+	// 	viewer.remove( panorama );
+	// 	newPanorama = new PANOLENS.ImagePanorama( 'static/360/kitchenSilverCabinets.jpg' );
+	// 	viewer.add( newPanorama );
+	// 	viewer.setPanorama( newPanorama );
+	// 	// Updates the price
+	// 	silverCabinets = 1800; // In the future we will get this piece of data from the database
+	// 	newPrice = basePrice + silverCabinets;
+	// 	$('#price').html("$" + newPrice);
+
+	// });
 
 	$('#submitImage').submit(function() {
 		fileName = $('#fileInput').val().replace(/.*[\/\\]/, '');

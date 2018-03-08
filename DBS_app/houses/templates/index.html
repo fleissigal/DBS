@@ -19,7 +19,10 @@
       <script src="/static/css/js/dist/tooltip.js"></script>
       <script src="/static/css/js/dist/popover.js"></script>
 
+      <script src="/static/dreamHome/main.js"></script>
+
       <link rel="stylesheet" href="/static/dreamHome/main.css">
+
   </head>
 
   <body>
@@ -38,8 +41,9 @@
 
           <h1>Floor Plan</h1>
           {{ floor.name }}
+          <br><br>
           <div class="floorplan">
-            <img src="static/360/floorPlan.png" style="width: 80%; height: 80%" alt="Floor Plan" />
+            <img src="/static/360/floorPlan.png" style="width: 80%; height: 80%" alt="Floor Plan" />
             <a href="http://www.google.com" style="top: 10%; left: 0%; width: 30%; height: 40%;" alt="Bedroom"></a>
             <a href="http://www.apple.com" style="top: 5%; left: 30%; width: 30%; height: 45%;" alt="Kitchen"></a>
             <a href="http://www.amazon.com" style="top: 5%; left: 60%; width: 20%; height: 45%;" alt="Bathroom"></a>
@@ -61,18 +65,18 @@
           <div id="dd">
             <h1>Options</h1>
 
-            {% for optionType in optionsTypes %}
+            {% for optionType in optionTypes %}
 
             <div class="dropdown">
               <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{ optionType.name }} Options
               <span class="caret"></span></button>
               <ul class="dropdown-menu">
-                  {% for option in optiontype.option_set %}
-                  <li><a class="dropdown-item" id="{{ option.name }}">{{ option.description }}</a></li>
+                  {% for option in optionType.option_set.all %}
+                  <li><a class="dropdown-item option" id="{{ option.imageName }}">{{ option.description }}</a></li>
                   {% endfor %}
               </ul>
             </div>
-
+            <br>
             {% endfor %}
 
           </div>
@@ -93,8 +97,6 @@
         </div>
 
       </div>
-
-      <script src="/static/dreamHome/main.js"></script>
 
   </body>
 
