@@ -15,6 +15,7 @@ def main(request):
 	return render(request, "index.html", {})
 
 
+# This action is responsible for uploading a new file
 def uploadFile(request):
 
     if request.method == 'POST' and request.FILES['picture']:
@@ -25,6 +26,8 @@ def uploadFile(request):
         return render(request, 'index.html')
     return render(request, 'index.html')
 
+# This function is responsible for rendering the page with the correct
+# data from the request (the data is being pulled form the DB)
 def configurator(request, houseID, floorPlanID, roomID, optionID):
 
 	context = {}
@@ -32,17 +35,16 @@ def configurator(request, houseID, floorPlanID, roomID, optionID):
 	# Getting the information from the DB
 	model = HousePlan.objects.get(id=houseID)
 	floor = FloorPlan.objects.get(id=floorPlanID)
-	rooms = floor.roomplan_set.all() ## reach all the rooms in the specific floor
-	optionTypes = RoomPlan.objects.get(id=roomID).optionTypes.all()
+	rooms = floor.roomplan_set.all() ## All the rooms in the chosen floor
+	optionTypes = RoomPlan.objects.get(id=roomID).optionTypes.all() # All the option types for the chosen room
 	mainRoom = RoomPlan.objects.get(id=roomID)
 
+	# This array stores all the options in the different dropdown menus (each dropdown menu is a different option type)
 	optionTypesList = {}
 	for op in optionTypes: #create multiple dictionaries and add them to a new dictionary and finally that dictionary to the context
 		optionTypesList[op] = op.option_set.all()
 
-	optionChosen = Option.objects.get(id=optionID)
-
-	context = {'model':model, 'floor':floor, 'rooms':rooms, 'mainRoom':mainRoom, 'optionTypes':optionTypes, 'optionTypesList':optionTypesList, 'optionChosen':optionChosen}
+	context = {'model':model, 'floor':floor, 'rooms':rooms, 'mainRoom':mainRoom, 'optionTypes':optionTypes, 'optionTypesList':optionTypesList}
 
 	return render(request, 'index.html', context)
 
