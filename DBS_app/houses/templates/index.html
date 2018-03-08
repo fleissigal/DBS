@@ -31,7 +31,14 @@
 
         <div class="col-md-8">
           <h1>360 Panoramic View</h1>
-          <div id="canvasContainer"></div>
+          <div id="canvasContainer">
+            <script>
+              var panorama, viewer;
+              panorama = new PANOLENS.ImagePanorama( '/static/360/{{ mainRoom.name }}.jpg' );
+              viewer = new PANOLENS.Viewer({ container: canvasContainer });
+              viewer.add( panorama );
+            </script>
+          </div>
         </div>
         
         <div class="col-md-4">
@@ -53,33 +60,30 @@
 
           <!-- Floor plan button grid that lets the user move between the different rooms of the house -->
           <h1>Rooms</h1>
-          <div class="btn-group" data-toggle="buttons" id="rr">
+          <div class="btn-group" data-toggle="buttons">
               {% for room in rooms %}
               <label class="btn btn-primary">
-                <input type="radio" id="{{ room.name }}" autocomplete="off" name="gridRadio"> {{ room.description }}
+                <input class="room" houseID="{{ model.id }}" floorID="{{ floor.id }}" roomID="{{ room.id }}" type="radio" id="{{ room.name }}" autocomplete="off" name="gridRadio"> {{ room.description }}
               </label>
               {% endfor %}
           </div>
 
           <!-- A dropdown menu of the options of the current room -->
-          <div id="dd">
-            <h1>Options</h1>
+          <h1>Options</h1>
 
-            {% for optionType in optionTypes %}
+          {% for optionType in optionTypes %}
 
-            <div class="dropdown">
-              <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{ optionType.name }} Options
-              <span class="caret"></span></button>
-              <ul class="dropdown-menu">
-                  {% for option in optionType.option_set.all %}
-                  <li><a class="dropdown-item option" id="{{ option.imageName }}">{{ option.description }}</a></li>
-                  {% endfor %}
-              </ul>
-            </div>
-            <br>
-            {% endfor %}
-
+          <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{ optionType.name }} Options
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                {% for option in optionType.option_set.all %}
+                <li><a class="dropdown-item option" id="{{ option.imageName }}">{{ option.description }}</a></li>
+                {% endfor %}
+            </ul>
           </div>
+          <br>
+          {% endfor %}
 
           <!-- The price that updates when the different options change -->
           <h1>Price</h1>
