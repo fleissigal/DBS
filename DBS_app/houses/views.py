@@ -14,7 +14,6 @@ def main(request):
 
 	return render(request, "index.html", {})
 
-
 # This action is responsible for uploading a new file
 def uploadFile(request):
 
@@ -44,7 +43,7 @@ def configurator(request, houseID, floorPlanID, roomID):
 	return render(request, 'index.html', context)
 
 
-def shareRoom(request, houseID, floorPlanID, roomID, optionID):
+def shareRoom(request, houseID, floorPlanID, roomID):
 
 	context = {}
 	return render(request, 'index.html', context)

@@ -38,36 +38,6 @@ $(document).ready(function(){
 	});
 
 
-		// $.get( newUrl, function( data ) {
-		//   $( "body" ).html( data );
-		// });
-
-		// $.ajax(newUrl, {
-		//     type: 'get',
-		//     // data: { subject_id: subject_id },
-		//     dataType: 'html',
-		//     success : function(html) {
-		//  		$( "body" ).html( html );
-		//     },
-		//     error: function() {
-		//         alert("Error");
-		//     }
-		// });
-
-
-		// $.get({
-		//     method: 'GET',
-		//     url: 'index.html',
-		//     // headers: {
-		//     //     'Content-Type': 'application/json',
-		//     // },
-		//     // query parameters go under "data" as an Object
-		//     data: {
-		//         housePlan: $(this).attr('houseID'),
-		//         floorPlan: $(this).attr('floorID'),
-		//     }
-		// });
-
 });
 
 
