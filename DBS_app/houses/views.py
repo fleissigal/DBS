@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
@@ -33,11 +33,11 @@ def configurator(request, houseID, floorPlanID, roomID, optionID):
 	context = {}
 
 	# Getting the information from the DB
-	model = HousePlan.objects.get(id=houseID)
-	floor = FloorPlan.objects.get(id=floorPlanID)
+	model = get_object_or_404(HousePlan, id=houseID)
+	floor = get_object_or_404(FloorPlan, id=floorPlanID)
 	rooms = floor.roomplan_set.all() ## All the rooms in the chosen floor
-	optionTypes = RoomPlan.objects.get(id=roomID).optionTypes.all() # All the option types for the chosen room
-	mainRoom = RoomPlan.objects.get(id=roomID)
+	optionTypes = get_object_or_404(RoomPlan, id=roomID).optionTypes.all() # All the option types for the chosen room
+	mainRoom = get_object_or_404(RoomPlan, id=roomID)
 
 	# This array stores all the options in the different dropdown menus (each dropdown menu is a different option type)
 	optionTypesList = {}
