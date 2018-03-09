@@ -39,12 +39,7 @@ def configurator(request, houseID, floorPlanID, roomID, optionID):
 	optionTypes = get_object_or_404(RoomPlan, id=roomID).optionTypes.all() # All the option types for the chosen room
 	mainRoom = get_object_or_404(RoomPlan, id=roomID)
 
-	# This array stores all the options in the different dropdown menus (each dropdown menu is a different option type)
-	optionTypesList = {}
-	for op in optionTypes: #create multiple dictionaries and add them to a new dictionary and finally that dictionary to the context
-		optionTypesList[op] = op.option_set.all()
-
-	context = {'model':model, 'floor':floor, 'rooms':rooms, 'mainRoom':mainRoom, 'optionTypes':optionTypes, 'optionTypesList':optionTypesList}
+	context = {'model':model, 'floor':floor, 'rooms':rooms, 'mainRoom':mainRoom, 'optionTypes':optionTypes }
 
 	return render(request, 'index.html', context)
 
