@@ -32,14 +32,7 @@
         <!-- The section in the page that contains the canvas -->
         <div class="col-md-8">
           <h1>360 Panoramic View</h1>
-          <div id="canvasContainer">
-            <script>
-              var panorama, viewer;
-              panorama = new PANOLENS.ImagePanorama( '/static/360/{{ mainRoom.name }}.jpg' );
-              viewer = new PANOLENS.Viewer({ container: canvasContainer });
-              viewer.add( panorama );
-            </script>
-          </div>
+          <div id="canvasContainer"></div>
         </div>
         
         <!-- The section in the page that contains all the options and buttons -->
@@ -103,6 +96,13 @@
         </div>
 
       </div>
+
+      <script>
+        var panorama, viewer;
+        panorama = new PANOLENS.ImagePanorama( '/static/360/{{ mainRoom.name }}.jpg' );
+        viewer = new PANOLENS.Viewer({  container: canvasContainer });
+        viewer.add( panorama );
+      </script>
 
   </body>
 

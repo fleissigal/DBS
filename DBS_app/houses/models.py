@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 
 from django.db import models
 
+from django.contrib.auth.models import User
+
 # The models of the application
 
 
@@ -39,6 +41,7 @@ class HouseConfiguration(models.Model):
 	name = models.CharField(max_length=100)
 	description = models.CharField(max_length=1000)
 	housePlan = models.ForeignKey(HousePlan)
+	user = models.ForeignKey(User, null=True)
 
 class FloorConfiguration(models.Model):
 	name = models.CharField(max_length=100)

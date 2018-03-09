@@ -31,10 +31,12 @@ $(document).ready(function(){
 
 	// This function presents the uploaded image in the canvas
 	$('#submitImage').submit(function() {
+
 		fileName = $('#fileInput').val().replace(/.*[\/\\]/, '');
 		Cookies.set('uploadedImage', 'static/media/' + fileName);
 
 	});
+
 
 		// $.get( newUrl, function( data ) {
 		//   $( "body" ).html( data );
