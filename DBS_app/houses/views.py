@@ -28,7 +28,7 @@ def uploadFile(request):
 
 # This function is responsible for rendering the page with the correct
 # data from the request (the data is being pulled form the DB)
-def configurator(request, houseID, floorPlanID, roomID, optionID):
+def configurator(request, houseID, floorPlanID, roomID):
 
 	context = {}
 
