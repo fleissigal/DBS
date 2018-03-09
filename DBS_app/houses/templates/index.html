@@ -91,6 +91,13 @@
             <br>
             <button class="btn btn-primary">Upload</button>
           </form>
+          <br>
+
+          <h1>Share this room</h1>
+          <form action="shareRoom" method="post" id="shareRoom">
+            {% csrf_token %}
+            <button class="btn btn-primary">Share</button>
+          </form>
           <br><br>
 
         </div>

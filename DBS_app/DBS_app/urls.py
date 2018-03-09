@@ -21,4 +21,6 @@ urlpatterns = [
     url(r'^$', houses.views.main, name="main"),
     url(r'^uploadFile$', houses.views.uploadFile, name="uploadFile"),
     url(r'^configurator/housePlan=(?P<houseID>[0-9]{1})/floorPlan=(?P<floorPlanID>[0-9]{1})/roomPlan=(?P<roomID>[0-9]{1})/option=(?P<optionID>[0-9]{1})/$', houses.views.configurator, name="configurator"),
+    url(r'^configurator/housePlan=(?P<houseID>[0-9]{1})/floorPlan=(?P<floorPlanID>[0-9]{1})/roomPlan=(?P<roomID>[0-9]{1})/option=(?P<optionID>[0-9]{1})/shareRoom$', houses.views.shareRoom, name="shareRoom"),
+
 ]

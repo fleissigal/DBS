@@ -49,4 +49,9 @@ def configurator(request, houseID, floorPlanID, roomID, optionID):
 	return render(request, 'index.html', context)
 
 
+def shareRoom(request, houseID, floorPlanID, roomID, optionID):
+
+	context = {}
+	return render(request, 'index.html', context)
+
 
