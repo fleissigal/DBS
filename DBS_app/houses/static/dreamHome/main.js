@@ -7,8 +7,8 @@ $(document).ready(function(){
 	$('#price').html("$" + basePrice);
 
 	// This function changes the image in the canvas when the user clicks on one of the dropdown menu options
-	$('.option').click(function() {
-		var imageName = String($(this).attr('id'));
+	$('.dropDownMenu').change(function() {
+		var imageName = $(this)[0].options[$(this)[0].selectedIndex].id;
 		// Replaces the image with the new image
 		viewer.remove( panorama );
 		newPanorama = new PANOLENS.ImagePanorama( '/static/360/' + imageName + '.jpg' );
@@ -37,6 +37,20 @@ $(document).ready(function(){
 
 	});
 
+	//
+	$('#shareRoom').click(function() {
+
+		var newUrl = "";
+
+		$('.dropDownMenu').each(function() {
+			var selectedValueID = $(this)[0].options[$(this)[0].selectedIndex].id;
+			var selectedValueName = $('#' + selectedValueID).attr("name");
+			newUrl += "/" + selectedValueName;
+		});
+
+		console.log(newUrl);
+
+	});
 
 });
 

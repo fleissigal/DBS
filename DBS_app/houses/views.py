@@ -27,25 +27,28 @@ def uploadFile(request):
 
 # This function is responsible for rendering the page with the correct
 # data from the request (the data is being pulled form the DB)
-def configurator(request, houseID, floorPlanID, roomID, optionID):
+def configurator(request, houseID, floorID, roomID):
 
 	context = {}
 
+	optionList = request.GET.getlist('option')
+	imageToLoad = ""
+	if optionList:
+		for option in optionList:
+			# Fills the imageToLoad variable with the id's of the options
+			if optionList.index(option) != 0:
+				imageToLoad = imageToLoad + "-"
+			imageToLoad = imageToLoad + option
+
+
 	# Getting the information from the DB
 	model = get_object_or_404(HousePlan, id=houseID)
-	floor = get_object_or_404(FloorPlan, id=floorPlanID)
+	floor = get_object_or_404(FloorPlan, id=floorID)
 	rooms = floor.roomplan_set.all() ## All the rooms in the chosen floor
 	optionTypes = get_object_or_404(RoomPlan, id=roomID).optionTypes.all() # All the option types for the chosen room
 	mainRoom = get_object_or_404(RoomPlan, id=roomID)
 
-	context = {'model':model, 'floor':floor, 'rooms':rooms, 'mainRoom':mainRoom, 'optionTypes':optionTypes }
-
-	return render(request, 'index.html', context)
-
-
-def shareRoom(request, houseID, floorPlanID, roomID):
-
-	context = {}
+	context = {'model':model, 'floor':floor, 'rooms':rooms, 'mainRoom':mainRoom, 'optionTypes':optionTypes, "imageToLoad":imageToLoad }
 	return render(request, 'index.html', context)
 
 

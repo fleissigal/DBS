@@ -20,7 +20,7 @@
 
       <script src="/static/css/js/dist/tooltip.js"></script>
       <script src="/static/css/js/dist/popover.js"></script>
-      
+
   </head>
 
   <body>
@@ -65,17 +65,12 @@
           <h1>Options</h1>
 
           {% for optionType in optionTypes %}
-
-          <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{ optionType.name }} Options
-            <span class="caret"></span></button>
-            <ul class="dropdown-menu">
-                {% for option in optionType.option_set.all %}
-                <li><a class="dropdown-item option" id="{{ option.imageName }}">{{ option.description }}</a></li>
-                {% endfor %}
-            </ul>
-          </div>
-          <br>
+            <select class="dropDownMenu" id="{{ optionType.name }}">
+              {% for option in optionType.option_set.all %}
+                <option class="dropdown-item option" name="{{ option.name }}" id="{{ option.imageName }}">{{ option.description }}</option>
+              {% endfor %}
+            </select>
+            <br><br>
           {% endfor %}
 
           <!-- The price that updates when the different options change -->
@@ -92,10 +87,10 @@
           <br>
 
           <h1>Share this room</h1>
-          <form action="shareRoom" method="post" id="shareRoom">
-            {% csrf_token %}
-            <button class="btn btn-primary">Share</button>
-          </form>
+          <!-- <form action="shareRoom" method="post" id="shareRoom"> -->
+            <!-- {% csrf_token %} -->
+            <button class="btn btn-primary" id="shareRoom">Share</button>
+          <!-- </form> -->
           <br><br>
 
         </div>
@@ -104,7 +99,11 @@
 
       <script>
         var panorama, viewer;
-        panorama = new PANOLENS.ImagePanorama( '/static/360/{{ mainRoom.name }}.jpg' );
+        {% if imageToLoad %}
+          panorama = new PANOLENS.ImagePanorama( '/static/360/{{ imageToLoad }}.jpg' );
+        {% else %}
+          panorama = new PANOLENS.ImagePanorama( '/static/360/{{ mainRoom.name }}.jpg' );
+        {% endif %}
         viewer = new PANOLENS.Viewer({  container: canvasContainer });
         viewer.add( panorama );
       </script>
