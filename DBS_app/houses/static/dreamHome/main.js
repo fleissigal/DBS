@@ -50,7 +50,7 @@ $(document).ready(function(){
 
 		});
 
-		alert(newUrl);
+		alert("Copy and paste the following link to share it:\n\n" + newUrl);
 
 	});
 
