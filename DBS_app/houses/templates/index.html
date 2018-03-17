@@ -59,6 +59,7 @@
                 <input class="room" houseID="{{ model.id }}" floorID="{{ floor.id }}" roomID="{{ room.id }}" type="radio" id="{{ room.name }}" autocomplete="off" name="gridRadio"> {{ room.description }}
               </label>
               {% endfor %}
+              <div id="roomInfo" houseID="{{ model.id }}" floorID="{{ floor.id }}" roomID="{{ floor.deafultRoom.id }}"></div>
           </div>
 
           <!-- A dropdown menu of the options of the current room -->

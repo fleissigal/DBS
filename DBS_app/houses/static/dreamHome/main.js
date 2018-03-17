@@ -40,8 +40,8 @@ $(document).ready(function(){
 	//
 	$('#shareRoom').click(function() {
 
-		var newUrl = 'http://localhost:8000/configurator/housePlan=' + $(this).attr('houseID') + '/floorPlan='
-			+ $(this).attr('floorID') + '/roomPlan=' + $(this).attr('roomID') + '/?';
+		var newUrl = 'http://localhost:8000/configurator/housePlan=' + $('#roomInfo').attr('houseID') + '/floorPlan='
+			+ $('#roomInfo').attr('floorID') + '/roomPlan=' + $('#roomInfo').attr('roomID') + '/?';
 
 		$('.dropDownMenu').each(function() {
 			var selectedValueID = $(this)[0].options[$(this)[0].selectedIndex].id;
@@ -55,8 +55,6 @@ $(document).ready(function(){
 	});
 
 });
-
-
 
 
 
