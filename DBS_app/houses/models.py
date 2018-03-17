@@ -30,6 +30,7 @@ class FloorPlan(models.Model):
 	name = models.CharField(max_length=100)
 	description = models.CharField(max_length=1000)
 	housePlan = models.ForeignKey(HousePlan)
+	imageName = models.CharField(max_length=100)
 	deafultRoom = models.ForeignKey('RoomPlan', null=True)
 
 class RoomPlan(models.Model):
