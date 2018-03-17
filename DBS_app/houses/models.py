@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 class OptionType(models.Model):
 	name = models.CharField(max_length=100)
 	description = models.CharField(max_length=1000)
+	deafultOption = models.ForeignKey('Option', null=True)
 
 class Option(models.Model):
 	name = models.CharField(max_length=100)
@@ -23,17 +24,19 @@ class Option(models.Model):
 class HousePlan(models.Model):
 	name = models.CharField(max_length=100)
 	description = models.CharField(max_length=1000)
+	deafultFloor = models.ForeignKey('FloorPlan', null=True)
 
 class FloorPlan(models.Model):
 	name = models.CharField(max_length=100)
 	description = models.CharField(max_length=1000)
 	housePlan = models.ForeignKey(HousePlan)
+	deafultRoom = models.ForeignKey('RoomPlan', null=True)
 
 class RoomPlan(models.Model):
 	name = models.CharField(max_length=100)
 	description = models.CharField(max_length=1000)
 	floorPlan = models.ForeignKey(FloorPlan)
-	optionTypes = models.ManyToManyField(OptionType)
+	optionTypes = models.ManyToManyField(OptionType, null=True)
 
 ### Configurations
 

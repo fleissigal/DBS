@@ -23,7 +23,7 @@ $(document).ready(function(){
 
 		// constructing the new url to load with a GET request, with the right data
 		var newUrl = 'http://localhost:8000/configurator/housePlan=' + $(this).attr('houseID') + '/floorPlan='
-			+ $(this).attr('floorID') + '/roomPlan=' + $(this).attr('roomID') + '/option=1/';
+			+ $(this).attr('floorID') + '/roomPlan=' + $(this).attr('roomID') + '/option=1/'; // Change the option to the default one
 
 		window.location.href = newUrl;
 
@@ -40,15 +40,17 @@ $(document).ready(function(){
 	//
 	$('#shareRoom').click(function() {
 
-		var newUrl = "";
+		var newUrl = 'http://localhost:8000/configurator/housePlan=' + $(this).attr('houseID') + '/floorPlan='
+			+ $(this).attr('floorID') + '/roomPlan=' + $(this).attr('roomID') + '/?';
 
 		$('.dropDownMenu').each(function() {
 			var selectedValueID = $(this)[0].options[$(this)[0].selectedIndex].id;
 			var selectedValueName = $('#' + selectedValueID).attr("name");
-			newUrl += "/" + selectedValueName;
+			newUrl += "&option=" + selectedValueName;
+
 		});
 
-		console.log(newUrl);
+		alert(newUrl);
 
 	});
 
