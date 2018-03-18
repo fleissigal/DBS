@@ -43,13 +43,10 @@
           {{ floor.name }}
           <br><br>
           <div class="floorplan">
-            <!-- <img src="/static/360/simpleFloorPlan.png" style="width: 80%; height: 80%" alt="Floor Plan" /> -->
             <img src="/static/360/{{ floor.imageName }}.png" style="width: 80%; height: 80%" alt="Floor Plan" />
-            <a href="http://www.google.com" style="top: 10%; left: 0%; width: 30%; height: 40%;" alt="Bedroom"></a>
-            <a href="http://www.apple.com" style="top: 5%; left: 30%; width: 30%; height: 45%;" alt="Kitchen"></a>
-            <a href="http://www.amazon.com" style="top: 5%; left: 60%; width: 20%; height: 45%;" alt="Bathroom"></a>
-            <a href="http://www.yahoo.com" style="top: 50%; left: 0%; width: 42%; height: 45%;" alt="Living Room"></a>
-            <a href="http://www.instagram.com" style="top: 50%; left: 42%; width: 38%; height: 45%;" alt="Master Bedroom"></a>
+            {% for room in rooms %}
+              <a href="http://www.{{ room.id }}.com" style="top: {{ room.topPosition }}%; left: {{ room.leftPosition }}%; width: {{ room.widthPosition }}%; height: {{ room.heightPosition }}%;" alt="{{ room.name }}"></a>
+            {% endfor %}
           </div>
 
           <!-- Floor plan button grid that lets the user move between the different rooms of the house -->

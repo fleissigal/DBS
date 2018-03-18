@@ -8,7 +8,6 @@ $(document).ready(function(){
 
 	// This function changes the image in the canvas when the user clicks on one of the dropdown menu options
 	$('.dropDownMenu').change(function() {
-		// var imageName = $(this)[0].options[$(this)[0].selectedIndex].id;
 		var imageName = $('#roomInfo').attr('houseID') + "-" + $('#roomInfo').attr('floorID') + "-" + $('#roomInfo').attr('roomID');
 
 		$('.dropDownMenu').each(function() {
@@ -21,10 +20,15 @@ $(document).ready(function(){
 
 		// Replaces the image with the new image
 		viewer.remove( panorama );
-		newPanorama = new PANOLENS.ImagePanorama( '/static/360/' + imageName + '.jpg' );
-		// TODO: add that if no such photo exists, show an error message
-		viewer.add( newPanorama );
-		viewer.setPanorama( newPanorama );
+		var imageToLoad = '/static/360/' + imageName + '.jpg';
+
+		if (urlExists(imageToLoad)) {
+          	newPanorama = new PANOLENS.ImagePanorama( imageToLoad );
+        	viewer.add( newPanorama );
+			viewer.setPanorama( newPanorama );
+        } else {
+          alert("The configuration \"" + imageName + "\" does not exist in the database");
+        }
 
 	});
 
@@ -33,8 +37,9 @@ $(document).ready(function(){
 	$('.room').change(function() {
 
 		// constructing the new url to load with a GET request, with the right data
+		// Whenever there are no options in the url, the image with the default options is being loaded
 		var newUrl = 'http://localhost:8000/configurator/housePlan=' + $(this).attr('houseID') + '/floorPlan='
-			+ $(this).attr('floorID') + '/roomPlan=' + $(this).attr('roomID'); // Whenever there are no options in the url, the image with the default options is being loaded
+			+ $(this).attr('floorID') + '/roomPlan=' + $(this).attr('roomID');
 
 		window.location.href = newUrl;
 
