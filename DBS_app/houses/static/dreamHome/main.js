@@ -4,17 +4,23 @@ $(document).ready(function(){
 
 	// The default price for the base house
 	var basePrice = 100000;
-	$('#price').html("$" + basePrice);
+	$('#price').html(basePrice);
 
 	// This function changes the image in the canvas when the user clicks on one of the dropdown menu options
 	$('.dropDownMenu').change(function() {
 		var imageName = $('#roomInfo').attr('houseID') + "-" + $('#roomInfo').attr('floorID') + "-" + $('#roomInfo').attr('roomID');
+		var selecedValuePrice 
+
+		var selectedValue = $(this)[0].options[$(this)[0].selectedIndex].id;
+		var selecedValuePrice = parseInt($('#' + selectedValue).attr("optionPrice"));
+		var newPrice = parseInt($('#price').html()) + selecedValuePrice;
+		$('#price').html(newPrice);
 
 		$('.dropDownMenu').each(function() {
-			var selectedValue = $(this)[0].options[$(this)[0].selectedIndex].id;
-			var selectedValueID = $('#' + selectedValue).attr("optionID");
+			var ddSelectedValue = $(this)[0].options[$(this)[0].selectedIndex].id;
+			var ddSelectedValueID = $('#' + ddSelectedValue).attr("optionID");
 			imageName += "-";
-			imageName += selectedValueID;
+			imageName += ddSelectedValueID;
 
 		});
 
@@ -26,8 +32,9 @@ $(document).ready(function(){
           	newPanorama = new PANOLENS.ImagePanorama( imageToLoad );
         	viewer.add( newPanorama );
 			viewer.setPanorama( newPanorama );
+
         } else {
-          alert("The configuration \"" + imageName + "\" does not exist in the database");
+        	alert("The configuration \"" + imageName + "\" does not exist in the database");
         }
 
 	});

@@ -66,7 +66,7 @@
           {% for optionType in optionTypes %}
             <select class="dropDownMenu" id="{{ optionType.name }}">
               {% for option in optionType.option_set.all %}
-                <option class="dropdown-item option" optionID="{{ option.id }}" name="{{ option.name }}" id="{{ option.imageName }}">{{ option.description }}</option>
+                <option class="dropdown-item option" optionID="{{ option.id }}" optionPrice="{{ option.price }}" name="{{ option.name }}" id="{{ option.imageName }}">{{ option.description }}</option>
               {% endfor %}
             </select>
             <br><br>
@@ -74,7 +74,7 @@
 
           <!-- The price that updates when the different options change -->
           <h1>Price</h1>
-          <h3 id="price" style="color: darkblue"></h3>
+          $<h3 id="price" style="color: darkblue"></h3>
 
           <h1>Panoramic image upload</h1>
           <form action="uploadFile" method="post" enctype="multipart/form-data" id="submitImage">
