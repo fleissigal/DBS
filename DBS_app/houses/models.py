@@ -38,6 +38,10 @@ class RoomPlan(models.Model):
 	description = models.CharField(max_length=1000)
 	floorPlan = models.ForeignKey(FloorPlan)
 	optionTypes = models.ManyToManyField(OptionType, null=True)
+	topPosition = models.IntegerField(max_length=3)
+	leftPosition = models.IntegerField(max_length=3)
+	widthPosition = models.IntegerField(max_length=3)
+	heightPosition = models.IntegerField(max_length=3)
 
 ### Configurations
 

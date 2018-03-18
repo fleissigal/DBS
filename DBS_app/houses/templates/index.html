@@ -69,7 +69,7 @@
           {% for optionType in optionTypes %}
             <select class="dropDownMenu" id="{{ optionType.name }}">
               {% for option in optionType.option_set.all %}
-                <option class="dropdown-item option" name="{{ option.name }}" id="{{ option.imageName }}">{{ option.description }}</option>
+                <option class="dropdown-item option" optionID="{{ option.id }}" name="{{ option.name }}" id="{{ option.imageName }}">{{ option.description }}</option>
               {% endfor %}
             </select>
             <br><br>
@@ -101,13 +101,23 @@
 
       <script>
         var panorama, viewer;
-        {% if imageToLoad %}
-          panorama = new PANOLENS.ImagePanorama( '/static/360/{{ imageToLoad }}.jpg' );
+        // TODO: add that if no such photo exists, show an error message
+        var imageToLoad;
+        {% if optionsToLoad %}
+          imageToLoad = '/static/360/{{ model.id }}-{{ floor.id }}-{{ floor.deafultRoom.id }}-{{ optionsToLoad }}.jpg';
         {% else %}
-          panorama = new PANOLENS.ImagePanorama( '/static/360/{{ mainRoom.name }}.jpg' );
+          imageToLoad = '/static/360/{{ model.id }}-{{ floor.id }}-{{ floor.deafultRoom.id }}.jpg';
         {% endif %}
-        viewer = new PANOLENS.Viewer({  container: canvasContainer });
-        viewer.add( panorama );
+
+        if (urlExists(imageToLoad)) {
+          panorama = new PANOLENS.ImagePanorama( imageToLoad );
+          viewer = new PANOLENS.Viewer({  container: canvasContainer });
+          viewer.add( panorama );
+        } else {
+          var imageName = '{{ model.id }}-{{ floor.id }}-{{ floor.deafultRoom.id }}-{{ optionsToLoad }}'
+          alert("The configuration \"" + imageName + "\" does not exist in the database");
+        }
+
       </script>
 
   </body>

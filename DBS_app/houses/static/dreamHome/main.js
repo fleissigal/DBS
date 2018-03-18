@@ -8,10 +8,21 @@ $(document).ready(function(){
 
 	// This function changes the image in the canvas when the user clicks on one of the dropdown menu options
 	$('.dropDownMenu').change(function() {
-		var imageName = $(this)[0].options[$(this)[0].selectedIndex].id;
+		// var imageName = $(this)[0].options[$(this)[0].selectedIndex].id;
+		var imageName = $('#roomInfo').attr('houseID') + "-" + $('#roomInfo').attr('floorID') + "-" + $('#roomInfo').attr('roomID');
+
+		$('.dropDownMenu').each(function() {
+			var selectedValue = $(this)[0].options[$(this)[0].selectedIndex].id;
+			var selectedValueID = $('#' + selectedValue).attr("optionID");
+			imageName += "-";
+			imageName += selectedValueID;
+
+		});
+
 		// Replaces the image with the new image
 		viewer.remove( panorama );
 		newPanorama = new PANOLENS.ImagePanorama( '/static/360/' + imageName + '.jpg' );
+		// TODO: add that if no such photo exists, show an error message
 		viewer.add( newPanorama );
 		viewer.setPanorama( newPanorama );
 
@@ -23,7 +34,7 @@ $(document).ready(function(){
 
 		// constructing the new url to load with a GET request, with the right data
 		var newUrl = 'http://localhost:8000/configurator/housePlan=' + $(this).attr('houseID') + '/floorPlan='
-			+ $(this).attr('floorID') + '/roomPlan=' + $(this).attr('roomID') + '/option=1/'; // Change the option to the default one
+			+ $(this).attr('floorID') + '/roomPlan=' + $(this).attr('roomID'); // Whenever there are no options in the url, the image with the default options is being loaded
 
 		window.location.href = newUrl;
 
@@ -44,9 +55,9 @@ $(document).ready(function(){
 			+ $('#roomInfo').attr('floorID') + '/roomPlan=' + $('#roomInfo').attr('roomID') + '/?';
 
 		$('.dropDownMenu').each(function() {
-			var selectedValueID = $(this)[0].options[$(this)[0].selectedIndex].id;
-			var selectedValueName = $('#' + selectedValueID).attr("name");
-			newUrl += "&option=" + selectedValueName;
+			var selectedValue = $(this)[0].options[$(this)[0].selectedIndex].id;
+			var selectedValueID = $('#' + selectedValue).attr("optionID");
+			newUrl += "&option=" + selectedValueID;
 
 		});
 
@@ -56,6 +67,12 @@ $(document).ready(function(){
 
 });
 
+function urlExists(url) {
+    var http = new XMLHttpRequest();
+    http.open('HEAD', url, false);
+    http.send();
+    return http.status!=404;
+}
 
 
 

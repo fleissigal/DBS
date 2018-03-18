@@ -32,13 +32,13 @@ def configurator(request, houseID, floorID, roomID):
 	context = {}
 
 	optionList = request.GET.getlist('option')
-	imageToLoad = ""
+	optionsToLoad = ""
 	if optionList:
 		for option in optionList:
-			# Fills the imageToLoad variable with the id's of the options
+			# Fills the optionsToLoad variable with the id's of the options
 			if optionList.index(option) != 0:
-				imageToLoad = imageToLoad + "-"
-			imageToLoad = imageToLoad + option
+				optionsToLoad = optionsToLoad + "-"
+			optionsToLoad = optionsToLoad + option
 
 
 	# Getting the information from the DB
@@ -46,9 +46,9 @@ def configurator(request, houseID, floorID, roomID):
 	floor = get_object_or_404(FloorPlan, id=floorID)
 	rooms = floor.roomplan_set.all() ## All the rooms in the chosen floor
 	optionTypes = get_object_or_404(RoomPlan, id=roomID).optionTypes.all() # All the option types for the chosen room
-	mainRoom = get_object_or_404(RoomPlan, id=roomID)
+	# mainRoom = get_object_or_404(RoomPlan, id=roomID)
 
-	context = {'model':model, 'floor':floor, 'rooms':rooms, 'mainRoom':mainRoom, 'optionTypes':optionTypes, "imageToLoad":imageToLoad }
+	context = {'model':model, 'floor':floor, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":optionsToLoad }
 	return render(request, 'index.html', context)
 
 
