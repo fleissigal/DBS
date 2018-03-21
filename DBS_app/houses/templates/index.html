@@ -52,7 +52,7 @@
             <img src="/static/360/{{ floor.imageName }}.png" style="width: 80%; height: 80%" alt="Floor Plan" usemap="#floormap">
             <map name="floormap">
             {% for room in rooms %}
-              <area shape="rect" coords="{{ room.x1 }}, {{ room.y1 }}, {{ room.x2 }}, {{ room.y2 }}" href="http://www.apple.com" alt="{{ room.name }}">
+              <area shape="rect" coords="{{ room.x1 }}, {{ room.y1 }}, {{ room.x2 }}, {{ room.y2 }}" href="http://www.{{ room.name }}.com" alt="{{ room.name }}">
             {% endfor %}
             </map>
           </div>
