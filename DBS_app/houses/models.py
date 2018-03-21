@@ -26,6 +26,7 @@ class HousePlan(models.Model):
 	name = models.CharField(max_length=100)
 	description = models.CharField(max_length=1000)
 	deafultFloor = models.ForeignKey('FloorPlan', null=True)
+	price = models.IntegerField()
 
 class FloorPlan(models.Model):
 	name = models.CharField(max_length=100)
