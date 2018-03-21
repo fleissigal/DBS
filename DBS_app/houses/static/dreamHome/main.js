@@ -41,7 +41,7 @@ $(document).ready(function(){
 
 	// This function loads the page with the default room image and the room dropdown menus (option types)  when the user
 	// clicks on one of the room buttons
-	$('.room').change(function() {
+	$('.room').click(function() {
 
 		// constructing the new url to load with a GET request, with the right data
 		// Whenever there are no options in the url, the image with the default options is being loaded
@@ -60,7 +60,7 @@ $(document).ready(function(){
 
 	});
 
-	//
+
 	$('#shareRoom').click(function() {
 
 		var newUrl = 'http://localhost:8000/configurator/housePlan=' + $('#roomInfo').attr('houseID') + '/floorPlan='
@@ -73,7 +73,16 @@ $(document).ready(function(){
 
 		});
 
-		alert("Copy and paste the following link to share it:\n\n" + newUrl);
+	    $( "<div title='Copy and paste the link below'>" + newUrl + "</div>" ).dialog({
+	    	modal: true,
+	    	width: 500,
+	    	buttons: {
+	    		// Add a copy button
+	        	Close: function() {
+	        		$( this ).dialog( "close" );
+	        	}
+	      	}
+	    });
 
 	});
 
@@ -85,6 +94,8 @@ function urlExists(url) {
     http.send();
     return http.status!=404;
 }
+
+
 
 
 

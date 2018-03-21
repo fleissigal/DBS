@@ -44,11 +44,12 @@ def configurator(request, houseID, floorID, roomID):
 	# Getting the information from the DB
 	model = get_object_or_404(HousePlan, id=houseID)
 	floor = get_object_or_404(FloorPlan, id=floorID)
+	room = get_object_or_404(RoomPlan, id=roomID)
 	rooms = floor.roomplan_set.all() ## All the rooms in the chosen floor
 	optionTypes = get_object_or_404(RoomPlan, id=roomID).optionTypes.all() # All the option types for the chosen room
 	# mainRoom = get_object_or_404(RoomPlan, id=roomID)
 
-	context = {'model':model, 'floor':floor, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":optionsToLoad }
+	context = {'model':model, 'floor':floor, 'room':room, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":optionsToLoad }
 	return render(request, 'index.html', context)
 
 
