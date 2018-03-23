@@ -39,6 +39,9 @@
         <!-- The section in the page that contains all the options and buttons -->
         <div class="col-md-4">
 
+          <h1>Logged in user</h1>
+          {{ user.username }}
+
           <h1>Model</h1>
           {{ model.name }}
 
@@ -102,7 +105,13 @@
 
           <br><br>
 
-          <form action="{% url 'logout' %}" method="post">
+          <form action="{% url 'saveConfiguration' user.get_username model.id floor.id room.id %}" method="post">
+            {% csrf_token %}
+            <button class="btn btn-primary" id="saveConfiguration">Save Configuration</button>
+          </form>
+          <br>
+          
+          <form action="{% url 'login' %}" method="get">
             {% csrf_token %}
             <button class="btn btn-primary" id="logout">Log out</button>
           </form>

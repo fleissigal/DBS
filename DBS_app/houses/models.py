@@ -57,17 +57,20 @@ class FloorConfiguration(models.Model):
 	name = models.CharField(max_length=100)
 	description = models.CharField(max_length=1000)
 	floorPlan = models.ForeignKey(FloorPlan)
-	houseConfiguration = models.ForeignKey(HouseConfiguration) # Needed?
+	houseConfiguration = models.ForeignKey(HouseConfiguration)
 
 class RoomConfiguration(models.Model):
 	name = models.CharField(max_length=100)
 	description = models.CharField(max_length=1000)
 	optionChoices = models.ManyToManyField(Option)
 	roomPlan = models.ForeignKey(RoomPlan)
-	floorConfiguration = models.ForeignKey(FloorConfiguration) # Needed?
+	floorConfiguration = models.ForeignKey(FloorConfiguration)
 
+### Profile
 
-# Do we need name and description for every model? some/all of them can use the name and description
-# that are attached to the chosen option
+class Profile(models.Model):
+
+	user = models.OneToOneField(User)
+	houseConfiguration = models.ForeignKey(HouseConfiguration)
 
 

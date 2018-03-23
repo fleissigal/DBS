@@ -17,13 +17,21 @@ from django.contrib.auth import logout as auth_logout
 from houses.models import *
 from houses.forms import *
 
-# Create your views here.
 
+@login_required()
 def main(request):
 
-	return render(request, "index.html", {})
+	model = get_object_or_404(HousePlan, id=1)
+	floor = get_object_or_404(FloorPlan, id=1)
+	room = get_object_or_404(RoomPlan, id=1)
+	rooms = floor.roomplan_set.all() ## All the rooms in the chosen floor
+	optionTypes = get_object_or_404(RoomPlan, id=1).optionTypes.all() # All the option types for the chosen room
+
+	context = {'model':model, 'floor':floor, 'room':room, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":"" }
+	return render(request, 'index.html', context)
 
 # This action is responsible for uploading a new file
+@login_required()
 def uploadFile(request):
 
     if request.method == 'POST' and request.FILES['picture']:
@@ -56,11 +64,28 @@ def configurator(request, houseID, floorID, roomID):
 	room = get_object_or_404(RoomPlan, id=roomID)
 	rooms = floor.roomplan_set.all() ## All the rooms in the chosen floor
 	optionTypes = get_object_or_404(RoomPlan, id=roomID).optionTypes.all() # All the option types for the chosen room
-	# mainRoom = get_object_or_404(RoomPlan, id=roomID)
 
 	context = {'model':model, 'floor':floor, 'room':room, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":optionsToLoad }
 	return render(request, 'index.html', context)
 
+
+@login_required()
+def saveConfiguration(request, username, houseID, floorID, roomID):
+	model = get_object_or_404(HousePlan, id=houseID)
+	floor = get_object_or_404(FloorPlan, id=floorID)
+	room = get_object_or_404(RoomPlan, id=roomID)
+	rooms = floor.roomplan_set.all() ## All the rooms in the chosen floor
+	optionTypes = get_object_or_404(RoomPlan, id=roomID).optionTypes.all() # All the option types for the chosen room
+
+	userToSave = User.objects.get(username = username)
+	configuratinoName = username + " " + model.name
+	configurationDescription = username + " " + model.description
+
+	newHouseConfiguration = HouseConfiguration(name=configuratinoName, description=configurationDescription, housePlan=model, user=userToSave)
+	newHouseConfiguration.save()
+
+	context = {'model':model, 'floor':floor, 'room':room, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":"" }
+	return render(request, 'index.html', context)
 
 def login(request):
 
@@ -89,6 +114,7 @@ def login(request):
 	context = {'model':model, 'floor':floor, 'room':room, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":"" }
 	return render(request, 'index.html', context)
 
+@login_required()
 def logout(request):
 
 	auth_logout(request)
