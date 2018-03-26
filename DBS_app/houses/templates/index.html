@@ -40,7 +40,9 @@
         <div class="col-md-4">
 
           <h1>Logged in user</h1>
-          {{ user.username }}
+            {% if user.username %}
+              {{ user.username }}
+            {% endif %}
 
           <h1>Model</h1>
           {{ model.name }}
@@ -105,13 +107,15 @@
 
           <br><br>
 
+        {% if user.username %}
           <form action="{% url 'saveConfiguration' user.get_username model.id floor.id room.id %}" method="post">
             {% csrf_token %}
             <button class="btn btn-primary" id="saveConfiguration">Save Configuration</button>
           </form>
           <br>
-          
-          <form action="{% url 'login' %}" method="get">
+        {% endif %}
+
+          <form action="{% url 'logout' %}" method="post">
             {% csrf_token %}
             <button class="btn btn-primary" id="logout">Log out</button>
           </form>

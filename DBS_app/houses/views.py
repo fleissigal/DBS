@@ -18,7 +18,6 @@ from houses.models import *
 from houses.forms import *
 
 
-@login_required()
 def main(request):
 
 	model = get_object_or_404(HousePlan, id=1)
@@ -44,7 +43,6 @@ def uploadFile(request):
 
 # This function is responsible for rendering the page with the correct
 # data from the request (the data is being pulled form the DB)
-@login_required()
 def configurator(request, houseID, floorID, roomID):
 
 	context = {}
@@ -78,11 +76,24 @@ def saveConfiguration(request, username, houseID, floorID, roomID):
 	optionTypes = get_object_or_404(RoomPlan, id=roomID).optionTypes.all() # All the option types for the chosen room
 
 	userToSave = User.objects.get(username = username)
-	configuratinoName = username + " " + model.name
-	configurationDescription = username + " " + model.description
 
-	newHouseConfiguration = HouseConfiguration(name=configuratinoName, description=configurationDescription, housePlan=model, user=userToSave)
+	houseConfiguratinoName = username + " " + model.name
+	houseConfigurationDescription = username + " " + model.description
+
+	floorConfigurationName = username + " " + floor.name
+	floorConfigurationDescription = username + " " + floor.description
+
+	roomConfigurationName = username + " " + room.name
+	roomConfigurationDescription = username + " " + room.description
+
+	newHouseConfiguration = HouseConfiguration(name=houseConfiguratinoName, description=houseConfigurationDescription, housePlan=model, user=userToSave)
 	newHouseConfiguration.save()
+	newFloorConfiguration = FloorConfiguration(name=floorConfigurationName, description=floorConfigurationDescription, floorPlan=floor, houseConfiguration=newHouseConfiguration)
+	newFloorConfiguration.save()
+	newRoomConfiguration = RoomConfiguration(name=roomConfigurationName, description=roomConfigurationDescription, optionChoices="", roomPlan=room, floorConfiguration=newFloorConfiguration)
+	newRoomConfiguration.save()
+	# Need to fix so that optionChoices has the actual options that were chosen
+	# Also need to fix optionsToLoad that is being passes to the context
 
 	context = {'model':model, 'floor':floor, 'room':room, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":"" }
 	return render(request, 'index.html', context)
@@ -114,7 +125,6 @@ def login(request):
 	context = {'model':model, 'floor':floor, 'room':room, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":"" }
 	return render(request, 'index.html', context)
 
-@login_required()
 def logout(request):
 
 	auth_logout(request)

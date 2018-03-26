@@ -66,11 +66,3 @@ class RoomConfiguration(models.Model):
 	roomPlan = models.ForeignKey(RoomPlan)
 	floorConfiguration = models.ForeignKey(FloorConfiguration)
 
-### Profile
-
-class Profile(models.Model):
-
-	user = models.OneToOneField(User)
-	houseConfiguration = models.ForeignKey(HouseConfiguration)
-
-
