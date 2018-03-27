@@ -44,16 +44,13 @@ def uploadFile(request):
 # This function is responsible for rendering the page with the correct
 # data from the request (the data is being pulled from the DB)
 @login_required()
-def configurator(request, houseID, floorID, roomID):
+def configurator(request, username, houseID, floorID, roomID):
 
 	context = {}
 
-
-
 	userToSave = User.objects.get(username = username)
 
-	if userToSave.houseconfiguration_set.all():
-
+	if userToSave.houseconfiguration_set.first():
 		model = get_object_or_404(HouseConfiguration, id=userToSave.houseconfiguration_set.first().id)
 		floor = get_object_or_404(FloorConfiguration, id=model.floorconfiguration_set.first().id)
 		room = get_object_or_404(RoomConfiguration, id=floor.roomconfiguration_set.first().id)
@@ -85,15 +82,10 @@ def configurator(request, houseID, floorID, roomID):
 
 @login_required()
 def saveConfiguration(request, username, houseID, floorID, roomID):
-	model = get_object_or_404(HousePlan, id=houseID)
-	floor = get_object_or_404(FloorPlan, id=floorID)
-	room = get_object_or_404(RoomPlan, id=roomID)
-	rooms = floor.roomplan_set.all() ## All the rooms in the chosen floor
-	optionTypes = get_object_or_404(RoomPlan, id=roomID).optionTypes.all() # All the option types for the chosen room
 
 	userToSave = User.objects.get(username = username)
 
-	if not userToSave.houseconfiguration_set.all():
+	if not userToSave.houseconfiguration_set.first():
 
 		houseConfiguratinoName = username + " " + model.name
 		houseConfigurationDescription = username + " " + model.description
@@ -108,12 +100,24 @@ def saveConfiguration(request, username, houseID, floorID, roomID):
 		newHouseConfiguration.save()
 		newFloorConfiguration = FloorConfiguration(name=floorConfigurationName, description=floorConfigurationDescription, floorPlan=floor, houseConfiguration=newHouseConfiguration)
 		newFloorConfiguration.save()
-		newRoomConfiguration = RoomConfiguration(name=roomConfigurationName, description=roomConfigurationDescription, optionChoices="", roomPlan=room, floorConfiguration=newFloorConfiguration)
+		newRoomConfiguration = RoomConfiguration(name=roomConfigurationName, description=roomConfigurationDescription, roomPlan=room, floorConfiguration=newFloorConfiguration)
 		newRoomConfiguration.save()
 		# Need to fix so that optionChoices has the actual options that were chosen
 		# Also need to fix optionsToLoad that is being passes to the context
-	else:
+
 		model = get_object_or_404(HousePlan, id=houseID)
+		floor = get_object_or_404(FloorPlan, id=floorID)
+		room = get_object_or_404(RoomPlan, id=roomID)
+		rooms = floor.roomplan_set.all() ## All the rooms in the chosen floor
+		optionTypes = get_object_or_404(RoomPlan, id=roomID).optionTypes.all() # All the option types for the chosen room
+
+	else:
+		
+		model = get_object_or_404(HouseConfiguration, id=userToSave.houseconfiguration_set.first().id)
+		floor = get_object_or_404(FloorConfiguration, id=model.floorconfiguration_set.first().id)
+		room = get_object_or_404(RoomConfiguration, id=floor.roomconfiguration_set.first().id)
+		rooms = floor.roomconfiguration_set.all()
+		optionTypes = get_object_or_404(RoomConfiguration, id=room.id).optionTypes.all()
 		# Change only the choices in this specific room (check which room we are currently
 		# editing according to the variable "room" and look for it in the rooms of the user's configuration)
 
