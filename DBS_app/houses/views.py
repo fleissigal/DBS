@@ -87,6 +87,12 @@ def saveConfiguration(request, username, houseID, floorID, roomID):
 
 	if not userToSave.houseconfiguration_set.first():
 
+		model = get_object_or_404(HousePlan, id=houseID)
+		floor = get_object_or_404(FloorPlan, id=floorID)
+		room = get_object_or_404(RoomPlan, id=roomID)
+		rooms = floor.roomplan_set.all() ## All the rooms in the chosen floor
+		optionTypes = get_object_or_404(RoomPlan, id=roomID).optionTypes.all() # All the option types for the chosen room
+
 		houseConfiguratinoName = username + " " + model.name
 		houseConfigurationDescription = username + " " + model.description
 
@@ -104,12 +110,6 @@ def saveConfiguration(request, username, houseID, floorID, roomID):
 		newRoomConfiguration.save()
 		# Need to fix so that optionChoices has the actual options that were chosen
 		# Also need to fix optionsToLoad that is being passes to the context
-
-		model = get_object_or_404(HousePlan, id=houseID)
-		floor = get_object_or_404(FloorPlan, id=floorID)
-		room = get_object_or_404(RoomPlan, id=roomID)
-		rooms = floor.roomplan_set.all() ## All the rooms in the chosen floor
-		optionTypes = get_object_or_404(RoomPlan, id=roomID).optionTypes.all() # All the option types for the chosen room
 
 	else:
 
