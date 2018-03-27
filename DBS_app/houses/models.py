@@ -62,7 +62,7 @@ class FloorConfiguration(models.Model):
 class RoomConfiguration(models.Model):
 	name = models.CharField(max_length=100)
 	description = models.CharField(max_length=1000)
-	# optionChoices = models.ManyToManyField(Option)
+	# optionChoices = models.ManyToManyField(Option, null=True)
 	roomPlan = models.ForeignKey(RoomPlan)
 	floorConfiguration = models.ForeignKey(FloorConfiguration)
 

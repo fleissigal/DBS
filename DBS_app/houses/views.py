@@ -112,7 +112,7 @@ def saveConfiguration(request, username, houseID, floorID, roomID):
 		optionTypes = get_object_or_404(RoomPlan, id=roomID).optionTypes.all() # All the option types for the chosen room
 
 	else:
-		
+
 		model = get_object_or_404(HouseConfiguration, id=userToSave.houseconfiguration_set.first().id)
 		floor = get_object_or_404(FloorConfiguration, id=model.floorconfiguration_set.first().id)
 		room = get_object_or_404(RoomConfiguration, id=floor.roomconfiguration_set.first().id)
