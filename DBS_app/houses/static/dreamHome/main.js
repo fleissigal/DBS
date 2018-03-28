@@ -37,20 +37,45 @@ $(document).ready(function(){
         	alert("The configuration \"" + imageName + "\" does not exist in the database");
         }
 
+        $.ajax({
+	        url: "/saveConfiguration2/",
+	        type : 'GET',
+	        data : { 'username': $(this).attr('username'),
+	        		'housePlan': $('#roomInfo').attr('houseID'),
+	        		'floorPlan': $('#roomInfo').attr('floorID'),
+	        		'roomPlan': $('#roomInfo').attr('roomID'),
+	        		'option': $(this).val() },
+	        dataType: 'json',
+	        success : function(json) {}
+	    });
+
 	});
 
 	// This function loads the page with the default room image and the room dropdown menus (option types)  when the user
 	// clicks on one of the room buttons
 	$('.room').click(function() {
 
+		if ($(this).attr('username')) {
+			moveToRoom($(this).attr('houseID'), $(this).attr('floorID'), $(this).attr('roomID'));
+		} else {
+			var input = confirm('You are not logged-in and therefore the changes will not get saved. Are you sure you want to continue?');
+			if (input) {
+				moveToRoom($(this).attr('houseID'), $(this).attr('floorID'), $(this).attr('roomID'));
+			} else {
+				return;
+			}
+		}
+
+	});
+
+	function moveToRoom(houseID, floorID, roomID) {
 		// constructing the new url to load with a GET request, with the right data
 		// Whenever there are no options in the url, the image with the default options is being loaded
 		var newUrl = 'http://localhost:8000/configurator/housePlan=' + $(this).attr('houseID') + '/floorPlan='
 			+ $(this).attr('floorID') + '/roomPlan=' + $(this).attr('roomID');
 
 		window.location.href = newUrl;
-
-	});
+	}
 
 	// This function presents the uploaded image in the canvas
 	$('#submitImage').submit(function() {
@@ -73,16 +98,30 @@ $(document).ready(function(){
 
 		});
 
-	    $( "<div title='Copy and paste the link below'>" + newUrl + "</div>" ).dialog({
-	    	modal: true,
-	    	width: 500,
-	    	buttons: {
-	    		// Add a copy button
-	        	Close: function() {
-	        		$( this ).dialog( "close" );
-	        	}
-	      	}
-	    });
+	    prompt("Copy and paste the link below", newUrl);
+
+	});
+
+	$('.option').change(function() {
+			console.log(444);
+
+			$.get('saveConfiguration2/', {username: $(this).attr('username')}, function(data){});
+
+		// $.ajax({
+	 //        url: "/saveConfiguration2/",
+	 //        type : 'GET',
+	 //        data : {},
+	 //        // data : { 'username': $(this).attr('username'),
+	 //        // 		'housePlan': $('#roomInfo').attr('houseID'),
+	 //        // 		'floorPlan': $('#roomInfo').attr('floorID'),
+	 //        // 		'roomPlan': $('#roomInfo').attr('roomID'),
+	 //        // 		'option': $(this).attr('optionID') },
+	 //        dataType: 'json',
+	 //        success : function(json) {
+	 //            // $("#request-access").hide();
+	 //            // console.log("requested access complete");
+	 //        }
+	 //    });
 
 	});
 
@@ -90,11 +129,10 @@ $(document).ready(function(){
 
 function urlExists(url) {
     var http = new XMLHttpRequest();
-    http.open('HEAD', url, false);
+    http.open('HEAD', url, false);	
     http.send();
     return http.status!=404;
 }
-
 
 
 

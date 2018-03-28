@@ -124,6 +124,16 @@ def saveConfiguration(request, username, houseID, floorID, roomID):
 	context = {'model':model, 'floor':floor, 'room':room, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":"" }
 	return render(request, 'index.html', context)
 
+@login_required()
+def saveConfiguration2(request):
+
+	username = request.GET.get('username')
+	print(username);
+	option = request.GET.get('option')
+	print(option);
+	return redirect("http://www.apple.com/")
+
+
 def login(request):
 
 	context = {}

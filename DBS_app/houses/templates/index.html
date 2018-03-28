@@ -60,20 +60,10 @@
             <img src="/static/360/{{ floor.imageName }}.png" style="width: 80%; height: 80%" alt="Floor Plan" usemap="#floormap">
             <map name="floormap">
             {% for room in rooms %}
-              <area shape="rect" coords="{{ room.x1 }}, {{ room.y1 }}, {{ room.x2 }}, {{ room.y2 }}" alt="{{ room.name }}" class="room" houseID="{{ model.id }}" floorID="{{ floor.id }}" roomID="{{ room.id }}" id="{{ room.name }}">
+              <area shape="rect" coords="{{ room.x1 }}, {{ room.y1 }}, {{ room.x2 }}, {{ room.y2 }}" alt="{{ room.name }}" class="room" houseID="{{ model.id }}" floorID="{{ floor.id }}" roomID="{{ room.id }}" id="{{ room.name }}" username="{{ user.username }}">
             {% endfor %}
             </map>
           </div>
-
-          <!-- Floor plan button grid that lets the user move between the different rooms of the house -->
-<!--           <h1>Rooms</h1>
-          <div class="btn-group" data-toggle="buttons">
-              {% for room in rooms %}
-              <label class="btn btn-primary">
-                <input class="room" houseID="{{ model.id }}" floorID="{{ floor.id }}" roomID="{{ room.id }}" type="radio" id="{{ room.name }}" autocomplete="off" name="gridRadio"> {{ room.description }}
-              </label>
-              {% endfor %}
-          </div> -->
 
           <div id="roomInfo" houseID="{{ model.id }}" floorID="{{ floor.id }}" roomID="{{ room.id }}"></div>
 
@@ -81,9 +71,9 @@
           <h1>Options</h1>
 
           {% for optionType in optionTypes %}
-            <select class="dropDownMenu" id="{{ optionType.name }}">
+            <select class="dropDownMenu" id="{{ optionType.name }}" username="{{ user.username }}">
               {% for option in optionType.option_set.all %}
-                <option class="dropdown-item option" optionID="{{ option.id }}" optionPrice="{{ option.price }}" name="{{ option.name }}" id="{{ option.imageName }}">{{ option.description }}</option>
+                <option class="dropdown-item option" value="{{ option.id }}" optionID="{{ option.id }}" optionPrice="{{ option.price }}" name="{{ option.name }}" id="{{ option.imageName }}">{{ option.description }}</option>
               {% endfor %}
             </select>
             <br><br>
