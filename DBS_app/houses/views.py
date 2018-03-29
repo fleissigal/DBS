@@ -7,6 +7,7 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 
 from django.core.exceptions import ObjectDoesNotExist
+import json
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -119,14 +120,12 @@ def configurator(request, username, houseID, floorID, roomID):
 				roomConfig = config
 
 
+		# Send inside optionsToLoad all the options from the DB for this specific user's room config.
 		optionList = roomConfig.optionChoices.all()
 		for option in optionList:
 			# Fills the optionsToLoad variable with the id's of the options
-			# if ptionList.index(option) != 0:
 			optionsToLoad = str(option.id) + "-"
-			# optionsToLoad = optionsToLoad + option
 
-		# send inside optionsToLoad all the options from the DB for this specific user's room config.
 
 	# Else just present the user with the configuration of this house to be able to save in the future
 	else:
@@ -145,7 +144,7 @@ def configurator(request, username, houseID, floorID, roomID):
 	rooms = floor.roomplan_set.all() ## All the rooms in the chosen floor
 	optionTypes = room.optionTypes.all() # All the option types for the chosen room
 
-	context = {'model':model, 'floor':floor, 'room':room, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":optionsToLoad, "viewer":"false" }
+	context = {'model':model, 'floor':floor, 'room':room, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":optionsToLoad, "viewer":"false", "price":model.price }
 	return render(request, 'index.html', context)
 
 
@@ -159,22 +158,25 @@ def saveConfig(request):
 	# all of the rooms in each floor, with the default options in each room
 
 	# Else, the modelConfig does exist for that user, go to the specific room that's being edited (how do we know that? according to the url)
-	# and change the specific option in the DB (replacement), save, and update the price
+	# and change the specific option in the DB (replacement), save, and update the price. Go through all the options in it and
+	# find the one with the same optionType as the one we want to add, remove it and add the newOption
 
+	print "555"
 
+	context = {}
+	houseConfig = None
+	newOption = get_object_or_404(Option, id=request.GET.get('option'))
 
-	if request.GET.get('username'):
-		user = User.objects.get(username = request.GET.get('username'))
+	usersHouseConfigs = get_object_or_404(User, username=request.GET.get('username')).houseconfiguration_set.all()
+	housePlansConfigs = get_object_or_404(HousePlan, id=request.GET.get('housePlan')).houseconfiguration_set.all()
+	# Check for intersection between them
+	for config in usersHouseConfigs:
+		if config in housePlansConfigs:
+			houseConfig = config
 
-	if not user.houseconfiguration_set.first():
+	if (houseConfig == None):
 
-		model = get_object_or_404(HousePlan, id=request.GET.get('housePlan'))
-		floor = get_object_or_404(FloorPlan, id=request.GET.get('floorPlan'))
-		room = get_object_or_404(RoomPlan, id=request.GET.get('roomPlan'))
-		rooms = floor.roomplan_set.all() ## All the rooms in the chosen floor
-		optionTypes = get_object_or_404(RoomPlan, id=roomID).optionTypes.all() # All the option types for the chosen room
-
-		houseConfiguratinoName = username + " " + model.name
+		houseConfigurationName = username + " " + model.name
 		houseConfigurationDescription = username + " " + model.description
 
 		floorConfigurationName = username + " " + floor.name
@@ -183,30 +185,53 @@ def saveConfig(request):
 		roomConfigurationName = username + " " + room.name
 		roomConfigurationDescription = username + " " + room.description
 
-		newOption = get_object_or_404(Option, id=request.GET.get('option'))
-
-		newHouseConfiguration = HouseConfiguration(name=houseConfiguratinoName, description=houseConfigurationDescription, housePlan=model, user=userToSave)
+		newHouseConfiguration = HouseConfiguration(name=houseConfigurationName, description=houseConfigurationDescription, housePlan=model, user=userToSave)
 		newHouseConfiguration.save()
 		newFloorConfiguration = FloorConfiguration(name=floorConfigurationName, description=floorConfigurationDescription, floorPlan=floor, houseConfiguration=newHouseConfiguration)
 		newFloorConfiguration.save()
 		newRoomConfiguration = RoomConfiguration(name=roomConfigurationName, description=roomConfigurationDescription, optionChoices="", roomPlan=room, floorConfiguration=newFloorConfiguration)
+		### NEED TO ADD ALSO ALL THE DEFAULT OPTIONS TO ALL THE ROOMS AND ONLY AFTER THAT ADD THE NEW OPTION INSTEAD OF ONE OF THEM
 		newRoomConfiguration.optionChoices.add(newOption)
 		newRoomConfiguration.save()
-		# Need to fix so that optionChoices has the actual options that were chosen
-		# Also need to fix optionsToLoad that is being passed to the context
+
+
+		# REMOVE LATER
+		price = request.GET.get('price')
+
 
 	else:
 
-		model = get_object_or_404(HouseConfiguration, id=user.houseconfiguration_set.first().id)
-		floor = get_object_or_404(FloorConfiguration, id=model.floorconfiguration_set.first().id)
-		room = get_object_or_404(RoomConfiguration, id=floor.roomconfiguration_set.first().id)
-		rooms = floor.roomconfiguration_set.all()
-		optionTypes = get_object_or_404(RoomConfiguration, id=room.id).optionTypes.all()
-		# Change only the choices in this specific room (check which room we are currently
-		# editing according to the variable "room" and look for it in the rooms of the user's configuration)
+		floorConfig = None
+		houseConfigsFloorConfigs = houseConfig.floorconfiguration_set.all()
+		floorPlansConfigs = get_object_or_404(FloorPlan, id=floorID).floorconfiguration_set.all()
+		# Check for intersection between them
+		for config in houseConfigsFloorConfigs:
+			if config in floorPlansConfigs:
+				floorConfig = config
 
-	context = {'model':model, 'floor':floor, 'room':room, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":"" }
-	return render(request, 'index.html', context)
+		roomConfig = None
+		floorConfigsRoomConfigs = floorConfig.roomconfiguration_set.all()
+		roomPlansConfigs = get_object_or_404(RoomPlan, id=roomID).roomconfiguration_set.all()
+		# Check for intersection between them
+		for config in floorConfigsRoomConfigs:
+			if config in roomPlansConfigs:
+				roomConfig = config
+
+		roomOptionChoices = roomConfig.optionChoices.all()
+
+		oldPrice = 0
+		newPrice = newOption.price
+
+		for option in roomOptionChoices:
+			if (newOption.optionType.id == option.optionType.id):
+				oldPrice = option.price
+				roomConfig.optionChoices.get(id=option.id).delete()
+				roomConfig.optionChoices.add(newOption)
+				roomConfig.optionChoices.save()
+
+		price = request.GET.get('price') - oldPrice + newPrice
+
+	return HttpResponse(json.dumps({'price':price}), content_type="application/json")
 
 
 def login(request):

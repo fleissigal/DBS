@@ -60,7 +60,7 @@
             </map>
           </div>
 
-          <div id="roomInfo" houseID="{{ model.id }}" floorID="{{ floor.id }}" roomID="{{ room.id }}" viewerMode="{{ viewerMode }}"></div>
+          <div id="roomInfo" houseID="{{ model.id }}" floorID="{{ floor.id }}" roomID="{{ room.id }}" viewerMode="{{ viewerMode }}" price="{{ price }}"></div>
 
           <!-- A dropdown menu of the options of the current room -->
           <h1>Options</h1>
@@ -76,7 +76,7 @@
 
           <!-- The price that updates when the different options change -->
           <h1>Price</h1>
-          $<h3 id="price" style="color: darkblue"></h3>
+          $<h3 id="price" style="color: darkblue">{{ price }}</h3>
 
           <h1>Panoramic image upload</h1>
           <form action="uploadFile" method="post" enctype="multipart/form-data" id="submitImage">

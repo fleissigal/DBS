@@ -13,8 +13,8 @@ $(document).ready(function(){
 
 		var selectedValue = $(this)[0].options[$(this)[0].selectedIndex].id;
 		var selecedValuePrice = parseInt($('#' + selectedValue).attr("optionPrice"));
-		var newPrice = parseInt($('#price').html()) + selecedValuePrice;
-		$('#price').html(newPrice);
+		// var newPrice = parseInt($('#price').html()) + selecedValuePrice;
+		// $('#price').html(newPrice);
 
 		$('.dropDownMenu').each(function() {
 			var ddSelectedValue = $(this)[0].options[$(this)[0].selectedIndex].id;
@@ -38,15 +38,18 @@ $(document).ready(function(){
         }
 
         $.ajax({
-	        url: "/saveConfig/",
+	        url : "saveConfig",
 	        type : 'GET',
 	        data : { 'username': $(this).attr('username'),
 	        		'housePlan': $('#roomInfo').attr('houseID'),
 	        		'floorPlan': $('#roomInfo').attr('floorID'),
 	        		'roomPlan': $('#roomInfo').attr('roomID'),
 	        		'option': $(this).val() },
+	        		'price': $('#roomInfo').attr('price'),
 	        dataType: 'json',
-	        success : function(json) {}
+	        success : function(response) {
+	       		$('#price').html(response.price);
+	        }
 	    });
 
 	});
