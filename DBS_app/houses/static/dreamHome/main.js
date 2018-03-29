@@ -99,7 +99,7 @@ $(document).ready(function(){
 
 	$('#shareRoom').click(function() {
 
-		var newUrl = 'http://localhost:8000/configurator/housePlan=' + $('#roomInfo').attr('houseID') + '/floorPlan='
+		var newUrl = 'http://localhost:8000/viewer/housePlan=' + $('#roomInfo').attr('houseID') + '/floorPlan='
 			+ $('#roomInfo').attr('floorID') + '/roomPlan=' + $('#roomInfo').attr('roomID') + '/?';
 
 		$('.dropDownMenu').each(function() {

@@ -49,11 +49,8 @@ def viewer(request, houseID, floorID, roomID):
 	# Present the appropriate "configurator" for the details in the params, including options if any, only without a saving option (the warning).
 	# To save, allow the user to sign-in and then the user will be redirected to the same url only with "configurator"
 	# instead of "viewer" and everything will get saved automatically when changing the dropdown menus
-
 	# there will be a button of "log-in" at the bottom instead of the logout button
-
 	# Also, in the share button, share a link for the VIEWER, not the configurator
-
 	# And allow sharing from the viewer url
 
 	context = {}
@@ -89,28 +86,47 @@ def configurator(request, username, houseID, floorID, roomID):
 	# as you change the dropdown menus
 
 
-
-
-
-
 	context = {}
+	houseConfig = None
 
-	user = User.objects.get(username = username)
+	usersHouseConfigs = get_object_or_404(User, username=username).houseconfiguration_set.all()
+	housePlansConfigs = get_object_or_404(HousePlan, id=houseID).houseconfiguration_set.all()
+	# Check for intersection between them
+	for config in usersHouseConfigs:
+		if config in housePlansConfigs:
+			houseConfig = config
+
+
 	optionsToLoad = ""
 
 	# If the user has a house in edit mode, load this house
-	if user.houseconfiguration_set.first():
-		modelConfig = get_object_or_404(HouseConfiguration, id=user.houseconfiguration_set.first().id)
-		floorConfig = get_object_or_404(FloorConfiguration, id=modelConfig.floorconfiguration_set.first().id)
-		roomConfig = get_object_or_404(RoomConfiguration, id=floorConfig.roomconfiguration_set.first().id)
-		# Need to fix so that optionChoices has the actual options that were chosen
-		# Also need to fix optionsToLoad that is being passes to the context
+	if (houseConfig != None):
 
-		model = get_object_or_404(HousePlan, id=modelConfig.housePlan.id)
-		floor = get_object_or_404(FloorPlan, id=floorConfig.floorPlan.id)
-		room = get_object_or_404(RoomPlan, id=roomConfig.roomPlan.id)
-		rooms = floor.roomplan_set.all()
-		optionTypes = room.optionTypes.all()
+		floorConfig = None
+		houseConfigsFloorConfigs = houseConfig.floorconfiguration_set.all()
+		floorPlansConfigs = get_object_or_404(FloorPlan, id=floorID).floorconfiguration_set.all()
+		# Check for intersection between them
+		for config in houseConfigsFloorConfigs:
+			if config in floorPlansConfigs:
+				floorConfig = config
+
+		roomConfig = None
+		floorConfigsRoomConfigs = floorConfig.roomconfiguration_set.all()
+		roomPlansConfigs = get_object_or_404(RoomPlan, id=roomID).roomconfiguration_set.all()
+		# Check for intersection between them
+		for config in floorConfigsRoomConfigs:
+			if config in roomPlansConfigs:
+				roomConfig = config
+
+
+		optionList = roomConfig.optionChoices.all()
+		for option in optionList:
+			# Fills the optionsToLoad variable with the id's of the options
+			# if ptionList.index(option) != 0:
+			optionsToLoad = str(option.id) + "-"
+			# optionsToLoad = optionsToLoad + option
+
+		# send inside optionsToLoad all the options from the DB for this specific user's room config.
 
 	# Else just present the user with the configuration of this house to be able to save in the future
 	else:
@@ -122,15 +138,16 @@ def configurator(request, username, houseID, floorID, roomID):
 					optionsToLoad = optionsToLoad + "-"
 				optionsToLoad = optionsToLoad + option
 
-		# Getting the information from the DB
-		model = get_object_or_404(HousePlan, id=houseID)
-		floor = get_object_or_404(FloorPlan, id=floorID)
-		room = get_object_or_404(RoomPlan, id=roomID)
-		rooms = floor.roomplan_set.all() ## All the rooms in the chosen floor
-		optionTypes = get_object_or_404(RoomPlan, id=roomID).optionTypes.all() # All the option types for the chosen room
+
+	model = get_object_or_404(HousePlan, id=houseID)
+	floor = get_object_or_404(FloorPlan, id=floorID)
+	room = get_object_or_404(RoomPlan, id=roomID)
+	rooms = floor.roomplan_set.all() ## All the rooms in the chosen floor
+	optionTypes = room.optionTypes.all() # All the option types for the chosen room
 
 	context = {'model':model, 'floor':floor, 'room':room, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":optionsToLoad, "viewer":"false" }
 	return render(request, 'index.html', context)
+
 
 @login_required()
 def saveConfig(request):
