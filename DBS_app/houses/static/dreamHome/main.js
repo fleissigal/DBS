@@ -60,12 +60,12 @@ $(document).ready(function(){
 		var floorID = $(this).attr('floorID');
 		var roomID = $(this).attr('roomID');
 
-		if (username) {
-			moveToRoom(username, houseID, floorID, roomID);
+		if ($('#roomInfo').attr('viewerMode') == "false") {
+			moveToRoom(username, houseID, floorID, roomID, "viewer");
 		} else {
-			var input = confirm('You are not logged-in and therefore the changes will not get saved. Are you sure you want to continue?');
+			var input = confirm('You are currently in viewer mode and therefore your changes will not get saved. Are you sure you want to continue?');
 			if (input) {
-				moveToRoom(username, houseID, floorID, roomID);
+				moveToRoom(username, houseID, floorID, roomID, "viewer");
 			} else {
 				return;
 			}
@@ -73,10 +73,16 @@ $(document).ready(function(){
 
 	});
 
-	function moveToRoom(username, houseID, floorID, roomID) {
+	function moveToRoom(user, houseID, floorID, roomID, mode) {
+
+		username = "";
+		if (mode == "configurator") {
+			username = '/' + user;
+		}
+
 		// constructing the new url to load with a GET request, with the right data
 		// Whenever there are no options in the url, the image with the default options is being loaded
-		var newUrl = 'http://localhost:8000/configurator/' + username + '/housePlan=' + houseID + '/floorPlan='
+		var newUrl = 'http://localhost:8000/' + mode + username + '/housePlan=' + houseID + '/floorPlan='
 			+ floorID + '/roomPlan=' + roomID;
 
 		window.location.href = newUrl;

@@ -18,6 +18,8 @@ from houses.models import *
 from houses.forms import *
 
 
+
+# CHANGE EVENTUALLY, NO NEED
 def main(request):
 
 	model = get_object_or_404(HousePlan, id=1)
@@ -43,20 +45,37 @@ def uploadFile(request):
 
 # No login required
 def viewer(request, houseID, floorID, roomID):
-	return render(request, 'index.html')
+
 	# Present the appropriate "configurator" for the details in the params, including options if any, only without a saving option (the warning).
 	# To save, allow the user to sign-in and then the user will be redirected to the same url only with "configurator"
 	# instead of "viewer" and everything will get saved automatically when changing the dropdown menus
 
-	# there will be a button of "sign-in" at the bottom instead of the logout button
+	# there will be a button of "log-in" at the bottom instead of the logout button
 
 	# Also, in the share button, share a link for the VIEWER, not the configurator
 
 	# And allow sharing from the viewer url
 
+	context = {}
 
+	optionsToLoad = ""
+	optionList = request.GET.getlist('option')
+	if optionList:
+		for option in optionList:
+			# Fills the optionsToLoad variable with the id's of the options
+			if optionList.index(option) != 0:
+				optionsToLoad = optionsToLoad + "-"
+			optionsToLoad = optionsToLoad + option
 
+	# Getting the information from the DB
+	model = get_object_or_404(HousePlan, id=houseID)
+	floor = get_object_or_404(FloorPlan, id=floorID)
+	room = get_object_or_404(RoomPlan, id=roomID)
+	rooms = floor.roomplan_set.all() ## All the rooms in the chosen floor
+	optionTypes = get_object_or_404(RoomPlan, id=roomID).optionTypes.all() # All the option types for the chosen room
 
+	context = {'model':model, 'floor':floor, 'room':room, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":optionsToLoad, "viewerMode":"true" }
+	return render(request, 'index.html', context)
 
 
 @login_required()
@@ -110,7 +129,7 @@ def configurator(request, username, houseID, floorID, roomID):
 		rooms = floor.roomplan_set.all() ## All the rooms in the chosen floor
 		optionTypes = get_object_or_404(RoomPlan, id=roomID).optionTypes.all() # All the option types for the chosen room
 
-	context = {'model':model, 'floor':floor, 'room':room, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":optionsToLoad }
+	context = {'model':model, 'floor':floor, 'room':room, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":optionsToLoad, "viewer":"false" }
 	return render(request, 'index.html', context)
 
 @login_required()

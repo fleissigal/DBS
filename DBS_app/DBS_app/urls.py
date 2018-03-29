@@ -23,8 +23,8 @@ urlpatterns = [
     url(r'^configurator/(?P<username>\w+)/housePlan=(?P<houseID>[0-9]{1})/floorPlan=(?P<floorID>[0-9]{1})/roomPlan=(?P<roomID>[0-9]{1})/', houses.views.configurator, name="configurator"),
     url(r'^login', houses.views.login, name="login"),
     url(r'^register', houses.views.register, name="register"),
-    # url(r'^saveConfiguration/(?P<username>\w+)/housePlan=(?P<houseID>[0-9]{1})/floorPlan=(?P<floorID>[0-9]{1})/roomPlan=(?P<roomID>[0-9]{1})/', houses.views.saveConfiguration, name="saveConfiguration"),
     url(r'^saveConfig/$', houses.views.saveConfig, name="saveConfig"),
+    url(r'^viewer/housePlan=(?P<houseID>[0-9]{1})/floorPlan=(?P<floorID>[0-9]{1})/roomPlan=(?P<roomID>[0-9]{1})/', houses.views.viewer, name="viewer"),
 
     url(r'^logout', houses.views.logout, name="logout"),
 
