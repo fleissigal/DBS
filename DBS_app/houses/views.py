@@ -97,7 +97,6 @@ def configurator(request, username, houseID, floorID, roomID):
 		if config in housePlansConfigs:
 			houseConfig = config
 
-
 	optionsToLoad = ""
 
 	# If the user has a house in edit mode, load this house
@@ -147,10 +146,8 @@ def configurator(request, username, houseID, floorID, roomID):
 	context = {'model':model, 'floor':floor, 'room':room, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":optionsToLoad, "viewer":"false", "price":model.price }
 	return render(request, 'index.html', context)
 
-
 @login_required()
 def saveConfig(request):
-
 
 	# Getting called automatically from within configurator/username/... with a change in the dropdown menu. Now:
 
@@ -161,20 +158,18 @@ def saveConfig(request):
 	# and change the specific option in the DB (replacement), save, and update the price. Go through all the options in it and
 	# find the one with the same optionType as the one we want to add, remove it and add the newOption
 
-	print "555"
-
 	context = {}
 	houseConfig = None
-	newOption = get_object_or_404(Option, id=request.GET.get('option'))
+	newOption = get_object_or_404(Option, id=request.POST['option'])
 
-	usersHouseConfigs = get_object_or_404(User, username=request.GET.get('username')).houseconfiguration_set.all()
-	housePlansConfigs = get_object_or_404(HousePlan, id=request.GET.get('housePlan')).houseconfiguration_set.all()
+	usersHouseConfigs = get_object_or_404(User, username=request.POST['username']).houseconfiguration_set.all()
+	housePlansConfigs = get_object_or_404(HousePlan, id=request.POST['housePlan']).houseconfiguration_set.all()
 	# Check for intersection between them
 	for config in usersHouseConfigs:
 		if config in housePlansConfigs:
 			houseConfig = config
 
-	if (houseConfig == None):
+	if (houseConfig is None):
 
 		houseConfigurationName = username + " " + model.name
 		houseConfigurationDescription = username + " " + model.description
@@ -196,14 +191,14 @@ def saveConfig(request):
 
 
 		# REMOVE LATER
-		price = request.GET.get('price')
+		price = request.POST['price']
 
 
 	else:
 
 		floorConfig = None
 		houseConfigsFloorConfigs = houseConfig.floorconfiguration_set.all()
-		floorPlansConfigs = get_object_or_404(FloorPlan, id=floorID).floorconfiguration_set.all()
+		floorPlansConfigs = get_object_or_404(FloorPlan, id=request.POST['floorPlan']).floorconfiguration_set.all()
 		# Check for intersection between them
 		for config in houseConfigsFloorConfigs:
 			if config in floorPlansConfigs:
@@ -211,7 +206,7 @@ def saveConfig(request):
 
 		roomConfig = None
 		floorConfigsRoomConfigs = floorConfig.roomconfiguration_set.all()
-		roomPlansConfigs = get_object_or_404(RoomPlan, id=roomID).roomconfiguration_set.all()
+		roomPlansConfigs = get_object_or_404(RoomPlan, id=request.POST['roomPlan']).roomconfiguration_set.all()
 		# Check for intersection between them
 		for config in floorConfigsRoomConfigs:
 			if config in roomPlansConfigs:
@@ -225,11 +220,11 @@ def saveConfig(request):
 		for option in roomOptionChoices:
 			if (newOption.optionType.id == option.optionType.id):
 				oldPrice = option.price
-				roomConfig.optionChoices.get(id=option.id).delete()
+				roomConfig.optionChoices.remove(option)
 				roomConfig.optionChoices.add(newOption)
-				roomConfig.optionChoices.save()
+				# roomConfig.optionChoices.save()
 
-		price = request.GET.get('price') - oldPrice + newPrice
+		price = int(request.POST['price']) - int(oldPrice) + int(newPrice)
 
 	return HttpResponse(json.dumps({'price':price}), content_type="application/json")
 

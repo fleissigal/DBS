@@ -38,20 +38,48 @@ $(document).ready(function(){
         }
 
         $.ajax({
-	        url : "saveConfig",
-	        type : 'GET',
-	        data : { 'username': $(this).attr('username'),
+	        url : "/saveConfig/",
+	        type : 'POST',
+	        data : {
+	        		'username': $(this).attr('username'),
 	        		'housePlan': $('#roomInfo').attr('houseID'),
 	        		'floorPlan': $('#roomInfo').attr('floorID'),
 	        		'roomPlan': $('#roomInfo').attr('roomID'),
-	        		'option': $(this).val() },
+	        		'option': $(this).val(),
 	        		'price': $('#roomInfo').attr('price'),
+	        		},
 	        dataType: 'json',
 	        success : function(response) {
 	       		$('#price').html(response.price);
-	        }
+	        },
 	    });
 
+	});
+
+	$.ajaxSetup({
+	    beforeSend: function(xhr, settings) {
+	        if (settings.type == 'POST' || settings.type == 'PUT' || settings.type == 'DELETE') {
+	            function getCookie(name) {
+	                var cookieValue = null;
+	                if (document.cookie && document.cookie != '') {
+	                    var cookies = document.cookie.split(';');
+	                    for (var i = 0; i < cookies.length; i++) {
+	                        var cookie = jQuery.trim(cookies[i]);
+	                        // Does this cookie string begin with the name we want?
+	                        if (cookie.substring(0, name.length + 1) == (name + '=')) {
+	                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+	                            break;
+	                        }
+	                    }
+	                }
+	                return cookieValue;
+	            }
+	            if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+	                // Only send the token to relative URLs i.e. locally.
+	                xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+	            }
+	        }
+	    }
 	});
 
 	// This function loads the page with the default room image and the room dropdown menus (option types)  when the user

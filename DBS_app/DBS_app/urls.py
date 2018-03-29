@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^uploadFile$', houses.views.uploadFile, name="uploadFile"),
     url(r'^viewer/housePlan=(?P<houseID>[0-9]{1})/floorPlan=(?P<floorID>[0-9]{1})/roomPlan=(?P<roomID>[0-9]{1})/', houses.views.viewer, name="viewer"),
     url(r'^configurator/(?P<username>\w+)/housePlan=(?P<houseID>[0-9]{1})/floorPlan=(?P<floorID>[0-9]{1})/roomPlan=(?P<roomID>[0-9]{1})/', houses.views.configurator, name="configurator"),
-    url(r'^saveConfig', houses.views.saveConfig, name="saveConfig"),
+    url(r'^saveConfig/$', houses.views.saveConfig, name="saveConfig"),
 
     url(r'^login', houses.views.login, name="login"),
     url(r'^register', houses.views.register, name="register"),
