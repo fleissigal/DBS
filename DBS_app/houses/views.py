@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 
@@ -207,17 +207,14 @@ def login(request):
 	if not form.is_valid():
 		return render(request, 'login.html', context)
 
-	logged_in_user = auth_authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+	username = form.cleaned_data['username']
+	password=form.cleaned_data['password']
+
+	logged_in_user = auth_authenticate(username=username, password=password)
 	auth_login(request, logged_in_user)
 
-	model = get_object_or_404(HousePlan, id=1)
-	floor = get_object_or_404(FloorPlan, id=1)
-	room = get_object_or_404(RoomPlan, id=1)
-	rooms = floor.roomplan_set.all() ## All the rooms in the chosen floor
-	optionTypes = get_object_or_404(RoomPlan, id=1).optionTypes.all() # All the option types for the chosen room
-
-	context = {'model':model, 'floor':floor, 'room':room, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":"" }
-	return render(request, 'index.html', context)
+	url = '/configurator/%s/housePlan=%s/floorPlan=%s/roomPlan=%s' % (username, "1", "1", "1")
+	return HttpResponseRedirect(url)
 
 def logout(request):
 

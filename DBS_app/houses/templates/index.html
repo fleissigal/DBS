@@ -50,12 +50,7 @@
           <h1>Floor Plan</h1>
           {{ floor.name }}
           <br><br>
-<!--           <div class="floorplan">
-            <img src="/static/360/{{ floor.imageName }}.png" style="width: 80%; height: 80%" alt="Floor Plan" />
-            {% for room in rooms %}
-              <a href="http://www.{{ room.id }}.com" style="top: {{ room.topPosition }}%; left: {{ room.leftPosition }}%; width: {{ room.widthPosition }}%; height: {{ room.heightPosition }}%;" alt="{{ room.name }}"></a>
-            {% endfor %}
-          </div> -->
+
           <div class="floorplan">
             <img src="/static/360/{{ floor.imageName }}.png" style="width: 80%; height: 80%" alt="Floor Plan" usemap="#floormap">
             <map name="floormap">
@@ -97,12 +92,24 @@
 
           <br><br>
 
+<!--           {% if viewerMode == 'true' and user.username %}
+            <form action="{% url 'configurator' user.username model.id floor.id room.id %}" method="post">
+              {% csrf_token %}
+              <button class="btn btn-primary" id="configurator">Switch to Configurator</button>
+            </form>
+          {% endif %} -->
 
-
-          <form action="{% url 'logout' %}" method="post">
-            {% csrf_token %}
-            <button class="btn btn-primary" id="logout">Log out</button>
-          </form>
+          {% if user.username %}
+            <form action="{% url 'logout' %}" method="post">
+              {% csrf_token %}
+              <button class="btn btn-primary" id="logout">Log out</button>
+            </form>
+          {% else %}
+            <form action="{% url 'login' %}" method="post">
+              {% csrf_token %}
+              <button class="btn btn-primary" id="login">Log in</button>
+            </form>
+          {% endif %}
 
         </div>
       </div>
