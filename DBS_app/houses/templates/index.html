@@ -97,13 +97,7 @@
 
           <br><br>
 
-        {% if user.username %}
-          <form action="{% url 'saveConfiguration' user.get_username model.id floor.id room.id %}" method="post">
-            {% csrf_token %}
-            <button class="btn btn-primary" id="saveConfiguration">Save Configuration</button>
-          </form>
-          <br>
-        {% endif %}
+
 
           <form action="{% url 'logout' %}" method="post">
             {% csrf_token %}

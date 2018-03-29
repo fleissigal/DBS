@@ -38,7 +38,7 @@ $(document).ready(function(){
         }
 
         $.ajax({
-	        url: "/saveConfiguration2/",
+	        url: "/saveConfig/",
 	        type : 'GET',
 	        data : { 'username': $(this).attr('username'),
 	        		'housePlan': $('#roomInfo').attr('houseID'),
@@ -55,12 +55,17 @@ $(document).ready(function(){
 	// clicks on one of the room buttons
 	$('.room').click(function() {
 
-		if ($(this).attr('username')) {
-			moveToRoom($(this).attr('houseID'), $(this).attr('floorID'), $(this).attr('roomID'));
+		var username = $(this).attr('username');
+		var houseID = $(this).attr('houseID');
+		var floorID = $(this).attr('floorID');
+		var roomID = $(this).attr('roomID');
+
+		if (username) {
+			moveToRoom(username, houseID, floorID, roomID);
 		} else {
 			var input = confirm('You are not logged-in and therefore the changes will not get saved. Are you sure you want to continue?');
 			if (input) {
-				moveToRoom($(this).attr('houseID'), $(this).attr('floorID'), $(this).attr('roomID'));
+				moveToRoom(username, houseID, floorID, roomID);
 			} else {
 				return;
 			}
@@ -68,11 +73,11 @@ $(document).ready(function(){
 
 	});
 
-	function moveToRoom(houseID, floorID, roomID) {
+	function moveToRoom(username, houseID, floorID, roomID) {
 		// constructing the new url to load with a GET request, with the right data
 		// Whenever there are no options in the url, the image with the default options is being loaded
-		var newUrl = 'http://localhost:8000/configurator/housePlan=' + $(this).attr('houseID') + '/floorPlan='
-			+ $(this).attr('floorID') + '/roomPlan=' + $(this).attr('roomID');
+		var newUrl = 'http://localhost:8000/configurator/' + username + '/housePlan=' + houseID + '/floorPlan='
+			+ floorID + '/roomPlan=' + roomID;
 
 		window.location.href = newUrl;
 	}
@@ -99,29 +104,6 @@ $(document).ready(function(){
 		});
 
 	    prompt("Copy and paste the link below", newUrl);
-
-	});
-
-	$('.option').change(function() {
-			console.log(444);
-
-			$.get('saveConfiguration2/', {username: $(this).attr('username')}, function(data){});
-
-		// $.ajax({
-	 //        url: "/saveConfiguration2/",
-	 //        type : 'GET',
-	 //        data : {},
-	 //        // data : { 'username': $(this).attr('username'),
-	 //        // 		'housePlan': $('#roomInfo').attr('houseID'),
-	 //        // 		'floorPlan': $('#roomInfo').attr('floorID'),
-	 //        // 		'roomPlan': $('#roomInfo').attr('roomID'),
-	 //        // 		'option': $(this).attr('optionID') },
-	 //        dataType: 'json',
-	 //        success : function(json) {
-	 //            // $("#request-access").hide();
-	 //            // console.log("requested access complete");
-	 //        }
-	 //    });
 
 	});
 

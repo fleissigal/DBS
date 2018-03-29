@@ -41,27 +41,61 @@ def uploadFile(request):
         return render(request, 'index.html')
     return render(request, 'index.html')
 
-# This function is responsible for rendering the page with the correct
-# data from the request (the data is being pulled from the DB)
+# No login required
+def viewer(request, houseID, floorID, roomID):
+	return render(request, 'index.html')
+	# Present the appropriate "configurator" for the details in the params, including options if any, only without a saving option (the warning).
+	# To save, allow the user to sign-in and then the user will be redirected to the same url only with "configurator"
+	# instead of "viewer" and everything will get saved automatically when changing the dropdown menus
+
+	# there will be a button of "sign-in" at the bottom instead of the logout button
+
+	# Also, in the share button, share a link for the VIEWER, not the configurator
+
+	# And allow sharing from the viewer url
+
+
+
+
+
+
 @login_required()
 def configurator(request, username, houseID, floorID, roomID):
 
+	# Ask for username and houseId, floorID, roomID. If the username already has this specific house in "edit mode", load that house
+	# with the right params in the URL.
+
+	# Else, load the house for those params for editing (house=houseID, floor=floorID, room=roomID), and it will get saved when
+	# changing the dropdown menus. Alert a message saying you are now editing a new house and it will get saved automatically
+	# as you change the dropdown menus
+
+
+
+
+
+
 	context = {}
 
-	userToSave = User.objects.get(username = username)
+	user = User.objects.get(username = username)
+	optionsToLoad = ""
 
-	if userToSave.houseconfiguration_set.first():
-		model = get_object_or_404(HouseConfiguration, id=userToSave.houseconfiguration_set.first().id)
-		floor = get_object_or_404(FloorConfiguration, id=model.floorconfiguration_set.first().id)
-		room = get_object_or_404(RoomConfiguration, id=floor.roomconfiguration_set.first().id)
-		rooms = floor.roomconfiguration_set.all()
-		optionTypes = get_object_or_404(RoomConfiguration, id=room.id).optionTypes.all()
+	# If the user has a house in edit mode, load this house
+	if user.houseconfiguration_set.first():
+		modelConfig = get_object_or_404(HouseConfiguration, id=user.houseconfiguration_set.first().id)
+		floorConfig = get_object_or_404(FloorConfiguration, id=modelConfig.floorconfiguration_set.first().id)
+		roomConfig = get_object_or_404(RoomConfiguration, id=floorConfig.roomconfiguration_set.first().id)
 		# Need to fix so that optionChoices has the actual options that were chosen
 		# Also need to fix optionsToLoad that is being passes to the context
 
+		model = get_object_or_404(HousePlan, id=modelConfig.housePlan.id)
+		floor = get_object_or_404(FloorPlan, id=floorConfig.floorPlan.id)
+		room = get_object_or_404(RoomPlan, id=roomConfig.roomPlan.id)
+		rooms = floor.roomplan_set.all()
+		optionTypes = room.optionTypes.all()
+
+	# Else just present the user with the configuration of this house to be able to save in the future
 	else:
 		optionList = request.GET.getlist('option')
-		optionsToLoad = ""
 		if optionList:
 			for option in optionList:
 				# Fills the optionsToLoad variable with the id's of the options
@@ -79,17 +113,28 @@ def configurator(request, username, houseID, floorID, roomID):
 	context = {'model':model, 'floor':floor, 'room':room, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":optionsToLoad }
 	return render(request, 'index.html', context)
 
-
 @login_required()
-def saveConfiguration(request, username, houseID, floorID, roomID):
+def saveConfig(request):
 
-	userToSave = User.objects.get(username = username)
 
-	if not userToSave.houseconfiguration_set.first():
+	# Getting called automatically from within configurator/username/... with a change in the dropdown menu. Now:
 
-		model = get_object_or_404(HousePlan, id=houseID)
-		floor = get_object_or_404(FloorPlan, id=floorID)
-		room = get_object_or_404(RoomPlan, id=roomID)
+	# If this modelConfig does not exist in the user's configurations, save the following: the model, all its floors and
+	# all of the rooms in each floor, with the default options in each room
+
+	# Else, the modelConfig does exist for that user, go to the specific room that's being edited (how do we know that? according to the url)
+	# and change the specific option in the DB (replacement), save, and update the price
+
+
+
+	if request.GET.get('username'):
+		user = User.objects.get(username = request.GET.get('username'))
+
+	if not user.houseconfiguration_set.first():
+
+		model = get_object_or_404(HousePlan, id=request.GET.get('housePlan'))
+		floor = get_object_or_404(FloorPlan, id=request.GET.get('floorPlan'))
+		room = get_object_or_404(RoomPlan, id=request.GET.get('roomPlan'))
 		rooms = floor.roomplan_set.all() ## All the rooms in the chosen floor
 		optionTypes = get_object_or_404(RoomPlan, id=roomID).optionTypes.all() # All the option types for the chosen room
 
@@ -102,18 +147,21 @@ def saveConfiguration(request, username, houseID, floorID, roomID):
 		roomConfigurationName = username + " " + room.name
 		roomConfigurationDescription = username + " " + room.description
 
+		newOption = get_object_or_404(Option, id=request.GET.get('option'))
+
 		newHouseConfiguration = HouseConfiguration(name=houseConfiguratinoName, description=houseConfigurationDescription, housePlan=model, user=userToSave)
 		newHouseConfiguration.save()
 		newFloorConfiguration = FloorConfiguration(name=floorConfigurationName, description=floorConfigurationDescription, floorPlan=floor, houseConfiguration=newHouseConfiguration)
 		newFloorConfiguration.save()
-		newRoomConfiguration = RoomConfiguration(name=roomConfigurationName, description=roomConfigurationDescription, roomPlan=room, floorConfiguration=newFloorConfiguration)
+		newRoomConfiguration = RoomConfiguration(name=roomConfigurationName, description=roomConfigurationDescription, optionChoices="", roomPlan=room, floorConfiguration=newFloorConfiguration)
+		newRoomConfiguration.optionChoices.add(newOption)
 		newRoomConfiguration.save()
 		# Need to fix so that optionChoices has the actual options that were chosen
-		# Also need to fix optionsToLoad that is being passes to the context
+		# Also need to fix optionsToLoad that is being passed to the context
 
 	else:
 
-		model = get_object_or_404(HouseConfiguration, id=userToSave.houseconfiguration_set.first().id)
+		model = get_object_or_404(HouseConfiguration, id=user.houseconfiguration_set.first().id)
 		floor = get_object_or_404(FloorConfiguration, id=model.floorconfiguration_set.first().id)
 		room = get_object_or_404(RoomConfiguration, id=floor.roomconfiguration_set.first().id)
 		rooms = floor.roomconfiguration_set.all()
@@ -123,15 +171,6 @@ def saveConfiguration(request, username, houseID, floorID, roomID):
 
 	context = {'model':model, 'floor':floor, 'room':room, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":"" }
 	return render(request, 'index.html', context)
-
-@login_required()
-def saveConfiguration2(request):
-
-	username = request.GET.get('username')
-	print(username);
-	option = request.GET.get('option')
-	print(option);
-	return redirect("http://www.apple.com/")
 
 
 def login(request):
