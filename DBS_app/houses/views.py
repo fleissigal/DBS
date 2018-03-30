@@ -215,16 +215,17 @@ def saveConfig(request):
 		roomOptionChoices = roomConfig.optionChoices.all()
 
 		oldPrice = 0
-		newPrice = newOption.price
+		newPrice = int(newOption.price)
+		print newPrice
 
 		for option in roomOptionChoices:
 			if (newOption.optionType.id == option.optionType.id):
-				oldPrice = option.price
+				oldPrice = int(option.price)
+				print oldPrice
 				roomConfig.optionChoices.remove(option)
 				roomConfig.optionChoices.add(newOption)
-				# roomConfig.optionChoices.save()
 
-		price = int(request.POST['price']) - int(oldPrice) + int(newPrice)
+		price = int(request.POST['price']) - oldPrice + newPrice
 
 	return HttpResponse(json.dumps({'price':price}), content_type="application/json")
 

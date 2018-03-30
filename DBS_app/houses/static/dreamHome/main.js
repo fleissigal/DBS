@@ -2,9 +2,7 @@
 // Functions to execute as response to buttons/menus
 $(document).ready(function(){
 
-	// The default price for the base house
-	var basePrice = 100000;
-	$('#price').html(basePrice);
+	$('#price').html();
 
 	// This function changes the image in the canvas when the user clicks on one of the dropdown menu options
 	$('.dropDownMenu').change(function() {
@@ -46,7 +44,7 @@ $(document).ready(function(){
 	        		'floorPlan': $('#roomInfo').attr('floorID'),
 	        		'roomPlan': $('#roomInfo').attr('roomID'),
 	        		'option': $(this).val(),
-	        		'price': $('#roomInfo').attr('price'),
+	        		'price': $('#price').html(),
 	        		},
 	        dataType: 'json',
 	        success : function(response) {
