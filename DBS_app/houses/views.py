@@ -7,7 +7,6 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 
 from django.core.exceptions import ObjectDoesNotExist
-import json
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -17,12 +16,12 @@ from django.contrib.auth import logout as auth_logout
 
 from houses.models import *
 from houses.forms import *
+import json
 
 
-
-# CHANGE EVENTUALLY, NO NEED
 def main(request):
 
+	# Change later to contain the main page of the webapp, and from this page there will be links to the viewer/configurator
 	model = get_object_or_404(HousePlan, id=1)
 	floor = get_object_or_404(FloorPlan, id=1)
 	room = get_object_or_404(RoomPlan, id=1)
@@ -44,7 +43,6 @@ def uploadFile(request):
         return render(request, 'index.html')
     return render(request, 'index.html')
 
-# No login required
 def viewer(request, houseID, floorID, roomID):
 
 	# Present the appropriate "configurator" for the details in the params, including options if any, only without a saving option (the warning).
@@ -65,12 +63,11 @@ def viewer(request, houseID, floorID, roomID):
 				optionsToLoad = optionsToLoad + "-"
 			optionsToLoad = optionsToLoad + option
 
-	# Getting the information from the DB
 	model = get_object_or_404(HousePlan, id=houseID)
 	floor = get_object_or_404(FloorPlan, id=floorID)
 	room = get_object_or_404(RoomPlan, id=roomID)
-	rooms = floor.roomplan_set.all() ## All the rooms in the chosen floor
-	optionTypes = get_object_or_404(RoomPlan, id=roomID).optionTypes.all() # All the option types for the chosen room
+	rooms = floor.roomplan_set.all()
+	optionTypes = get_object_or_404(RoomPlan, id=roomID).optionTypes.all()
 
 	context = {'model':model, 'floor':floor, 'room':room, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":optionsToLoad, "viewerMode":"true" }
 	return render(request, 'index.html', context)
@@ -81,11 +78,9 @@ def configurator(request, username, houseID, floorID, roomID):
 
 	# Ask for username and houseId, floorID, roomID. If the username already has this specific house in "edit mode", load that house
 	# with the right params in the URL.
-
 	# Else, load the house for those params for editing (house=houseID, floor=floorID, room=roomID), and it will get saved when
 	# changing the dropdown menus. Alert a message saying you are now editing a new house and it will get saved automatically
 	# as you change the dropdown menus
-
 
 	context = {}
 	houseConfig = None
@@ -105,7 +100,6 @@ def configurator(request, username, houseID, floorID, roomID):
 		floorConfig = None
 		houseConfigsFloorConfigs = houseConfig.floorconfiguration_set.all()
 		floorPlansConfigs = get_object_or_404(FloorPlan, id=floorID).floorconfiguration_set.all()
-		# Check for intersection between them
 		for config in houseConfigsFloorConfigs:
 			if config in floorPlansConfigs:
 				floorConfig = config
@@ -113,7 +107,6 @@ def configurator(request, username, houseID, floorID, roomID):
 		roomConfig = None
 		floorConfigsRoomConfigs = floorConfig.roomconfiguration_set.all()
 		roomPlansConfigs = get_object_or_404(RoomPlan, id=roomID).roomconfiguration_set.all()
-		# Check for intersection between them
 		for config in floorConfigsRoomConfigs:
 			if config in roomPlansConfigs:
 				roomConfig = config
@@ -140,8 +133,8 @@ def configurator(request, username, houseID, floorID, roomID):
 	model = get_object_or_404(HousePlan, id=houseID)
 	floor = get_object_or_404(FloorPlan, id=floorID)
 	room = get_object_or_404(RoomPlan, id=roomID)
-	rooms = floor.roomplan_set.all() ## All the rooms in the chosen floor
-	optionTypes = room.optionTypes.all() # All the option types for the chosen room
+	rooms = floor.roomplan_set.all()
+	optionTypes = room.optionTypes.all()
 
 	context = {'model':model, 'floor':floor, 'room':room, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":optionsToLoad, "viewer":"false", "price":model.price }
 	return render(request, 'index.html', context)
@@ -169,6 +162,7 @@ def saveConfig(request):
 		if config in housePlansConfigs:
 			houseConfig = config
 
+	# If the user has already saved this model config in the past
 	if (houseConfig is None):
 
 		houseConfigurationName = username + " " + model.name
@@ -185,21 +179,19 @@ def saveConfig(request):
 		newFloorConfiguration = FloorConfiguration(name=floorConfigurationName, description=floorConfigurationDescription, floorPlan=floor, houseConfiguration=newHouseConfiguration)
 		newFloorConfiguration.save()
 		newRoomConfiguration = RoomConfiguration(name=roomConfigurationName, description=roomConfigurationDescription, optionChoices="", roomPlan=room, floorConfiguration=newFloorConfiguration)
-		### NEED TO ADD ALSO ALL THE DEFAULT OPTIONS TO ALL THE ROOMS AND ONLY AFTER THAT ADD THE NEW OPTION INSTEAD OF ONE OF THEM
+		### NEED TO SAVE ALL THE FLOORS CONFIGURAGTION AND ALL THE ROOMS IN EACH FLOOR (NOW WE SAVE ONLY ONE FLOOR AND ONE ROOM IN IT)
+		### NEED FIRST TO ADD ALL THE DEFAULT OPTIONS TO ALL THE ROOMS AND ONLY AFTER THAT ADD THE NEW OPTION INSTEAD OF ONE OF THEM
 		newRoomConfiguration.optionChoices.add(newOption)
 		newRoomConfiguration.save()
 
-
-		# REMOVE LATER
+		# REMOVE after the above fixes
 		price = request.POST['price']
-
 
 	else:
 
 		floorConfig = None
 		houseConfigsFloorConfigs = houseConfig.floorconfiguration_set.all()
 		floorPlansConfigs = get_object_or_404(FloorPlan, id=request.POST['floorPlan']).floorconfiguration_set.all()
-		# Check for intersection between them
 		for config in houseConfigsFloorConfigs:
 			if config in floorPlansConfigs:
 				floorConfig = config
@@ -207,21 +199,19 @@ def saveConfig(request):
 		roomConfig = None
 		floorConfigsRoomConfigs = floorConfig.roomconfiguration_set.all()
 		roomPlansConfigs = get_object_or_404(RoomPlan, id=request.POST['roomPlan']).roomconfiguration_set.all()
-		# Check for intersection between them
 		for config in floorConfigsRoomConfigs:
 			if config in roomPlansConfigs:
 				roomConfig = config
 
 		roomOptionChoices = roomConfig.optionChoices.all()
 
+		# Replacing the old option with the new one and updating the price
 		oldPrice = 0
 		newPrice = int(newOption.price)
-		print newPrice
 
 		for option in roomOptionChoices:
 			if (newOption.optionType.id == option.optionType.id):
 				oldPrice = int(option.price)
-				print oldPrice
 				roomConfig.optionChoices.remove(option)
 				roomConfig.optionChoices.add(newOption)
 
@@ -251,6 +241,7 @@ def login(request):
 	logged_in_user = auth_authenticate(username=username, password=password)
 	auth_login(request, logged_in_user)
 
+	# Change later so it goes to the configurator url that we got redirected from
 	url = '/configurator/%s/housePlan=%s/floorPlan=%s/roomPlan=%s' % (username, "1", "1", "1")
 	return HttpResponseRedirect(url)
 
@@ -258,7 +249,6 @@ def logout(request):
 
 	auth_logout(request)
 	return redirect('login.html')
-
 
 def register(request):
 
@@ -276,7 +266,7 @@ def register(request):
 		return render(request, 'register.html', context)
 
 	newUser = User.objects.create_user(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
-	newUser.is_active = True # CHANGE LATER
+	newUser.is_active = True # CHANGE LATER when we want to add the email confirmation feature
 
 	newUser.save()
 

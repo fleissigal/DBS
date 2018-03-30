@@ -92,13 +92,6 @@
 
           <br><br>
 
-<!--           {% if viewerMode == 'true' and user.username %}
-            <form action="{% url 'configurator' user.username model.id floor.id room.id %}" method="post">
-              {% csrf_token %}
-              <button class="btn btn-primary" id="configurator">Switch to Configurator</button>
-            </form>
-          {% endif %} -->
-
           {% if user.username %}
             <form action="{% url 'logout' %}" method="post">
               {% csrf_token %}
@@ -114,9 +107,9 @@
         </div>
       </div>
 
+      <!-- Loading the correct image to the canvas -->
       <script>
         var panorama, viewer;
-        // TODO: add that if no such photo exists, show an error message
         var imageToLoad;
         {% if optionsToLoad %}
           imageToLoad = '/static/360/{{ model.id }}-{{ floor.id }}-{{ room.id }}-{{ optionsToLoad }}.jpg';

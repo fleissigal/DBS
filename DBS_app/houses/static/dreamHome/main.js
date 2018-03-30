@@ -11,8 +11,6 @@ $(document).ready(function(){
 
 		var selectedValue = $(this)[0].options[$(this)[0].selectedIndex].id;
 		var selecedValuePrice = parseInt($('#' + selectedValue).attr("optionPrice"));
-		// var newPrice = parseInt($('#price').html()) + selecedValuePrice;
-		// $('#price').html(newPrice);
 
 		$('.dropDownMenu').each(function() {
 			var ddSelectedValue = $(this)[0].options[$(this)[0].selectedIndex].id;
@@ -54,6 +52,7 @@ $(document).ready(function(){
 
 	});
 
+	// Sending CSRF token with the ajax jquery call
 	$.ajaxSetup({
 	    beforeSend: function(xhr, settings) {
 	        if (settings.type == 'POST' || settings.type == 'PUT' || settings.type == 'DELETE') {
@@ -63,7 +62,6 @@ $(document).ready(function(){
 	                    var cookies = document.cookie.split(';');
 	                    for (var i = 0; i < cookies.length; i++) {
 	                        var cookie = jQuery.trim(cookies[i]);
-	                        // Does this cookie string begin with the name we want?
 	                        if (cookie.substring(0, name.length + 1) == (name + '=')) {
 	                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
 	                            break;
@@ -80,7 +78,7 @@ $(document).ready(function(){
 	    }
 	});
 
-	// This function loads the page with the default room image and the room dropdown menus (option types)  when the user
+	// This function loads the page with the default room image and the room dropdown menus (option types) when the user
 	// clicks on one of the room buttons
 	$('.room').click(function() {
 
@@ -102,6 +100,7 @@ $(document).ready(function(){
 
 	});
 
+	// Go to the clicked room in the right mode
 	function moveToRoom(user, houseID, floorID, roomID, mode) {
 
 		username = "";
@@ -125,7 +124,7 @@ $(document).ready(function(){
 
 	});
 
-
+	// Sharing the room URL
 	$('#shareRoom').click(function() {
 
 		var newUrl = 'http://localhost:8000/viewer/housePlan=' + $('#roomInfo').attr('houseID') + '/floorPlan='
