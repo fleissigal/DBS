@@ -117,6 +117,8 @@ def configurator(request, username, houseID, floorID, roomID):
 		for option in optionList:
 			# Fills the optionsToLoad variable with the id's of the options
 			optionsToLoad = str(option.id) + "-"
+			# DELETE the last character
+			optionsToLoad = optionsToLoad[:-1]
 
 
 	# Else just present the user with the configuration of this house to be able to save in the future
@@ -136,7 +138,7 @@ def configurator(request, username, houseID, floorID, roomID):
 	rooms = floor.roomplan_set.all()
 	optionTypes = room.optionTypes.all()
 
-	context = {'model':model, 'floor':floor, 'room':room, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":optionsToLoad, "viewer":"false", "price":model.price }
+	context = {'model':model, 'floor':floor, 'room':room, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":optionsToLoad, "viewerMode":"false", "price":model.price }
 	return render(request, 'index.html', context)
 
 @login_required()

@@ -88,7 +88,7 @@ $(document).ready(function(){
 		var roomID = $(this).attr('roomID');
 
 		if ($('#roomInfo').attr('viewerMode') == "false") {
-			moveToRoom(username, houseID, floorID, roomID, "viewer");
+			moveToRoom(username, houseID, floorID, roomID, "configurator");
 		} else {
 			var input = confirm('You are currently in viewer mode and therefore your changes will not get saved. Are you sure you want to continue?');
 			if (input) {
