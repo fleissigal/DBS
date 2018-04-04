@@ -21,7 +21,7 @@ import json
 
 def main(request):
 
-	# Change later to contain the main page of the webapp, and from this page there will be links to the viewer/configurator
+	# Change later to contain the main page of the webapp, and from this page there will be links to the viewer/configurator urls
 	model = get_object_or_404(HousePlan, id=1)
 	floor = get_object_or_404(FloorPlan, id=1)
 	room = get_object_or_404(RoomPlan, id=1)
@@ -117,8 +117,8 @@ def configurator(request, username, houseID, floorID, roomID):
 		for option in optionList:
 			# Fills the optionsToLoad variable with the id's of the options
 			optionsToLoad = str(option.id) + "-"
-			# DELETE the last character
-			optionsToLoad = optionsToLoad[:-1]
+		# DELETES the last character
+		optionsToLoad = optionsToLoad[:-1]
 
 
 	# Else just present the user with the configuration of this house to be able to save in the future
@@ -141,6 +141,7 @@ def configurator(request, username, houseID, floorID, roomID):
 	context = {'model':model, 'floor':floor, 'room':room, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":optionsToLoad, "viewerMode":"false", "price":model.price }
 	return render(request, 'index.html', context)
 
+# Getting called from an ajax function
 @login_required()
 def saveConfig(request):
 
@@ -167,27 +168,63 @@ def saveConfig(request):
 	# If the user has already saved this model config in the past
 	if (houseConfig is None):
 
+		# Saving the model
+
 		houseConfigurationName = username + " " + model.name
 		houseConfigurationDescription = username + " " + model.description
+
+		newHouseConfiguration = HouseConfiguration(name=houseConfigurationName, description=houseConfigurationDescription, housePlan=model, user=userToSave)
+		newHouseConfiguration.save()
+
+		# <<------NEW CODE------>>
+
+		# Saving each of the floors
+
+		# for fl in model.floorplan_set.all():
+
+		# 	floorConfigurationName = username + " " + fl.name
+		# 	floorConfigurationDescription = username + " " + fl.description
+
+		# 	newFloorConfiguration = FloorConfiguration(name=floorConfigurationName, description=floorConfigurationDescription, floorPlan=fl, houseConfiguration=newHouseConfiguration)
+		# 	newFloorConfiguration.save()
+
+		# 	# Saving each of the rooms in this floor
+
+		# 	for ro in floor.roomplan_set.all():
+
+		# 		roomConfigurationName = username + " " + ro.name
+		# 		roomConfigurationDescription = username + " " + ro.description
+
+		# 		newRoomConfiguration = RoomConfiguration(name=roomConfigurationName, description=roomConfigurationDescription, optionChoices="", roomPlan=ro, floorConfiguration=newFloorConfiguration)
+
+		# 		for optionType in ro.optionTypes.all():
+		# 			newRoomConfiguration.optionChoices.add(optionType.defaultOption)
+
+		# 		newRoomConfiguration.save()
+
+		# <<------NEW CODE------>>
+
+
+		# <<------ORIGINAL CODE------>>
 
 		floorConfigurationName = username + " " + floor.name
 		floorConfigurationDescription = username + " " + floor.description
 
+		newFloorConfiguration = FloorConfiguration(name=floorConfigurationName, description=floorConfigurationDescription, floorPlan=floor, houseConfiguration=newHouseConfiguration)
+		newFloorConfiguration.save()
+
 		roomConfigurationName = username + " " + room.name
 		roomConfigurationDescription = username + " " + room.description
 
-		newHouseConfiguration = HouseConfiguration(name=houseConfigurationName, description=houseConfigurationDescription, housePlan=model, user=userToSave)
-		newHouseConfiguration.save()
-		newFloorConfiguration = FloorConfiguration(name=floorConfigurationName, description=floorConfigurationDescription, floorPlan=floor, houseConfiguration=newHouseConfiguration)
-		newFloorConfiguration.save()
 		newRoomConfiguration = RoomConfiguration(name=roomConfigurationName, description=roomConfigurationDescription, optionChoices="", roomPlan=room, floorConfiguration=newFloorConfiguration)
-		### NEED TO SAVE ALL THE FLOORS CONFIGURAGTION AND ALL THE ROOMS IN EACH FLOOR (NOW WE SAVE ONLY ONE FLOOR AND ONE ROOM IN IT)
-		### NEED FIRST TO ADD ALL THE DEFAULT OPTIONS TO ALL THE ROOMS AND ONLY AFTER THAT ADD THE NEW OPTION INSTEAD OF ONE OF THEM
+
 		newRoomConfiguration.optionChoices.add(newOption)
 		newRoomConfiguration.save()
 
-		# REMOVE after the above fixes
+		# REMOVE THIS after the above fixes
 		price = request.POST['price']
+
+		# <<------ORIGINAL CODE------>>
 
 	else:
 
