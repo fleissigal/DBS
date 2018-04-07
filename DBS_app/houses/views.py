@@ -21,15 +21,11 @@ import json
 
 def main(request):
 
-	# Change later to contain the main page of the webapp, and from this page there will be links to the viewer/configurator urls
-	model = get_object_or_404(HousePlan, id=1)
-	floor = get_object_or_404(FloorPlan, id=1)
-	room = get_object_or_404(RoomPlan, id=1)
-	rooms = floor.roomplan_set.all() ## All the rooms in the chosen floor
-	optionTypes = get_object_or_404(RoomPlan, id=1).optionTypes.all() # All the option types for the chosen room
+	context = {}
 
-	context = {'model':model, 'floor':floor, 'room':room, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":"" }
-	return render(request, 'index.html', context)
+	# Change later to contain the main page of the webapp, and from this page there will be links to the viewer/configurator urls
+
+	return render(request, 'homepage.html', context)
 
 # This action is responsible for uploading a new file
 @login_required()

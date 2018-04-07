@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>DBS - Dream Home</title>
+
+      <!-- Scripts and css files -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+      <script src="/static/jquery-ui/jquery-ui-1.12.0-rc.2/jquery-ui.min.js"></script>
+      <script src="/static/three/three.min.js"></script>
+      <script src="/static/panolens/panolens.min.js"></script>
+
+      <script src="/static/tether/dist/js/tether.min.js"></script>
+      <script src="/static/dreamHome/main.js"></script>
+
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="/static/jquery-ui/jquery-ui-1.12.0-rc.2/jquery-ui.min.css">
+
+      <link rel="stylesheet" href="/static/dreamHome/main.css">
+
+      <script src="/static/css/js/dist/tooltip.js"></script>
+      <script src="/static/css/js/dist/popover.js"></script>
+
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <div class="row">
+        <h1>Welcome to your Dream Home!</h1>
+      </div>
+
+      <div class="row">
+          <h3>Choose your house model:</h3>
+          <br>
+      </div>
+
+
+      <div class="row">
+        
+        <div class="col-md-4">
+        </div>
+
+        <div class="col-md-4">
+          <a href="{% url 'viewer' 1 1 1 %}"><img src="/static/360/simplemodel.jpg" style="width: 350px; height: 200px"></a>
+          <br><br>
+        </div>
+
+        <div class="col-md-4">
+        </div>
+
+      </div>
+
+
+      <div class="row">
+        
+        <div class="col-md-4">
+        </div>
+
+        <div class="col-md-4">
+          <a href="{% url 'viewer' 2 2 6 %}"><img src="/static/360/simplemodel2.jpg" style="width: 350px; height: 200px"></a>
+          <br><br>
+        </div>
+
+        <div class="col-md-4">
+        </div>
+
+      </div>
+
+      <div class="row">
+        
+        <div class="col-md-4">
+        </div>
+
+        <div class="col-md-4">
+
+        <div class="row">
+          <div class="col-md-4">
+            {% if user.username %}
+              <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button class="btn btn-primary" id="logout">Log out</button>
+              </form>
+            {% else %}
+              <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                <button class="btn btn-primary" id="login">Log in</button>
+              </form>
+            {% endif %}
+          </div>
+
+          <div class="col-md-4">
+          </div>
+          
+          <div class="col-md-4">
+            <form action="{% url 'register' %}" method="post">
+              {% csrf_token %}
+              <button class="btn btn-warning" id="register">Register</button>
+            </form>
+          </div>
+
+          </div>
+
+        </div>
+
+        <div class="col-md-4">
+        </div>
+
+      </div>
+
+
+    </div>
+
+
+  </body>
+
+</html>

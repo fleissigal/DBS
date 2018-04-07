@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 class OptionType(models.Model):
 	name = models.CharField(max_length=100)
 	description = models.CharField(max_length=1000)
-	deafultOption = models.ForeignKey('Option', null=True)
+	defaultOption = models.ForeignKey('Option', null=True)
 
 class Option(models.Model):
 	name = models.CharField(max_length=100)
@@ -25,7 +25,7 @@ class Option(models.Model):
 class HousePlan(models.Model):
 	name = models.CharField(max_length=100)
 	description = models.CharField(max_length=1000)
-	deafultFloor = models.ForeignKey('FloorPlan', null=True)
+	defaultFloor = models.ForeignKey('FloorPlan', null=True)
 	price = models.IntegerField(default=0)
 
 class FloorPlan(models.Model):

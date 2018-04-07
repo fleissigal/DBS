@@ -52,7 +52,7 @@
           <br><br>
 
           <div class="floorplan">
-            <img src="/static/360/{{ floor.imageName }}.png" style="width: 80%; height: 80%" alt="Floor Plan" usemap="#floormap">
+            <img src="/static/360/{{ floor.imageName }}.jpg" style="width: 80%; height: 80%" alt="Floor Plan" usemap="#floormap">
             <map name="floormap">
             {% for room in rooms %}
               <area shape="rect" coords="{{ room.x1 }}, {{ room.y1 }}, {{ room.x2 }}, {{ room.y2 }}" alt="{{ room.name }}" class="room" houseID="{{ model.id }}" floorID="{{ floor.id }}" roomID="{{ room.id }}" id="{{ room.name }}" username="{{ user.username }}">
