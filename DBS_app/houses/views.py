@@ -16,8 +16,10 @@ from django.contrib.auth import logout as auth_logout
 
 from houses.models import *
 from houses.forms import *
-import json
 
+import json
+from django.core.serializers.json import DjangoJSONEncoder
+from django.core import serializers
 
 def main(request):
 
@@ -68,6 +70,50 @@ def viewer(request, houseID, floorID, roomID):
 	context = {'model':model, 'floor':floor, 'room':room, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":optionsToLoad, "viewerMode":"true" }
 	return render(request, 'index.html', context)
 
+@login_required()
+def summary(request):
+
+	options = None
+
+	username = request.POST['username']
+	houseID = request.POST['housePlan']
+	floorID = request.POST['floorPlan']
+	roomID = request.POST['roomPlan']
+
+	houseConfig = None
+
+	usersHouseConfigs = get_object_or_404(User, username=username).houseconfiguration_set.all()
+	housePlansConfigs = get_object_or_404(HousePlan, id=houseID).houseconfiguration_set.all()
+	# Check for intersection between them
+	for config in usersHouseConfigs:
+		if config in housePlansConfigs:
+			houseConfig = config
+
+	# If the user has a house in edit mode, load this house
+	if (houseConfig != None):
+
+		floorConfig = None
+		houseConfigsFloorConfigs = houseConfig.floorconfiguration_set.all()
+		floorPlansConfigs = get_object_or_404(FloorPlan, id=floorID).floorconfiguration_set.all()
+		for config in houseConfigsFloorConfigs:
+			if config in floorPlansConfigs:
+				floorConfig = config
+
+		roomConfig = None
+		floorConfigsRoomConfigs = floorConfig.roomconfiguration_set.all()
+		roomPlansConfigs = get_object_or_404(RoomPlan, id=roomID).roomconfiguration_set.all()
+		for config in floorConfigsRoomConfigs:
+			if config in roomPlansConfigs:
+				roomConfig = config
+
+
+		# Send inside optionsToLoad all the options from the DB for this specific user's room config.
+		options = roomConfig.optionChoices.all()
+
+	# We only want to present the name and the price of every option - in the summary
+	serializedOptions = serializers.serialize('json', options, fields=('name', 'price'))
+
+	return HttpResponse(json.dumps({'options':serializedOptions}), content_type="application/json")
 
 @login_required()
 def configurator(request, username, houseID, floorID, roomID):
@@ -152,10 +198,10 @@ def saveConfig(request):
 
 	context = {}
 	houseConfig = None
-	newOption = get_object_or_404(Option, id=request.POST['option'])
+	newOption = get_object_or_404(Option, id=request.POST.get['option'])
 
-	usersHouseConfigs = get_object_or_404(User, username=request.POST['username']).houseconfiguration_set.all()
-	housePlansConfigs = get_object_or_404(HousePlan, id=request.POST['housePlan']).houseconfiguration_set.all()
+	usersHouseConfigs = get_object_or_404(User, username=request.POST.get['username']).houseconfiguration_set.all()
+	housePlansConfigs = get_object_or_404(HousePlan, id=request.POST.get['housePlan']).houseconfiguration_set.all()
 	# Check for intersection between them
 	for config in usersHouseConfigs:
 		if config in housePlansConfigs:
@@ -218,7 +264,7 @@ def saveConfig(request):
 		newRoomConfiguration.save()
 
 		# REMOVE THIS after the above fixes
-		price = request.POST['price']
+		price = request.POST.get['price']
 
 		# <<------ORIGINAL CODE------>>
 
@@ -226,14 +272,14 @@ def saveConfig(request):
 
 		floorConfig = None
 		houseConfigsFloorConfigs = houseConfig.floorconfiguration_set.all()
-		floorPlansConfigs = get_object_or_404(FloorPlan, id=request.POST['floorPlan']).floorconfiguration_set.all()
+		floorPlansConfigs = get_object_or_404(FloorPlan, id=request.POST.get['floorPlan']).floorconfiguration_set.all()
 		for config in houseConfigsFloorConfigs:
 			if config in floorPlansConfigs:
 				floorConfig = config
 
 		roomConfig = None
 		floorConfigsRoomConfigs = floorConfig.roomconfiguration_set.all()
-		roomPlansConfigs = get_object_or_404(RoomPlan, id=request.POST['roomPlan']).roomconfiguration_set.all()
+		roomPlansConfigs = get_object_or_404(RoomPlan, id=request.POST.get['roomPlan']).roomconfiguration_set.all()
 		for config in floorConfigsRoomConfigs:
 			if config in roomPlansConfigs:
 				roomConfig = config
@@ -250,7 +296,7 @@ def saveConfig(request):
 				roomConfig.optionChoices.remove(option)
 				roomConfig.optionChoices.add(newOption)
 
-		price = int(request.POST['price']) - oldPrice + newPrice
+		price = int(request.POST.get['price']) - oldPrice + newPrice
 
 	return HttpResponse(json.dumps({'price':price}), content_type="application/json")
 

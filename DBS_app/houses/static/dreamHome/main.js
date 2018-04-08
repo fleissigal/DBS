@@ -37,7 +37,7 @@ $(document).ready(function(){
 	        url : "/saveConfig/",
 	        type : 'POST',
 	        data : {
-	        		'username': $(this).attr('username'),
+	        		'username': $('#roomInfo').attr('username'),
 	        		'housePlan': $('#roomInfo').attr('houseID'),
 	        		'floorPlan': $('#roomInfo').attr('floorID'),
 	        		'roomPlan': $('#roomInfo').attr('roomID'),
@@ -47,6 +47,39 @@ $(document).ready(function(){
 	        dataType: 'json',
 	        success : function(response) {
 	       		$('#price').html(response.price);
+	        },
+	    });
+
+	});
+
+
+	$('#summary').click(function() {
+
+
+		$.ajax({
+	        url : "/summary/",
+	        type : 'POST',
+	        data : {
+	        		'username': $('#roomInfo').attr('username'),
+	        		'housePlan': $('#roomInfo').attr('houseID'),
+	        		'floorPlan': $('#roomInfo').attr('floorID'),
+	        		'roomPlan': $('#roomInfo').attr('roomID'),
+	        		},
+	        dataType: 'json',
+	        success : function(response) {
+
+	        	var options = JSON.parse(response.options);
+
+				var list = "<ul>";
+
+				for (var i = 0; i < options.length ; i++) {
+					list += "<li>" + options[i].fields['name'] + " - $" + options[i].fields['price'] + "</li>";
+				}
+
+				list += "</ul>";
+
+				$('#optionsSummary').html(list);
+
 	        },
 	    });
 
@@ -77,6 +110,7 @@ $(document).ready(function(){
 	        }
 	    }
 	});
+
 
 	// This function loads the page with the default room image and the room dropdown menus (option types) when the user
 	// clicks on one of the room buttons

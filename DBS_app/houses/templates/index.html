@@ -60,13 +60,13 @@
             </map>
           </div>
 
-          <div id="roomInfo" houseID="{{ model.id }}" floorID="{{ floor.id }}" roomID="{{ room.id }}" viewerMode="{{ viewerMode }}"></div>
+          <div id="roomInfo" houseID="{{ model.id }}" floorID="{{ floor.id }}" roomID="{{ room.id }}" viewerMode="{{ viewerMode }}" username="{{ user.username }}"></div>
 
           <!-- A dropdown menu of the options of the current room -->
           <h1>Options</h1>
 
           {% for optionType in optionTypes %}
-            <select class="dropDownMenu" id="{{ optionType.name }}" username="{{ user.username }}">
+            <select class="dropDownMenu" id="{{ optionType.name }}">
               {% for option in optionType.option_set.all %}
                 <option class="dropdown-item option" value="{{ option.id }}" optionID="{{ option.id }}" optionPrice="{{ option.price }}" name="{{ option.name }}" id="{{ option.imageName }}">{{ option.description }}</option>
               {% endfor %}
@@ -77,6 +77,10 @@
           <!-- The price that updates when the different options change -->
           <h1>Price</h1>
           $<h3 id="price" style="color: darkblue">{{ price }}</h3>
+
+          <br>
+          <button class="btn btn-primary" id="summary">Summary</button>
+          <div id="optionsSummary"></div>
 
           <h1>Panoramic image upload</h1>
           <form action="uploadFile" method="post" enctype="multipart/form-data" id="submitImage">
