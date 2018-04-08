@@ -219,8 +219,7 @@ def saveConfig(request):
 
 		newHouseConfiguration = HouseConfiguration(name=houseConfigurationName, description=houseConfigurationDescription, housePlan=housePlan, user=user)
 		newHouseConfiguration.save()
-
-		# <<------NEW CODE------>>
+		houseConfig = newHouseConfiguration
 
 		# Saving each of the floors
 
@@ -239,66 +238,43 @@ def saveConfig(request):
 				roomConfigurationName = user.username + " " + ro.name
 				roomConfigurationDescription = user.username + " " + ro.description
 
-				newRoomConfiguration = RoomConfiguration(name=roomConfigurationName, description=roomConfigurationDescription, optionChoices="", roomPlan=ro, floorConfiguration=newFloorConfiguration)
+				newRoomConfiguration = RoomConfiguration(name=roomConfigurationName, description=roomConfigurationDescription, roomPlan=ro, floorConfiguration=newFloorConfiguration)
+
+				newRoomConfiguration.save()
 
 				for optionType in ro.optionTypes.all():
 					newRoomConfiguration.optionChoices.add(optionType.defaultOption)
 
 				newRoomConfiguration.save()
 
-		# <<------NEW CODE------>>
 
+	floorConfig = None
+	houseConfigsFloorConfigs = houseConfig.floorconfiguration_set.all()
+	floorPlansConfigs = get_object_or_404(FloorPlan, id=request.POST['floorPlan']).floorconfiguration_set.all()
+	for config in houseConfigsFloorConfigs:
+		if config in floorPlansConfigs:
+			floorConfig = config
 
-		# <<------ORIGINAL CODE------>>
+	roomConfig = None
+	floorConfigsRoomConfigs = floorConfig.roomconfiguration_set.all()
+	roomPlansConfigs = get_object_or_404(RoomPlan, id=request.POST['roomPlan']).roomconfiguration_set.all()
+	for config in floorConfigsRoomConfigs:
+		if config in roomPlansConfigs:
+			roomConfig = config
 
-		# floorConfigurationName = username + " " + floor.name
-		# floorConfigurationDescription = username + " " + floor.description
+	roomOptionChoices = roomConfig.optionChoices.all()
 
-		# newFloorConfiguration = FloorConfiguration(name=floorConfigurationName, description=floorConfigurationDescription, floorPlan=floor, houseConfiguration=newHouseConfiguration)
-		# newFloorConfiguration.save()
+	# Replacing the old option with the new one and updating the price
+	oldPrice = 0
+	newPrice = int(newOption.price)
 
-		# roomConfigurationName = username + " " + room.name
-		# roomConfigurationDescription = username + " " + room.description
+	for option in roomOptionChoices:
+		if (newOption.optionType.id == option.optionType.id):
+			oldPrice = int(option.price)
+			roomConfig.optionChoices.remove(option)
+			roomConfig.optionChoices.add(newOption)
 
-		# newRoomConfiguration = RoomConfiguration(name=roomConfigurationName, description=roomConfigurationDescription, optionChoices="", roomPlan=room, floorConfiguration=newFloorConfiguration)
-
-		# newRoomConfiguration.optionChoices.add(newOption)
-		# newRoomConfiguration.save()
-
-		# # REMOVE THIS after the above fixes
-		# price = request.POST.get['price']
-
-		# <<------ORIGINAL CODE------>>
-
-	else:
-
-		floorConfig = None
-		houseConfigsFloorConfigs = houseConfig.floorconfiguration_set.all()
-		floorPlansConfigs = get_object_or_404(FloorPlan, id=request.POST['floorPlan']).floorconfiguration_set.all()
-		for config in houseConfigsFloorConfigs:
-			if config in floorPlansConfigs:
-				floorConfig = config
-
-		roomConfig = None
-		floorConfigsRoomConfigs = floorConfig.roomconfiguration_set.all()
-		roomPlansConfigs = get_object_or_404(RoomPlan, id=request.POST['roomPlan']).roomconfiguration_set.all()
-		for config in floorConfigsRoomConfigs:
-			if config in roomPlansConfigs:
-				roomConfig = config
-
-		roomOptionChoices = roomConfig.optionChoices.all()
-
-		# Replacing the old option with the new one and updating the price
-		oldPrice = 0
-		newPrice = int(newOption.price)
-
-		for option in roomOptionChoices:
-			if (newOption.optionType.id == option.optionType.id):
-				oldPrice = int(option.price)
-				roomConfig.optionChoices.remove(option)
-				roomConfig.optionChoices.add(newOption)
-
-		price = int(request.POST['price']) - oldPrice + newPrice
+	price = int(request.POST['price']) - oldPrice + newPrice
 
 	return HttpResponse(json.dumps({'price':price}), content_type="application/json")
 
