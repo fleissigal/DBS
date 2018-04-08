@@ -198,10 +198,12 @@ def saveConfig(request):
 
 	context = {}
 	houseConfig = None
-	newOption = get_object_or_404(Option, id=request.POST.get['option'])
+	newOption = get_object_or_404(Option, id=request.POST['option'])
+	user = get_object_or_404(User, username=request.POST['username'])
+	housePlan = get_object_or_404(HousePlan, id=request.POST['housePlan'])
 
-	usersHouseConfigs = get_object_or_404(User, username=request.POST.get['username']).houseconfiguration_set.all()
-	housePlansConfigs = get_object_or_404(HousePlan, id=request.POST.get['housePlan']).houseconfiguration_set.all()
+	usersHouseConfigs = get_object_or_404(User, username=request.POST['username']).houseconfiguration_set.all()
+	housePlansConfigs = get_object_or_404(HousePlan, id=request.POST['housePlan']).houseconfiguration_set.all()
 	# Check for intersection between them
 	for config in usersHouseConfigs:
 		if config in housePlansConfigs:
@@ -212,59 +214,59 @@ def saveConfig(request):
 
 		# Saving the model
 
-		houseConfigurationName = username + " " + model.name
-		houseConfigurationDescription = username + " " + model.description
+		houseConfigurationName = user.username + " " + housePlan.name
+		houseConfigurationDescription = user.username + " " + housePlan.description
 
-		newHouseConfiguration = HouseConfiguration(name=houseConfigurationName, description=houseConfigurationDescription, housePlan=model, user=userToSave)
+		newHouseConfiguration = HouseConfiguration(name=houseConfigurationName, description=houseConfigurationDescription, housePlan=housePlan, user=user)
 		newHouseConfiguration.save()
 
 		# <<------NEW CODE------>>
 
 		# Saving each of the floors
 
-		# for fl in model.floorplan_set.all():
+		for fl in housePlan.floorplan_set.all():
 
-		# 	floorConfigurationName = username + " " + fl.name
-		# 	floorConfigurationDescription = username + " " + fl.description
+			floorConfigurationName = user.username + " " + fl.name
+			floorConfigurationDescription = user.username + " " + fl.description
 
-		# 	newFloorConfiguration = FloorConfiguration(name=floorConfigurationName, description=floorConfigurationDescription, floorPlan=fl, houseConfiguration=newHouseConfiguration)
-		# 	newFloorConfiguration.save()
+			newFloorConfiguration = FloorConfiguration(name=floorConfigurationName, description=floorConfigurationDescription, floorPlan=fl, houseConfiguration=newHouseConfiguration)
+			newFloorConfiguration.save()
 
-		# 	# Saving each of the rooms in this floor
+			# Saving each of the rooms in this floor
 
-		# 	for ro in floor.roomplan_set.all():
+			for ro in fl.roomplan_set.all():
 
-		# 		roomConfigurationName = username + " " + ro.name
-		# 		roomConfigurationDescription = username + " " + ro.description
+				roomConfigurationName = user.username + " " + ro.name
+				roomConfigurationDescription = user.username + " " + ro.description
 
-		# 		newRoomConfiguration = RoomConfiguration(name=roomConfigurationName, description=roomConfigurationDescription, optionChoices="", roomPlan=ro, floorConfiguration=newFloorConfiguration)
+				newRoomConfiguration = RoomConfiguration(name=roomConfigurationName, description=roomConfigurationDescription, optionChoices="", roomPlan=ro, floorConfiguration=newFloorConfiguration)
 
-		# 		for optionType in ro.optionTypes.all():
-		# 			newRoomConfiguration.optionChoices.add(optionType.defaultOption)
+				for optionType in ro.optionTypes.all():
+					newRoomConfiguration.optionChoices.add(optionType.defaultOption)
 
-		# 		newRoomConfiguration.save()
+				newRoomConfiguration.save()
 
 		# <<------NEW CODE------>>
 
 
 		# <<------ORIGINAL CODE------>>
 
-		floorConfigurationName = username + " " + floor.name
-		floorConfigurationDescription = username + " " + floor.description
+		# floorConfigurationName = username + " " + floor.name
+		# floorConfigurationDescription = username + " " + floor.description
 
-		newFloorConfiguration = FloorConfiguration(name=floorConfigurationName, description=floorConfigurationDescription, floorPlan=floor, houseConfiguration=newHouseConfiguration)
-		newFloorConfiguration.save()
+		# newFloorConfiguration = FloorConfiguration(name=floorConfigurationName, description=floorConfigurationDescription, floorPlan=floor, houseConfiguration=newHouseConfiguration)
+		# newFloorConfiguration.save()
 
-		roomConfigurationName = username + " " + room.name
-		roomConfigurationDescription = username + " " + room.description
+		# roomConfigurationName = username + " " + room.name
+		# roomConfigurationDescription = username + " " + room.description
 
-		newRoomConfiguration = RoomConfiguration(name=roomConfigurationName, description=roomConfigurationDescription, optionChoices="", roomPlan=room, floorConfiguration=newFloorConfiguration)
+		# newRoomConfiguration = RoomConfiguration(name=roomConfigurationName, description=roomConfigurationDescription, optionChoices="", roomPlan=room, floorConfiguration=newFloorConfiguration)
 
-		newRoomConfiguration.optionChoices.add(newOption)
-		newRoomConfiguration.save()
+		# newRoomConfiguration.optionChoices.add(newOption)
+		# newRoomConfiguration.save()
 
-		# REMOVE THIS after the above fixes
-		price = request.POST.get['price']
+		# # REMOVE THIS after the above fixes
+		# price = request.POST.get['price']
 
 		# <<------ORIGINAL CODE------>>
 
@@ -272,14 +274,14 @@ def saveConfig(request):
 
 		floorConfig = None
 		houseConfigsFloorConfigs = houseConfig.floorconfiguration_set.all()
-		floorPlansConfigs = get_object_or_404(FloorPlan, id=request.POST.get['floorPlan']).floorconfiguration_set.all()
+		floorPlansConfigs = get_object_or_404(FloorPlan, id=request.POST['floorPlan']).floorconfiguration_set.all()
 		for config in houseConfigsFloorConfigs:
 			if config in floorPlansConfigs:
 				floorConfig = config
 
 		roomConfig = None
 		floorConfigsRoomConfigs = floorConfig.roomconfiguration_set.all()
-		roomPlansConfigs = get_object_or_404(RoomPlan, id=request.POST.get['roomPlan']).roomconfiguration_set.all()
+		roomPlansConfigs = get_object_or_404(RoomPlan, id=request.POST['roomPlan']).roomconfiguration_set.all()
 		for config in floorConfigsRoomConfigs:
 			if config in roomPlansConfigs:
 				roomConfig = config
@@ -296,7 +298,7 @@ def saveConfig(request):
 				roomConfig.optionChoices.remove(option)
 				roomConfig.optionChoices.add(newOption)
 
-		price = int(request.POST.get['price']) - oldPrice + newPrice
+		price = int(request.POST['price']) - oldPrice + newPrice
 
 	return HttpResponse(json.dumps({'price':price}), content_type="application/json")
 
