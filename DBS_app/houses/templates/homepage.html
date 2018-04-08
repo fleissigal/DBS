@@ -40,36 +40,22 @@
       </div>
 
 
-      <div class="row">
-        
-        <div class="col-md-4">
+      {% for model in models %}
+        <div class="row">
+          
+          <div class="col-md-4">
+          </div>
+
+          <div class="col-md-4">
+            <a href="{% url 'viewer' model.id model.defaultFloor.id model.defaultFloor.defaultRoom.id %}"><img src="/static/360/{{ model.name }}.jpg" style="width: 350px; height: 200px"></a>
+            <br><br>
+          </div>
+
+          <div class="col-md-4">
+          </div>
+
         </div>
-
-        <div class="col-md-4">
-          <a href="{% url 'viewer' 1 1 1 %}"><img src="/static/360/simplemodel.jpg" style="width: 350px; height: 200px"></a>
-          <br><br>
-        </div>
-
-        <div class="col-md-4">
-        </div>
-
-      </div>
-
-
-      <div class="row">
-        
-        <div class="col-md-4">
-        </div>
-
-        <div class="col-md-4">
-          <a href="{% url 'viewer' 2 2 6 %}"><img src="/static/360/simplemodel2.jpg" style="width: 350px; height: 200px"></a>
-          <br><br>
-        </div>
-
-        <div class="col-md-4">
-        </div>
-
-      </div>
+      {% endfor %}
 
       <div class="row">
         

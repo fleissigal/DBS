@@ -23,11 +23,9 @@ from django.core import serializers
 
 def main(request):
 
-	context = {}
+	models = HousePlan.objects.all()
 
-	# Change later to contain the main page of the webapp, and from this page there will be links to the viewer/configurator urls
-
-	return render(request, 'homepage.html', context)
+	return render(request, 'homepage.html', {"models":models})
 
 # This action is responsible for uploading a new file
 @login_required()
