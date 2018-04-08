@@ -65,7 +65,7 @@ def viewer(request, houseID, floorID, roomID):
 	rooms = floor.roomplan_set.all()
 	optionTypes = get_object_or_404(RoomPlan, id=roomID).optionTypes.all()
 
-	context = {'model':model, 'floor':floor, 'room':room, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":optionsToLoad, "viewerMode":"true" }
+	context = {'model':model, 'floor':floor, 'room':room, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":optionsToLoad, "viewerMode":"true", "price":model.price }
 	return render(request, 'index.html', context)
 
 @login_required()
@@ -264,11 +264,11 @@ def saveConfig(request):
 
 	# Replacing the old option with the new one and updating the price
 	oldPrice = 0
-	newPrice = int(newOption.price)
+	newPrice = newOption.price
 
 	for option in roomOptionChoices:
 		if (newOption.optionType.id == option.optionType.id):
-			oldPrice = int(option.price)
+			oldPrice = option.price
 			roomConfig.optionChoices.remove(option)
 			roomConfig.optionChoices.add(newOption)
 
