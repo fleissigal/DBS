@@ -199,12 +199,17 @@ def saveConfig(request):
 	newOption = get_object_or_404(Option, id=request.POST['option'])
 	user = get_object_or_404(User, username=request.POST['username'])
 	housePlan = get_object_or_404(HousePlan, id=request.POST['housePlan'])
+	floorPlan = get_object_or_404(FloorPlan, id=request.POST['floorPlan'])
+	roomPlan = get_object_or_404(RoomPlan, id=request.POST['roomPlan'])
 
 	usersHouseConfigs = get_object_or_404(User, username=request.POST['username']).houseconfiguration_set.all()
-	housePlansConfigs = get_object_or_404(HousePlan, id=request.POST['housePlan']).houseconfiguration_set.all()
 	# Check for intersection between them
+
 	for config in usersHouseConfigs:
-		if config in housePlansConfigs:
+		# from the django docs
+		# To compare two model instances, just use the standard Python comparison operator, 
+		# the double equals sign: ==. Behind the scenes, that compares the primary key values of two models.
+		if config.housePlan == housePlan
 			houseConfig = config
 
 	# If the user has already saved this model config in the past
@@ -215,9 +220,8 @@ def saveConfig(request):
 		houseConfigurationName = user.username + " " + housePlan.name
 		houseConfigurationDescription = user.username + " " + housePlan.description
 
-		newHouseConfiguration = HouseConfiguration(name=houseConfigurationName, description=houseConfigurationDescription, housePlan=housePlan, user=user)
-		newHouseConfiguration.save()
-		houseConfig = newHouseConfiguration
+		houseConfig = HouseConfiguration(name=houseConfigurationName, description=houseConfigurationDescription, housePlan=housePlan, user=user)
+		houseConfig.save()
 
 		# Saving each of the floors
 
@@ -226,7 +230,7 @@ def saveConfig(request):
 			floorConfigurationName = user.username + " " + fl.name
 			floorConfigurationDescription = user.username + " " + fl.description
 
-			newFloorConfiguration = FloorConfiguration(name=floorConfigurationName, description=floorConfigurationDescription, floorPlan=fl, houseConfiguration=newHouseConfiguration)
+			newFloorConfiguration = FloorConfiguration(name=floorConfigurationName, description=floorConfigurationDescription, floorPlan=fl, houseConfiguration=houseConfig)
 			newFloorConfiguration.save()
 
 			# Saving each of the rooms in this floor
@@ -248,16 +252,14 @@ def saveConfig(request):
 
 	floorConfig = None
 	houseConfigsFloorConfigs = houseConfig.floorconfiguration_set.all()
-	floorPlansConfigs = get_object_or_404(FloorPlan, id=request.POST['floorPlan']).floorconfiguration_set.all()
 	for config in houseConfigsFloorConfigs:
-		if config in floorPlansConfigs:
+		if config.floorPlan == floorPlan
 			floorConfig = config
 
 	roomConfig = None
 	floorConfigsRoomConfigs = floorConfig.roomconfiguration_set.all()
-	roomPlansConfigs = get_object_or_404(RoomPlan, id=request.POST['roomPlan']).roomconfiguration_set.all()
 	for config in floorConfigsRoomConfigs:
-		if config in roomPlansConfigs:
+		if config.roomPlan == roomPlan
 			roomConfig = config
 
 	roomOptionChoices = roomConfig.optionChoices.all()
@@ -267,10 +269,13 @@ def saveConfig(request):
 	newPrice = newOption.price
 
 	for option in roomOptionChoices:
-		if (newOption.optionType.id == option.optionType.id):
+		if (newOption.optionType == option.optionType):
 			oldPrice = option.price
+
+			#wrap this in a transaction
 			roomConfig.optionChoices.remove(option)
 			roomConfig.optionChoices.add(newOption)
+			roomConfig.save()
 
 	price = int(request.POST['price']) - oldPrice + newPrice
 
