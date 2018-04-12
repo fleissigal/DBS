@@ -47,7 +47,13 @@
           </div>
 
           <div class="col-md-4">
-            <a href="{% url 'viewer' model.id model.defaultFloor.id model.defaultFloor.defaultRoom.id %}"><img src="/static/360/{{ model.name }}.jpg" style="width: 350px; height: 200px"></a>
+            {% if user.username %}
+              <a href="{% url 'configurator' user.username model.id model.defaultFloor.id model.defaultFloor.defaultRoom.id %}">
+            {% else %}
+              <a href="{% url 'viewer' model.id model.defaultFloor.id model.defaultFloor.defaultRoom.id %}">
+            {% endif %}
+            <img src="/static/360/{{ model.name }}.jpg" style="width: 350px; height: 200px"></a>
+
             <br><br>
           </div>
 

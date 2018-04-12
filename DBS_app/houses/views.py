@@ -209,7 +209,7 @@ def saveConfig(request):
 		# from the django docs
 		# To compare two model instances, just use the standard Python comparison operator, 
 		# the double equals sign: ==. Behind the scenes, that compares the primary key values of two models.
-		if config.housePlan == housePlan
+		if config.housePlan == housePlan:
 			houseConfig = config
 
 	# If the user has already saved this model config in the past
@@ -253,13 +253,13 @@ def saveConfig(request):
 	floorConfig = None
 	houseConfigsFloorConfigs = houseConfig.floorconfiguration_set.all()
 	for config in houseConfigsFloorConfigs:
-		if config.floorPlan == floorPlan
+		if config.floorPlan == floorPlan:
 			floorConfig = config
 
 	roomConfig = None
 	floorConfigsRoomConfigs = floorConfig.roomconfiguration_set.all()
 	for config in floorConfigsRoomConfigs:
-		if config.roomPlan == roomPlan
+		if config.roomPlan == roomPlan:
 			roomConfig = config
 
 	roomOptionChoices = roomConfig.optionChoices.all()
