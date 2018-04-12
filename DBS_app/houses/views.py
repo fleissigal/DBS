@@ -269,10 +269,10 @@ def saveConfig(request):
 		if (newOption.optionType == option.optionType):
 			oldPrice = option.price
 
-			#wrap this in a transaction
-			roomConfig.optionChoices.remove(option)
-			roomConfig.optionChoices.add(newOption)
-			roomConfig.save()
+			with transaction.atomic():
+				roomConfig.optionChoices.remove(option)
+				roomConfig.optionChoices.add(newOption)
+				roomConfig.save()
 
 	price = int(request.POST['price']) - oldPrice + newPrice
 
