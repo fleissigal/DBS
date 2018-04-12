@@ -27,7 +27,7 @@ def main(request):
 
 	return render(request, 'homepage.html', {"models":models})
 
-# This action is responsible for uploading a new file
+# This action is responsible for uploading a new file. Need to check if things have changed
 @login_required()
 def uploadFile(request):
 
@@ -73,18 +73,17 @@ def summary(request):
 
 	options = None
 
-	username = request.POST['username']
-	houseID = request.POST['housePlan']
-	floorID = request.POST['floorPlan']
-	roomID = request.POST['roomPlan']
+	user = get_object_or_404(User, username=request.POST['username'])
+	housePlan = get_object_or_404(HousePlan, id=request.POST['housePlan'])
+	floorPlan = get_object_or_404(FloorPlan, id=request.POST['floorPlan'])
+	roomPlan = get_object_or_404(RoomPlan, id=request.POST['roomPlan'])
 
 	houseConfig = None
 
-	usersHouseConfigs = get_object_or_404(User, username=username).houseconfiguration_set.all()
-	housePlansConfigs = get_object_or_404(HousePlan, id=houseID).houseconfiguration_set.all()
-	# Check for intersection between them
+	usersHouseConfigs = user.houseconfiguration_set.all()
+	
 	for config in usersHouseConfigs:
-		if config in housePlansConfigs:
+		if config.housePlan == housePlan:
 			houseConfig = config
 
 	# If the user has a house in edit mode, load this house
@@ -92,16 +91,16 @@ def summary(request):
 
 		floorConfig = None
 		houseConfigsFloorConfigs = houseConfig.floorconfiguration_set.all()
-		floorPlansConfigs = get_object_or_404(FloorPlan, id=floorID).floorconfiguration_set.all()
+
 		for config in houseConfigsFloorConfigs:
-			if config in floorPlansConfigs:
+			if config.floorPlan == floorPlan:
 				floorConfig = config
 
 		roomConfig = None
 		floorConfigsRoomConfigs = floorConfig.roomconfiguration_set.all()
-		roomPlansConfigs = get_object_or_404(RoomPlan, id=roomID).roomconfiguration_set.all()
+
 		for config in floorConfigsRoomConfigs:
-			if config in roomPlansConfigs:
+			if config.roomPlan == roomPlan:
 				roomConfig = config
 
 
@@ -123,13 +122,19 @@ def configurator(request, username, houseID, floorID, roomID):
 	# as you change the dropdown menus
 
 	context = {}
+
+	housePlan = get_object_or_404(HousePlan, id=houseID)
+	floorPlan = get_object_or_404(FloorPlan, id=floorID)
+	roomPlan = get_object_or_404(RoomPlan, id=roomID)
+	rooms = floorPlan.roomplan_set.all()
+	optionTypes = roomPlan.optionTypes.all()
+
 	houseConfig = None
 
 	usersHouseConfigs = get_object_or_404(User, username=username).houseconfiguration_set.all()
-	housePlansConfigs = get_object_or_404(HousePlan, id=houseID).houseconfiguration_set.all()
-	# Check for intersection between them
+
 	for config in usersHouseConfigs:
-		if config in housePlansConfigs:
+		if config.housePlan == housePlan:
 			houseConfig = config
 
 	optionsToLoad = ""
@@ -139,16 +144,14 @@ def configurator(request, username, houseID, floorID, roomID):
 
 		floorConfig = None
 		houseConfigsFloorConfigs = houseConfig.floorconfiguration_set.all()
-		floorPlansConfigs = get_object_or_404(FloorPlan, id=floorID).floorconfiguration_set.all()
 		for config in houseConfigsFloorConfigs:
-			if config in floorPlansConfigs:
+			if config.floorPlan == floorPlan:
 				floorConfig = config
 
 		roomConfig = None
 		floorConfigsRoomConfigs = floorConfig.roomconfiguration_set.all()
-		roomPlansConfigs = get_object_or_404(RoomPlan, id=roomID).roomconfiguration_set.all()
 		for config in floorConfigsRoomConfigs:
-			if config in roomPlansConfigs:
+			if config.roomPlan == roomPlan:
 				roomConfig = config
 
 
@@ -171,14 +174,7 @@ def configurator(request, username, houseID, floorID, roomID):
 					optionsToLoad = optionsToLoad + "-"
 				optionsToLoad = optionsToLoad + option
 
-
-	model = get_object_or_404(HousePlan, id=houseID)
-	floor = get_object_or_404(FloorPlan, id=floorID)
-	room = get_object_or_404(RoomPlan, id=roomID)
-	rooms = floor.roomplan_set.all()
-	optionTypes = room.optionTypes.all()
-
-	context = {'model':model, 'floor':floor, 'room':room, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":optionsToLoad, "viewerMode":"false", "price":model.price }
+	context = {'model':housePlan, 'floor':floorPlan, 'room':roomPlan, 'rooms':rooms, 'optionTypes':optionTypes , "optionsToLoad":optionsToLoad, "viewerMode":"false", "price":housePlan.price }
 	return render(request, 'index.html', context)
 
 # Getting called from an ajax function
@@ -195,7 +191,9 @@ def saveConfig(request):
 	# find the one with the same optionType as the one we want to add, remove it and add the newOption
 
 	context = {}
+
 	houseConfig = None
+
 	newOption = get_object_or_404(Option, id=request.POST['option'])
 	user = get_object_or_404(User, username=request.POST['username'])
 	housePlan = get_object_or_404(HousePlan, id=request.POST['housePlan'])
@@ -203,7 +201,6 @@ def saveConfig(request):
 	roomPlan = get_object_or_404(RoomPlan, id=request.POST['roomPlan'])
 
 	usersHouseConfigs = get_object_or_404(User, username=request.POST['username']).houseconfiguration_set.all()
-	# Check for intersection between them
 
 	for config in usersHouseConfigs:
 		# from the django docs
