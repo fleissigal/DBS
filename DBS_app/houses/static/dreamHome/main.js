@@ -12,6 +12,7 @@ $(document).ready(function(){
 		var selectedValue = $(this)[0].options[$(this)[0].selectedIndex].id;
 		var selecedValuePrice = parseInt($('#' + selectedValue).attr("optionPrice"));
 
+		// Requires ordering the dropdown menus by increasing option ID's order
 		$('.dropDownMenu').each(function() {
 			var ddSelectedValue = $(this)[0].options[$(this)[0].selectedIndex].id;
 			var ddSelectedValueID = $('#' + ddSelectedValue).attr("optionID");

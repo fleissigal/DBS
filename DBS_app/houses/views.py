@@ -17,6 +17,8 @@ from django.contrib.auth import logout as auth_logout
 from houses.models import *
 from houses.forms import *
 
+from django.db import transaction
+
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 from django.core import serializers
@@ -156,7 +158,7 @@ def configurator(request, username, houseID, floorID, roomID):
 
 
 		# Send inside optionsToLoad all the options from the DB for this specific user's room config.
-		optionList = roomConfig.optionChoices.all()
+		optionList = roomConfig.optionChoices.all().order_by('id')
 		for option in optionList:
 			# Fills the optionsToLoad variable with the id's of the options
 			optionsToLoad = str(option.id) + "-"
@@ -170,6 +172,7 @@ def configurator(request, username, houseID, floorID, roomID):
 		if optionList:
 			for option in optionList:
 				# Fills the optionsToLoad variable with the id's of the options
+				# Requires sorting of optionList as well (in case it is not sorted according to the order in the url - to begin with)
 				if optionList.index(option) != 0:
 					optionsToLoad = optionsToLoad + "-"
 				optionsToLoad = optionsToLoad + option
@@ -189,6 +192,9 @@ def saveConfig(request):
 	# Else, the modelConfig does exist for that user, go to the specific room that's being edited (how do we know that? according to the url)
 	# and change the specific option in the DB (replacement), save, and update the price. Go through all the options in it and
 	# find the one with the same optionType as the one we want to add, remove it and add the newOption
+
+	# Need to edit this action so that it updates the price from within 'viewer'
+	# Also need to fix it so that it presents the price of the model + the prices of all the default options - from the beginning
 
 	context = {}
 
