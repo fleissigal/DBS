@@ -68,7 +68,7 @@
           {% for optionType in optionTypes %}
             <select class="dropDownMenu" id="{{ optionType.name }}">
               {% for option in optionType.option_set.all %}
-                <option class="dropdown-item option" value="{{ option.id }}" optionID="{{ option.id }}" optionPrice="{{ option.price }}" name="{{ option.name }}" id="{{ option.imageName }}">{{ option.description }}</option>
+                <option class="dropdown-item option" value="{{ option.id }}" optionID="{{ option.id }}" optionPrice="{{ option.price }}" name="{{ option.name }}" id="{{ option.name }}">{{ option.description }}</option>
               {% endfor %}
             </select>
             <br><br>

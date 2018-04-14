@@ -7,8 +7,6 @@ $(document).ready(function(){
 	// This function changes the image in the canvas when the user clicks on one of the dropdown menu options
 	$('.dropDownMenu').change(function() {
 		var imageName = $('#roomInfo').attr('houseID') + "-" + $('#roomInfo').attr('floorID') + "-" + $('#roomInfo').attr('roomID');
-		var selecedValuePrice 
-
 		var selectedValue = $(this)[0].options[$(this)[0].selectedIndex].id;
 		var selecedValuePrice = parseInt($('#' + selectedValue).attr("optionPrice"));
 
