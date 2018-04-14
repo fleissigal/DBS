@@ -17,7 +17,6 @@ class Option(models.Model):
 	name = models.CharField(max_length=100)
 	description = models.CharField(max_length=1000)
 	optionType = models.ForeignKey(OptionType)
-	imageName = models.CharField(max_length=100)
 	price = models.IntegerField(default=0)
 
 ### Plans
